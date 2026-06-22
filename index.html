@@ -1589,18 +1589,20 @@ function goDashboard(){ onboarded=true; $('dash').classList.add('on'); ensureDay
 function hideDash(){ $('dash').classList.remove('on'); }
 
 /* ═══════════ DAY CARDS — every active day uses the 4-option pick card → done state ═══════════ */
+/* `won` = the AI-personalised badge line (written from THIS chat). Falls back to the
+   badge's generic `sub` when there's no conversation context (repo view / stepper). */
 const DAY_DATA={
   1:{ opts:[
-    {emotion:'curious',        text:"I think Cape Verde's draw was no fluke..is it ??"},
-    {emotion:'smug_confident', text:"I'm calling it: Haaland wins the top scorer.. what do you think ?"},
-    {emotion:'provoke',        text:"I bet your team mexico, gets knocked out early.. he.he.."},
-    {emotion:'skeptical',      text:"I think your favorite 'Messi' is overrated.. ready to challenge me ?"}
+    {emotion:'curious',        text:"I think Cape Verde's draw was no fluke..is it ??",            won:"Argued Cape Verde's draw was no fluke — and made it stick."},
+    {emotion:'smug_confident', text:"I'm calling it: Haaland wins the top scorer.. what do you think ?", won:"Backed Haaland for top scorer and held your ground."},
+    {emotion:'provoke',        text:"I bet your team mexico, gets knocked out early.. he.he..",   won:"Defended Mexico against the early-exit talk."},
+    {emotion:'skeptical',      text:"I think your favorite 'Messi' is overrated.. ready to challenge me ?", won:"Stood up for Messi and won the GOAT debate."}
   ]},
   2:{ opts:[
-    {emotion:'hyped',          text:"Argentina take this one 2–0.. calling it now"},
-    {emotion:'provoke',        text:"Brazil bottle it again tonight.. classic, right ?"},
-    {emotion:'smug_confident', text:"Messi runs the whole game.. you still doubt him ?"},
-    {emotion:'outraged',       text:"The ref ruins this one.. watch the VAR drama"}
+    {emotion:'hyped',          text:"Argentina take this one 2–0.. calling it now",               won:"Called Argentina 2–0 and talked it through with conviction."},
+    {emotion:'provoke',        text:"Brazil bottle it again tonight.. classic, right ?",          won:"Took on the Brazil-bottlers and made your case."},
+    {emotion:'smug_confident', text:"Messi runs the whole game.. you still doubt him ?",          won:"Made the case that Messi runs the whole game."},
+    {emotion:'outraged',       text:"The ref ruins this one.. watch the VAR drama",               won:"Broke down the VAR drama like a seasoned pundit."}
   ]}
 };
 /* ═══════════ DAY ENGINE — per-topic, day-long progress + demo timer ═══════════ */
@@ -1723,31 +1725,31 @@ window.addEventListener('message', e=>{
 
 /* ═══════════ BADGE COLLECTION — 25 daily badges + pinned finale (26) ═══════════ */
 const BADGES=[
-  {id:1,key:"badge_01",img:"assets/badges/badge_01.png",name:"Kickoff",tier:"common",sub:"You're off the mark — first chat done."},
-  {id:2,key:"badge_02",img:"assets/badges/badge_02.png",name:"First Touch",tier:"common",sub:"Boots laced, first words spoken."},
-  {id:3,key:"badge_03",img:"assets/badges/badge_03.png",name:"On the Whistle",tier:"rare",sub:"Right on cue, every single day."},
-  {id:4,key:"badge_04",img:"assets/badges/badge_04.png",name:"Corner Taken",tier:"common",sub:"Working the flanks of the conversation."},
-  {id:5,key:"badge_05",img:"assets/badges/badge_05.png",name:"Home Kit",tier:"common",sub:"Wearing the colours with pride."},
-  {id:6,key:"badge_06",img:"assets/badges/badge_06.png",name:"Safe Hands",tier:"rare",sub:"Nothing gets past you now."},
-  {id:7,key:"badge_07",img:"assets/badges/badge_07.png",name:"Back of the Net",tier:"rare",sub:"Words hitting the target."},
-  {id:8,key:"badge_08",img:"assets/badges/badge_08.png",name:"Captain's Armband",tier:"rare",sub:"Leading the talk from the front."},
-  {id:9,key:"badge_09",img:"assets/badges/badge_09.png",name:"Silverware",tier:"epic",sub:"First real piece of the collection."},
-  {id:10,key:"badge_10",img:"assets/badges/badge_10.png",name:"Fresh Studs",tier:"common",sub:"Gripping the conversation."},
-  {id:11,key:"badge_11",img:"assets/badges/badge_11.png",name:"Matchday",tier:"rare",sub:"Stepping out under the lights."},
+  {id:1,key:"badge_01",img:"assets/badges/badge_01.png",name:"Debut",tier:"common",sub:"Your first match. The journey starts here."},
+  {id:2,key:"badge_02",img:"assets/badges/badge_02.png",name:"First Touch",tier:"common",sub:"Boots on, first words spoken."},
+  {id:3,key:"badge_03",img:"assets/badges/badge_03.png",name:"On the Whistle",tier:"rare",sub:"Sharp from the very first whistle."},
+  {id:4,key:"badge_04",img:"assets/badges/badge_04.png",name:"Touchline",tier:"common",sub:"Working the edges, finding your feet."},
+  {id:5,key:"badge_05",img:"assets/badges/badge_05.png",name:"Squad Number",tier:"common",sub:"You've earned the shirt."},
+  {id:6,key:"badge_06",img:"assets/badges/badge_06.png",name:"Clean Sheet",tier:"rare",sub:"Nothing slipped past you today."},
+  {id:7,key:"badge_07",img:"assets/badges/badge_07.png",name:"Top Bins",tier:"rare",sub:"Right in the back of the net."},
+  {id:8,key:"badge_08",img:"assets/badges/badge_08.png",name:"The Armband",tier:"rare",sub:"Leading the talk from the front."},
+  {id:9,key:"badge_09",img:"assets/badges/badge_09.png",name:"First Silverware",tier:"epic",sub:"The first cup in the cabinet."},
+  {id:10,key:"badge_10",img:"assets/badges/badge_10.png",name:"Studs In",tier:"common",sub:"Gripping the game now."},
+  {id:11,key:"badge_11",img:"assets/badges/badge_11.png",name:"Under the Lights",tier:"rare",sub:"Stepping out on the big stage."},
   {id:12,key:"badge_12",img:"assets/badges/badge_12.png",name:"Lucky Boots",tier:"rare",sub:"Form is temporary, class is permanent."},
-  {id:13,key:"badge_13",img:"assets/badges/badge_13.png",name:"Home Ground",tier:"rare",sub:"Owning your turf."},
+  {id:13,key:"badge_13",img:"assets/badges/badge_13.png",name:"Fortress",tier:"rare",sub:"Holding your home ground."},
   {id:14,key:"badge_14",img:"assets/badges/badge_14.png",name:"Screamer",tier:"epic",sub:"A strike worth replaying."},
-  {id:15,key:"badge_15",img:"assets/badges/badge_15.png",name:"Flag Bearer",tier:"rare",sub:"Flying your team's colours."},
-  {id:16,key:"badge_16",img:"assets/badges/badge_16.png",name:"Star Striker",tier:"epic",sub:"Shining on the big stage."},
-  {id:17,key:"badge_17",img:"assets/badges/badge_17.png",name:"Golden Gloves",tier:"epic",sub:"A keeper of a streak."},
-  {id:18,key:"badge_18",img:"assets/badges/badge_18.png",name:"Final Whistle",tier:"rare",sub:"Seeing every chat through."},
-  {id:19,key:"badge_19",img:"assets/badges/badge_19.png",name:"Playmaker",tier:"epic",sub:"Dictating the tempo."},
+  {id:15,key:"badge_15",img:"assets/badges/badge_15.png",name:"Flag Bearer",tier:"rare",sub:"Flying your colours with pride."},
+  {id:16,key:"badge_16",img:"assets/badges/badge_16.png",name:"Star Man",tier:"epic",sub:"Player of the match, no debate."},
+  {id:17,key:"badge_17",img:"assets/badges/badge_17.png",name:"Golden Gloves",tier:"epic",sub:"An unbeatable run between the posts."},
+  {id:18,key:"badge_18",img:"assets/badges/badge_18.png",name:"Full Time",tier:"rare",sub:"Saw it through to the final whistle."},
+  {id:19,key:"badge_19",img:"assets/badges/badge_19.png",name:"The Maestro",tier:"epic",sub:"Pulling every string on the pitch."},
   {id:20,key:"badge_20",img:"assets/badges/badge_20.png",name:"Golden Boot",tier:"epic",sub:"Top of the scoring charts."},
-  {id:21,key:"badge_21",img:"assets/badges/badge_21.png",name:"Legend's Kit",tier:"epic",sub:"The shirt fits a star."},
-  {id:22,key:"badge_22",img:"assets/badges/badge_22.png",name:"Champion",tier:"legendary",sub:"Crowned for your consistency."},
-  {id:23,key:"badge_23",img:"assets/badges/badge_23.png",name:"King of the Pitch",tier:"legendary",sub:"The pitch belongs to you."},
-  {id:24,key:"badge_24",img:"assets/badges/badge_24.png",name:"Hall of Fame",tier:"legendary",sub:"An all-time great in the making."},
-  {id:25,key:"badge_25",img:"assets/badges/badge_25.png",name:"Immortal",tier:"legendary",sub:"The last word in football fluency."}
+  {id:21,key:"badge_21",img:"assets/badges/badge_21.png",name:"Cult Hero",tier:"epic",sub:"The crowd sings your name."},
+  {id:22,key:"badge_22",img:"assets/badges/badge_22.png",name:"Champion",tier:"legendary",sub:"Crowned for going the distance."},
+  {id:23,key:"badge_23",img:"assets/badges/badge_23.png",name:"King of the Pitch",tier:"legendary",sub:"The pitch bends to your will."},
+  {id:24,key:"badge_24",img:"assets/badges/badge_24.png",name:"Hall of Fame",tier:"legendary",sub:"An all-time great, etched in."},
+  {id:25,key:"badge_25",img:"assets/badges/badge_25.png",name:"Immortal",tier:"legendary",sub:"Beyond legend. Never forgotten."}
 ];
 /* the Finale is a SEPARATE always-present badge (the Stimuler shield), not badge 25 */
 const FINALE={id:26,key:"finale",img:"assets/fifa-badge.png",name:"The Finale",tier:"legendary",sub:"Speak through every day to claim it."};
@@ -1758,12 +1760,12 @@ function isEarned(id){ return id>=1 && id<=4 && dayState[id] && dayState[id].bad
 function earnedCount(){ let n=0; for(const b of BADGES) if(isEarned(b.id)) n++; return n; }
 
 let _shareViewOnly=false, _shareConf=null;
-function setShareBadge(day){
+function setShareBadge(day, desc){
   const b=badgeFor(day), tm=TIER[b.tier], glow=tm.glow;
   document.getElementById('shareScreen').style.setProperty('--bglow',glow);
   document.getElementById('shareBadgeImg').src=b.img;
   document.getElementById('shareTitle').textContent=b.name;
-  document.getElementById('shareSub').textContent=b.sub;
+  document.getElementById('shareSub').textContent=desc||b.sub;   // AI line when earned in a chat, else generic
   const rar=document.getElementById('shareRarity'); rar.textContent='✦ '+tm.label; rar.className='rarity tier-'+b.tier;
   document.getElementById('bsvAura').style.background='radial-gradient(circle,'+glow+', transparent 62%)';
   document.getElementById('spPrevImg').src=b.img;
@@ -1832,7 +1834,10 @@ function showBadgeEntrance(){
   setTimeout(()=>{ wrap.style.animation='none'; wrap.style.transition='transform .12s ease-out';
     wrap.style.transform='perspective(900px) rotateY(0deg)'; startBadgeTilt(); }, 1280);
 }
-function openShare(){ _shareViewOnly=false; setShareBadge(_attemptDay); document.getElementById('shareSkip').textContent='Skip for now';
+function openShare(){ _shareViewOnly=false;
+  // personalised line from the chat just finished (real product: AI writes this); fallback handled in setShareBadge
+  const topic=(DAY_DATA[_attemptDay]&&DAY_DATA[_attemptDay].opts[_attemptTopic])||null;
+  setShareBadge(_attemptDay, topic&&topic.won); document.getElementById('shareSkip').textContent='Skip for now';
   document.getElementById('shareScreen').classList.add('on'); showBadgeEntrance(); }
 function closeShare(){ closePreview(); document.getElementById('shareScreen').classList.remove('on');
   if(_shareViewOnly){ _shareViewOnly=false; return; }
