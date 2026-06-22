@@ -601,6 +601,9 @@ body{font-family:'Inter','Inter',-apple-system,system-ui,sans-serif,system-ui,sa
 .dev-tags button{font-family:'Geist';font-size:11px;font-weight:500;color:#cfcfe0;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);border-radius:11px;padding:8px 12px;cursor:pointer;transition:.15s;text-align:left}
 .dev-tags button:hover{border-color:rgba(251,191,36,.5);color:#fff}
 .dev-tags button:active{transform:scale(.95)}
+.dev-tags .dt-step{display:flex;align-items:center;gap:7px}
+.dev-tags .dt-step button{flex:none;width:38px;text-align:center;padding:8px 0;font-size:13px}
+.dev-tags .dt-step span{flex:1;text-align:center;font-family:'Geist';font-size:11px;font-weight:600;color:#ffe7ad}
 @media (max-width:480px), (display-mode:standalone){ .dev-tags{display:none} }
 .dash .tl-dot.is-done{background:linear-gradient(135deg,#34d399,#22c55e);border-color:transparent;color:#06240f;font-weight:600}
 .dash .wcp-badge.pop{animation:wcpPop .5s cubic-bezier(.34,1.56,.64,1)}
@@ -769,8 +772,7 @@ body{font-family:'Inter','Inter',-apple-system,system-ui,sans-serif,system-ui,sa
 .badge-wrap img{width:100%;height:auto;display:block}
 .badge-hero{z-index:2}
 .bsv-conflayer{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:visible}
-.share-screen.on #shareBadgeImg{animation:bsvPop .72s cubic-bezier(.22,1.15,.36,1) both}
-@keyframes bsvPop{0%{opacity:0;transform:scale(.5)}60%{opacity:1}100%{opacity:1;transform:scale(1)}}
+@keyframes bsvSpin{0%{opacity:0;transform:perspective(900px) scale(.5) rotateY(0deg)}24%{opacity:1;transform:perspective(900px) scale(1.1) rotateY(0deg)}100%{opacity:1;transform:perspective(900px) scale(1) rotateY(360deg)}}
 .bsv-info{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center}
 .bsv-title{font-family:'Inter',-apple-system,system-ui,sans-serif;font-weight:800;font-size:21px;letter-spacing:.2px;
   background:linear-gradient(180deg,#fff,#ffe7ad);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -807,10 +809,9 @@ body{font-family:'Inter','Inter',-apple-system,system-ui,sans-serif,system-ui,sa
 .repo-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px 10px;margin-bottom:22px}
 .repo-sec.special .repo-row{grid-template-columns:1fr;justify-items:center;margin-bottom:26px}
 .repo-sec.special .repo-cell{max-width:150px;width:100%}
-/* intro: finale badge expands, spins once, scales down into the grid */
-.repo-intro{position:absolute;inset:0;z-index:4;display:none;align-items:center;justify-content:center;pointer-events:none;perspective:1100px}
-.repo-intro img{width:208px;height:auto;filter:drop-shadow(0 0 50px rgba(251,191,36,.45)) drop-shadow(0 18px 36px rgba(0,0,0,.5))}
-@keyframes repoSpin{0%{opacity:0;transform:scale(.4) rotateY(0deg)}22%{opacity:1;transform:scale(1.14) rotateY(0deg)}100%{opacity:1;transform:scale(1) rotateY(360deg)}}
+.repo-finale .repo-badge{perspective:800px}
+.repo-finale .repo-badge img{cursor:pointer}
+@keyframes finaleSpin{0%{transform:rotateY(0deg) scale(1)}40%{transform:rotateY(200deg) scale(1.06)}100%{transform:rotateY(360deg) scale(1)}}
 .repo-cell{display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer}
 .repo-cell.locked{cursor:default}
 .repo-badge{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;position:relative;border-radius:18px;
@@ -1382,14 +1383,13 @@ body{font-family:'Inter','Inter',-apple-system,system-ui,sans-serif,system-ui,sa
           <div class="repo-close" onclick="closeRepo()">✕</div>
         </div>
         <div class="repo-grid" id="repoGrid"></div>
-        <div class="repo-intro" id="repoIntro"><img id="repoIntroImg" src="assets/badges/badge_25.png" alt=""></div>
       </div>
 
       <!-- ═══════════ FINALE SHARE — dashboard share button ═══════════ -->
       <div class="fsh-back" id="fshBack" onclick="closeFinaleShare()"></div>
       <div class="fsh-panel" id="fshPanel">
         <div class="sp-grip"></div>
-        <div class="fsh-prev"><img src="assets/badges/badge_25.png" alt="The Finale"><div class="t">The Finale</div></div>
+        <div class="fsh-prev"><img src="assets/fifa-badge.png" alt="The Finale"><div class="t">The Finale</div></div>
         <div class="sp-title">Share your challenge</div>
         <div class="sp-sub">Invite a friend to go Football Fluent</div>
         <div class="fsh-row">
@@ -1435,6 +1435,8 @@ body{font-family:'Inter','Inter',-apple-system,system-ui,sans-serif,system-ui,sa
     <button onclick="devJump('share')">Share badge</button>
     <button onclick="devJump('repo')">Badge repo</button>
     <button onclick="devJump('celebrate')">Celebration</button>
+    <span class="dt-group">Badge preview · 1–25</span>
+    <div class="dt-step"><button onclick="devBadgeStep(-1)">◀</button><span id="devBadgeLbl">1 / 25</span><button onclick="devBadgeStep(1)">▶</button></div>
   </div>
 </div>
 
@@ -1741,8 +1743,10 @@ const BADGES=[
   {id:22,key:"badge_22",img:"assets/badges/badge_22.png",name:"Champion",tier:"legendary",sub:"Crowned for your consistency."},
   {id:23,key:"badge_23",img:"assets/badges/badge_23.png",name:"King of the Pitch",tier:"legendary",sub:"The pitch belongs to you."},
   {id:24,key:"badge_24",img:"assets/badges/badge_24.png",name:"Hall of Fame",tier:"legendary",sub:"An all-time great in the making."},
-  {id:25,key:"badge_25",img:"assets/badges/badge_25.png",name:"The Finale",tier:"legendary",sub:"The very summit of the challenge."}
+  {id:25,key:"badge_25",img:"assets/badges/badge_25.png",name:"Immortal",tier:"legendary",sub:"The last word in football fluency."}
 ];
+/* the Finale is a SEPARATE always-present badge (the Stimuler shield), not badge 25 */
+const FINALE={id:26,key:"finale",img:"assets/fifa-badge.png",name:"The Finale",tier:"legendary",sub:"Speak through every day to claim it."};
 const PALETTE={"badge_01":["#dbdddf","#8f5b41","#f6f7f7","#b88360"],"badge_02":["#dcdcde","#b2b3b7","#ba845e","#915a40"],"badge_03":["#1d2a42","#8b5b42","#e0dfdb","#644437"],"badge_04":["#dddedd","#b5b7b9","#915a40","#bc7f5e"],"badge_05":["#bc7e59","#dbdde2","#634135","#8d5b43"],"badge_06":["#212a42","#dddee0","#915d41","#b28364"],"badge_07":["#5f6268","#393c41","#84888f","#b0b4b9"],"badge_08":["#afb2b6","#d9dadc","#868b91","#393c41"],"badge_09":["#3c4046","#aeb1b5","#dbdbdd","#888c91"],"badge_10":["#404045","#dbdcde","#8d8c8c","#b2b1b0"],"badge_11":["#3c3e43","#b0b2b6","#878a8f","#d9dadc"],"badge_12":["#3c3e43","#d9dbde","#afb3b7","#868b90"],"badge_13":["#b08449","#dbdbdd","#8e6738","#633d19"],"badge_14":["#8a683b","#dedddc","#b1905b","#5e3f1e"],"badge_15":["#dddde1","#8c6837","#b38542","#d6ae63"],"badge_16":["#8f6332","#dbdadd","#b28345","#673d19"],"badge_17":["#af8841","#8e6b35","#d1b165","#dcdce0"],"badge_18":["#dddddb","#ae9462","#d2bb88","#866b3d"],"badge_19":["#b38842","#8b6836","#d6b260","#dbdbdb"],"badge_20":["#b38841","#d7b162","#8b6a39","#e1dfda"],"badge_21":["#8b6836","#b18743","#dddbd8","#b7b4b1"],"badge_22":["#8d6837","#b18542","#dfdedb","#d6b063"],"badge_23":["#b58c43","#d5af5b","#e1e0de","#8a6a38"],"badge_24":["#b38640","#8c6636","#d6ae5f","#dddcd9"],"badge_25":["#b6893e","#dbb55b","#8b6b37","#5d4220"]};
 const TIER={common:{label:'Common',glow:'rgba(186,196,210,.4)'},rare:{label:'Rare',glow:'rgba(96,165,250,.42)'},epic:{label:'Epic',glow:'rgba(192,132,252,.42)'},legendary:{label:'Legendary',glow:'rgba(251,191,36,.45)'}};
 function badgeFor(day){ return BADGES[(day-1)%BADGES.length]; }   // Day N → badge N (sequential)
@@ -1781,9 +1785,10 @@ function repoCell(b,earned,finale){
   return '<div class="'+cls+'"'+style+click+'><div class="repo-badge"><img src="'+b.img+'" alt=""></div><div class="repo-name">'+name+'</div>'+tier+'</div>';
 }
 function buildRepo(){
-  // Special (finale) on top, then Common → Rare → Epic → Legendary
+  // Special (the always-present Finale shield) on top, then Common → Rare → Epic → Legendary
   let h='<div class="repo-sec special"><div class="repo-sec-h">Special</div><div class="repo-row">'
-    + repoCell({id:26,key:'badge_25',img:BADGES[24].img,name:'The Finale',tier:'legendary',sub:''},false,true)
+    + '<div class="repo-cell repo-finale" onclick="spinFinale(this)"><div class="repo-badge"><img src="'+FINALE.img+'" alt=""></div>'
+    + '<div class="repo-name">'+FINALE.name+'</div><div class="repo-tier rt-legendary">Finale</div></div>'
     + '</div></div>';
   for(const [tier,label] of [['common','Common'],['rare','Rare'],['epic','Epic'],['legendary','Legendary']]){
     const cells=BADGES.filter(b=>b.tier===tier).map(b=>repoCell(b,isEarned(b.id),false)).join('');
@@ -1792,24 +1797,12 @@ function buildRepo(){
   document.getElementById('repoGrid').innerHTML=h;
   document.getElementById('repoSub').textContent=earnedCount()+' of 26 earned';
 }
-function openRepo(){
-  buildRepo();
-  const r=document.getElementById('badgeRepo'), intro=document.getElementById('repoIntro'),
-        grid=document.getElementById('repoGrid'), head=document.querySelector('#badgeRepo .repo-head'),
-        img=document.getElementById('repoIntroImg');
-  r.classList.add('on');
-  grid.style.opacity='0'; head.style.opacity='0';
-  intro.style.display='flex'; intro.style.transition=''; intro.style.opacity=''; intro.style.transform='';
-  img.style.animation='none'; void img.offsetWidth; img.style.animation='repoSpin 1.15s cubic-bezier(.3,0,.2,1) forwards';
-  setTimeout(()=>{ intro.style.transition='opacity .55s ease,transform .55s cubic-bezier(.5,0,.3,1)';
-    intro.style.opacity='0'; intro.style.transform='translateY(-30vh) scale(.32)';
-    grid.style.transition='opacity .55s ease'; grid.style.opacity='1';
-    head.style.transition='opacity .4s ease'; head.style.opacity='1'; }, 1180);
-  setTimeout(()=>{ intro.style.display='none'; intro.style.transition=''; intro.style.transform=''; }, 1820);
-}
+function spinFinale(cell){ const img=cell.querySelector('.repo-badge img'); if(!img) return;
+  img.style.animation='none'; void img.offsetWidth; img.style.animation='finaleSpin 1.1s cubic-bezier(.3,0,.2,1)'; }
+function openRepo(){ buildRepo(); document.getElementById('badgeRepo').classList.add('on'); }
 function closeRepo(){ document.getElementById('badgeRepo').classList.remove('on'); }
 function openBadgeView(id){ _shareViewOnly=true; setShareBadge(id); document.getElementById('shareSkip').textContent='Close';
-  document.getElementById('shareScreen').classList.add('on'); startBadgeTilt(); setTimeout(()=>badgeConfetti(_shareConf),420); }
+  document.getElementById('shareScreen').classList.add('on'); showBadgeEntrance(); }
 function badgeConfetti(colors){
   colors=colors||['#fbbf24','#fde047','#ffffff','#f59e0b'];
   const host=document.getElementById('bsvConf'); if(!host) return; host.innerHTML='';
@@ -1826,8 +1819,17 @@ function badgeConfetti(colors){
     setTimeout(()=>p.remove(),2500);
   }
 }
+/* badge entrance: spin once → confetti from behind → activate gyro */
+function showBadgeEntrance(){
+  const wrap=document.getElementById('badgeWrap');
+  wrap.style.transition='none'; wrap.style.transform=''; wrap.style.animation='none'; void wrap.offsetWidth;
+  wrap.style.animation='bsvSpin 1.05s cubic-bezier(.3,0,.2,1) both';
+  setTimeout(()=>badgeConfetti(_shareConf), 960);
+  setTimeout(()=>{ wrap.style.animation='none'; wrap.style.transition='transform .12s ease-out';
+    wrap.style.transform='perspective(900px) rotateY(0deg)'; startBadgeTilt(); }, 1280);
+}
 function openShare(){ _shareViewOnly=false; setShareBadge(_attemptDay); document.getElementById('shareSkip').textContent='Skip for now';
-  document.getElementById('shareScreen').classList.add('on'); startBadgeTilt(); setTimeout(()=>badgeConfetti(_shareConf),480); }
+  document.getElementById('shareScreen').classList.add('on'); showBadgeEntrance(); }
 function closeShare(){ closePreview(); document.getElementById('shareScreen').classList.remove('on');
   if(_shareViewOnly){ _shareViewOnly=false; return; }
   setTimeout(()=>afterTopic(_attemptDay), 420); }
@@ -2188,6 +2190,10 @@ function devJump(name){
   else if(name==='repo'){ _devOpenDash(); openRepo(); }
   else if(name==='celebrate'){ _devOpenDash(); openCelebration(); }
 }
+let _devBadgeN=1;
+function devBadgeStep(d){ _devBadgeN=Math.max(1,Math.min(25,_devBadgeN+d));
+  const l=document.getElementById('devBadgeLbl'); if(l) l.textContent=_devBadgeN+' / 25';
+  _devOpenDash(); openBadgeView(_devBadgeN); }
 
 /* dev shortcut: open #dash to jump straight to the dashboard */
 if(location.hash==='#dash'){ const d=document.getElementById('dash'); if(d){ d.classList.add('on'); setTimeout(()=>d.scrollTop=560,150); } }
