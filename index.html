@@ -754,22 +754,24 @@ body{font-family:'Inter','Inter',-apple-system,system-ui,sans-serif,system-ui,sa
 .shield .pip{position:absolute;font-size:13px;line-height:1}
 .shield.earned{filter:drop-shadow(0 3px 8px rgba(251,191,36,.5))}
 .coll-cap{font-family:'Geist';font-size:10px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:rgba(255,255,255,.34)}
-.rarity{margin:0;display:inline-flex;align-items:center;gap:6px;padding:6px 18px;border-radius:30px;
+.rarity{position:relative;z-index:2;margin:0;display:inline-flex;align-items:center;gap:6px;padding:6px 18px;border-radius:30px;
   font-family:'Geist';font-size:10.5px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#3a2600;
   background:linear-gradient(100deg,#fde68a,#f59e0b 45%,#fbbf24 70%,#fcd34d);
   box-shadow:0 8px 22px -8px rgba(251,191,36,.7), inset 0 1px 1px rgba(255,255,255,.5)}
 .badge-stage{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;min-height:0}
 .badge-hero{position:relative;display:flex;align-items:center;justify-content:center;perspective:900px}
-.aura{position:absolute;top:50%;left:50%;width:430px;height:430px;transform:translate(-50%,-50%);pointer-events:none;z-index:0;
-  background:radial-gradient(circle, rgba(251,191,36,.30), rgba(245,158,11,.10) 44%, transparent 64%);
-  animation:auraPulse 3.8s ease-in-out infinite}
-@keyframes auraPulse{0%,100%{opacity:.55;transform:translate(-50%,-50%) scale(.94)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.06)}}
-.badge-wrap{position:relative;z-index:1;width:208px;transform-style:preserve-3d;transition:transform .14s ease-out;
-  filter:drop-shadow(0 0 26px var(--bglow)) drop-shadow(0 18px 34px rgba(0,0,0,.6))}
+.aura{position:absolute;top:50%;left:50%;width:460px;height:460px;transform:translate(-50%,-50%);pointer-events:none;z-index:0;filter:blur(22px);
+  background:radial-gradient(circle, rgba(251,191,36,.22), rgba(245,158,11,.07) 46%, transparent 70%);
+  animation:auraPulse 4.2s ease-in-out infinite}
+@keyframes auraPulse{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(.92)}50%{opacity:.85;transform:translate(-50%,-50%) scale(1.05)}}
+.badge-wrap{position:relative;z-index:2;width:208px;transform-style:preserve-3d;transition:transform .14s ease-out;
+  filter:drop-shadow(0 0 52px var(--bglow)) drop-shadow(0 16px 32px rgba(0,0,0,.5))}
 .badge-wrap img{width:100%;height:auto;display:block}
+.badge-hero{z-index:2}
+.bsv-conflayer{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:visible}
 .share-screen.on #shareBadgeImg{animation:bsvPop .72s cubic-bezier(.22,1.15,.36,1) both}
 @keyframes bsvPop{0%{opacity:0;transform:scale(.5)}60%{opacity:1}100%{opacity:1;transform:scale(1)}}
-.bsv-info{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center}
+.bsv-info{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center}
 .bsv-title{font-family:'Inter',-apple-system,system-ui,sans-serif;font-weight:800;font-size:21px;letter-spacing:.2px;
   background:linear-gradient(180deg,#fff,#ffe7ad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .bsv-sub{font-family:'Geist';font-size:11.5px;font-weight:400;color:rgba(255,255,255,.55);max-width:240px;line-height:1.45}
@@ -797,8 +799,18 @@ body{font-family:'Inter','Inter',-apple-system,system-ui,sans-serif,system-ui,sa
 .repo-close{flex:none;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);
   display:flex;align-items:center;justify-content:center;color:#fff;cursor:pointer;font-size:17px;margin-top:6px}
 .repo-close:active{transform:scale(.92)}
-.repo-grid{flex:1;overflow-y:auto;padding:18px 16px calc(34px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(3,1fr);gap:20px 10px;scrollbar-width:none}
+.repo-grid{flex:1;overflow-y:auto;padding:14px 16px calc(34px + env(safe-area-inset-bottom));scrollbar-width:none}
 .repo-grid::-webkit-scrollbar{display:none}
+.repo-sec{margin-bottom:8px}
+.repo-sec-h{font-family:'Geist';font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:rgba(255,255,255,.38);padding:6px 4px 13px}
+.repo-sec.special .repo-sec-h{color:var(--gold-1)}
+.repo-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px 10px;margin-bottom:22px}
+.repo-sec.special .repo-row{grid-template-columns:1fr;justify-items:center;margin-bottom:26px}
+.repo-sec.special .repo-cell{max-width:150px;width:100%}
+/* intro: finale badge expands, spins once, scales down into the grid */
+.repo-intro{position:absolute;inset:0;z-index:4;display:none;align-items:center;justify-content:center;pointer-events:none;perspective:1100px}
+.repo-intro img{width:208px;height:auto;filter:drop-shadow(0 0 50px rgba(251,191,36,.45)) drop-shadow(0 18px 36px rgba(0,0,0,.5))}
+@keyframes repoSpin{0%{opacity:0;transform:scale(.4) rotateY(0deg)}22%{opacity:1;transform:scale(1.14) rotateY(0deg)}100%{opacity:1;transform:scale(1) rotateY(360deg)}}
 .repo-cell{display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer}
 .repo-cell.locked{cursor:default}
 .repo-badge{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;position:relative;border-radius:18px;
@@ -808,11 +820,28 @@ body{font-family:'Inter','Inter',-apple-system,system-ui,sans-serif,system-ui,sa
 .repo-cell.locked .repo-badge img{filter:grayscale(1) brightness(.34);opacity:.55}
 .repo-cell.locked .repo-badge::after{content:'';position:absolute;z-index:2;width:22px;height:22px;border-radius:50%;background:rgba(10,10,14,.7);border:1px solid rgba(255,255,255,.12);
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 16 16' fill='none'%3E%3Crect x='3' y='7' width='10' height='8' rx='2' fill='%23ffffff' fill-opacity='.45'/%3E%3Cpath d='M5 7V5a3 3 0 0 1 6 0v2' stroke='%23ffffff' stroke-opacity='.5' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center}
-.repo-finale .repo-badge{border-color:var(--bglow);box-shadow:0 0 22px -6px rgba(251,191,36,.5),inset 0 0 0 1px rgba(251,191,36,.3)}
+.repo-finale .repo-badge{border:1.5px solid rgba(251,191,36,.85);box-shadow:0 0 0 4px rgba(251,191,36,.12),0 0 28px -4px rgba(251,191,36,.5)}
 .repo-name{font-family:'Geist';font-size:10px;font-weight:600;color:rgba(255,255,255,.74);text-align:center;line-height:1.15}
 .repo-cell.locked .repo-name{color:rgba(255,255,255,.3)}
 .repo-tier{font-family:'Geist';font-size:7.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase}
 .rt-common{color:#aab4c2}.rt-rare{color:#60a5fa}.rt-epic{color:#c084fc}.rt-legendary{color:var(--gold-1)}
+/* ═══════════ FINALE SHARE SHEET (dashboard) ═══════════ */
+.fsh-back{position:absolute;inset:0;z-index:97;background:rgba(0,0,0,.62);opacity:0;visibility:hidden;transition:opacity .3s}
+.fsh-back.on{opacity:1;visibility:visible}
+.fsh-panel{position:absolute;left:0;right:0;bottom:0;z-index:98;background:#141320;border-radius:26px 26px 0 0;border-top:1px solid rgba(255,255,255,.08);
+  padding:12px 22px calc(26px + env(safe-area-inset-bottom));transform:translateY(103%);transition:transform .44s cubic-bezier(.16,1,.3,1)}
+.fsh-panel.on{transform:translateY(0)}
+.fsh-prev{width:130px;margin:6px auto 18px;display:flex;flex-direction:column;align-items:center;gap:8px;
+  filter:drop-shadow(0 14px 26px rgba(0,0,0,.55)) drop-shadow(0 0 16px rgba(251,191,36,.4))}
+.fsh-prev img{width:110px;height:110px;object-fit:contain}
+.fsh-prev .t{font-family:'Inter',-apple-system,system-ui,sans-serif;font-weight:800;font-size:13px;color:#ffe7ad}
+.fsh-row{display:flex;gap:12px;margin-top:20px}
+.fsh-cta{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:15px;border-radius:14px;border:none;cursor:pointer;
+  font-family:'Inter',-apple-system,system-ui,sans-serif;font-weight:600;font-size:14.5px}
+.fsh-cta svg{width:18px;height:18px}
+.fsh-cta:active{transform:scale(.97)}
+.fsh-cta.ghost{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);color:#fff}
+.fsh-cta.gold{background:linear-gradient(135deg,var(--gold-2),var(--gold-3));color:var(--gold-ink);box-shadow:0 12px 30px -10px var(--gold-glow)}
 .repo-cell.locked .repo-tier{color:rgba(255,255,255,.22)}
 .badge-border{clip-path:var(--pennant);padding:2.5px;
   background:linear-gradient(135deg,#fff6cf,#f59e0b 30%,#fde047 55%,#b45309 80%,#fcd34d)}
@@ -1221,8 +1250,7 @@ body{font-family:'Inter','Inter',-apple-system,system-ui,sans-serif,system-ui,sa
           <div class="h-back" onclick="hideDash()">‹</div>
           <div class="h-title">World Football Challenge</div>
           <div class="h-actions">
-            <div class="h-ic" title="Share"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4M8.5 7.5 12 4l3.5 3.5"/><path d="M5 12v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg></div>
-            <div class="h-ic" title="Settings"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+            <div class="h-ic" title="Share" onclick="openFinaleShare()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4M8.5 7.5 12 4l3.5 3.5"/><path d="M5 12v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg></div>
           </div>
         </div>
         <div class="content">
@@ -1299,7 +1327,7 @@ body{font-family:'Inter','Inter',-apple-system,system-ui,sans-serif,system-ui,sa
             <div class="dd-prog"><div class="dd-prog-fill" id="ddProgFill"></div></div>
             <div class="dd-prog-cap"><span>Day 0</span><span><b>Day 1 of 39</b> ✓</span></div>
           </div>
-          <div class="dd-t">Day 1 is done 🎉</div>
+          <div class="dd-t" id="dayDoneT">Day 1 is done 🎉</div>
           <div class="dd-s">You're one step closer to your Football Fluent badge. Come back tomorrow for a fresh topic.</div>
           <button class="dd-cta" onclick="closeDayDone()">I'll come tomorrow</button>
         </div>
@@ -1312,6 +1340,7 @@ body{font-family:'Inter','Inter',-apple-system,system-ui,sans-serif,system-ui,sa
           <div class="coll-cap" id="collCap">1 of 26 badges</div>
         </div>
         <div class="badge-stage">
+          <div class="bsv-conflayer" id="bsvConf"></div>
           <div class="rarity tier-legendary" id="shareRarity">✦ Legendary</div>
           <div class="badge-hero">
             <div class="aura" id="bsvAura"></div>
@@ -1353,6 +1382,26 @@ body{font-family:'Inter','Inter',-apple-system,system-ui,sans-serif,system-ui,sa
           <div class="repo-close" onclick="closeRepo()">✕</div>
         </div>
         <div class="repo-grid" id="repoGrid"></div>
+        <div class="repo-intro" id="repoIntro"><img id="repoIntroImg" src="assets/badges/badge_25.png" alt=""></div>
+      </div>
+
+      <!-- ═══════════ FINALE SHARE — dashboard share button ═══════════ -->
+      <div class="fsh-back" id="fshBack" onclick="closeFinaleShare()"></div>
+      <div class="fsh-panel" id="fshPanel">
+        <div class="sp-grip"></div>
+        <div class="fsh-prev"><img src="assets/badges/badge_25.png" alt="The Finale"><div class="t">The Finale</div></div>
+        <div class="sp-title">Share your challenge</div>
+        <div class="sp-sub">Invite a friend to go Football Fluent</div>
+        <div class="fsh-row">
+          <button class="fsh-cta ghost" onclick="doFinaleShare('clipboard')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>
+            Copy link
+          </button>
+          <button class="fsh-cta gold" onclick="doFinaleShare('share')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg>
+            Share
+          </button>
+        </div>
       </div>
 
       <!-- ═══════════ BOTTOM TAB BAR ═══════════ -->
@@ -1627,6 +1676,8 @@ function afterTopic(day){
   if(doneCount===TPD){ st.status='pending'; const nd=dayState[day+1]; if(nd && nd.status==='locked'){ nd.status='soon'; nd.endsAt=st.endsAt; renderDayCard(day+1); } }
   renderDayCard(day); syncProgress();
   const dash=document.getElementById('dash'), c=document.getElementById('day'+day+'Card'); if(dash&&c) dash.scrollTop=Math.max(0,c.offsetTop-210);
+  // full "Day done 🎉" celebration only when all 4 chats are finished in one session
+  if(doneCount===TPD){ const t=document.getElementById('dayDoneT'); if(t) t.textContent='Day '+day+' is done 🎉'; setTimeout(openCelebration, 480); }
 }
 function closeDay(day){
   const st=dayState[day], doneCount=st.done.filter(Boolean).length;
@@ -1693,7 +1744,7 @@ const BADGES=[
   {id:25,key:"badge_25",img:"assets/badges/badge_25.png",name:"The Finale",tier:"legendary",sub:"The very summit of the challenge."}
 ];
 const PALETTE={"badge_01":["#dbdddf","#8f5b41","#f6f7f7","#b88360"],"badge_02":["#dcdcde","#b2b3b7","#ba845e","#915a40"],"badge_03":["#1d2a42","#8b5b42","#e0dfdb","#644437"],"badge_04":["#dddedd","#b5b7b9","#915a40","#bc7f5e"],"badge_05":["#bc7e59","#dbdde2","#634135","#8d5b43"],"badge_06":["#212a42","#dddee0","#915d41","#b28364"],"badge_07":["#5f6268","#393c41","#84888f","#b0b4b9"],"badge_08":["#afb2b6","#d9dadc","#868b91","#393c41"],"badge_09":["#3c4046","#aeb1b5","#dbdbdd","#888c91"],"badge_10":["#404045","#dbdcde","#8d8c8c","#b2b1b0"],"badge_11":["#3c3e43","#b0b2b6","#878a8f","#d9dadc"],"badge_12":["#3c3e43","#d9dbde","#afb3b7","#868b90"],"badge_13":["#b08449","#dbdbdd","#8e6738","#633d19"],"badge_14":["#8a683b","#dedddc","#b1905b","#5e3f1e"],"badge_15":["#dddde1","#8c6837","#b38542","#d6ae63"],"badge_16":["#8f6332","#dbdadd","#b28345","#673d19"],"badge_17":["#af8841","#8e6b35","#d1b165","#dcdce0"],"badge_18":["#dddddb","#ae9462","#d2bb88","#866b3d"],"badge_19":["#b38842","#8b6836","#d6b260","#dbdbdb"],"badge_20":["#b38841","#d7b162","#8b6a39","#e1dfda"],"badge_21":["#8b6836","#b18743","#dddbd8","#b7b4b1"],"badge_22":["#8d6837","#b18542","#dfdedb","#d6b063"],"badge_23":["#b58c43","#d5af5b","#e1e0de","#8a6a38"],"badge_24":["#b38640","#8c6636","#d6ae5f","#dddcd9"],"badge_25":["#b6893e","#dbb55b","#8b6b37","#5d4220"]};
-const TIER={common:{label:'Common',glow:'rgba(186,196,210,.55)'},rare:{label:'Rare',glow:'rgba(96,165,250,.6)'},epic:{label:'Epic',glow:'rgba(192,132,252,.6)'},legendary:{label:'Legendary',glow:'rgba(251,191,36,.6)'}};
+const TIER={common:{label:'Common',glow:'rgba(186,196,210,.4)'},rare:{label:'Rare',glow:'rgba(96,165,250,.42)'},epic:{label:'Epic',glow:'rgba(192,132,252,.42)'},legendary:{label:'Legendary',glow:'rgba(251,191,36,.45)'}};
 function badgeFor(day){ return BADGES[(day-1)%BADGES.length]; }   // Day N → badge N (sequential)
 function isEarned(id){ return id>=1 && id<=4 && dayState[id] && dayState[id].badge; }  // demo models days 1–4
 function earnedCount(){ let n=0; for(const b of BADGES) if(isEarned(b.id)) n++; return n; }
@@ -1714,11 +1765,12 @@ function setShareBadge(day){
 }
 function buildCollStrip(curId){
   const strip=document.getElementById('collStrip'); let h='';
-  for(const b of BADGES){ const e=isEarned(b.id)||b.id===curId; h+='<div class="cmini'+(e?'':' locked')+(b.id===curId?' cur':'')+'"><img src="'+b.img+'" alt=""></div>'; }
-  h+='<div class="cmini locked"><img src="'+BADGES[24].img+'" alt=""></div>';   // pinned finale (26)
+  // window of 5: current badge + the next 4 upcoming
+  let start=curId; if(start+4>BADGES.length) start=Math.max(1,BADGES.length-4);
+  for(let id=start; id<start+5 && id<=BADGES.length; id++){ const b=BADGES[id-1], e=isEarned(id)||id===curId;
+    h+='<div class="cmini'+(e?'':' locked')+(id===curId?' cur':'')+'"><img src="'+b.img+'" alt=""></div>'; }
   strip.innerHTML=h;
   document.getElementById('collCap').textContent=earnedCount()+' of 26 badges';
-  const c=strip.querySelector('.cmini.cur'); if(c) strip.scrollLeft=c.offsetLeft-strip.clientWidth/2+c.offsetWidth/2;
 }
 function repoCell(b,earned,finale){
   const tm=TIER[b.tier], cls='repo-cell '+(earned?'earned':'locked')+(finale?' repo-finale':'');
@@ -1729,19 +1781,40 @@ function repoCell(b,earned,finale){
   return '<div class="'+cls+'"'+style+click+'><div class="repo-badge"><img src="'+b.img+'" alt=""></div><div class="repo-name">'+name+'</div>'+tier+'</div>';
 }
 function buildRepo(){
-  let h=''; for(const b of BADGES) h+=repoCell(b,isEarned(b.id),false);
-  h+=repoCell({id:26,key:'badge_25',img:BADGES[24].img,name:'The Finale',tier:'legendary',sub:''},false,true);
+  // Special (finale) on top, then Common → Rare → Epic → Legendary
+  let h='<div class="repo-sec special"><div class="repo-sec-h">Special</div><div class="repo-row">'
+    + repoCell({id:26,key:'badge_25',img:BADGES[24].img,name:'The Finale',tier:'legendary',sub:''},false,true)
+    + '</div></div>';
+  for(const [tier,label] of [['common','Common'],['rare','Rare'],['epic','Epic'],['legendary','Legendary']]){
+    const cells=BADGES.filter(b=>b.tier===tier).map(b=>repoCell(b,isEarned(b.id),false)).join('');
+    h+='<div class="repo-sec"><div class="repo-sec-h">'+label+'</div><div class="repo-row">'+cells+'</div></div>';
+  }
   document.getElementById('repoGrid').innerHTML=h;
   document.getElementById('repoSub').textContent=earnedCount()+' of 26 earned';
 }
-function openRepo(){ buildRepo(); document.getElementById('badgeRepo').classList.add('on'); }
+function openRepo(){
+  buildRepo();
+  const r=document.getElementById('badgeRepo'), intro=document.getElementById('repoIntro'),
+        grid=document.getElementById('repoGrid'), head=document.querySelector('#badgeRepo .repo-head'),
+        img=document.getElementById('repoIntroImg');
+  r.classList.add('on');
+  grid.style.opacity='0'; head.style.opacity='0';
+  intro.style.display='flex'; intro.style.transition=''; intro.style.opacity=''; intro.style.transform='';
+  img.style.animation='none'; void img.offsetWidth; img.style.animation='repoSpin 1.15s cubic-bezier(.3,0,.2,1) forwards';
+  setTimeout(()=>{ intro.style.transition='opacity .55s ease,transform .55s cubic-bezier(.5,0,.3,1)';
+    intro.style.opacity='0'; intro.style.transform='translateY(-30vh) scale(.32)';
+    grid.style.transition='opacity .55s ease'; grid.style.opacity='1';
+    head.style.transition='opacity .4s ease'; head.style.opacity='1'; }, 1180);
+  setTimeout(()=>{ intro.style.display='none'; intro.style.transition=''; intro.style.transform=''; }, 1820);
+}
 function closeRepo(){ document.getElementById('badgeRepo').classList.remove('on'); }
 function openBadgeView(id){ _shareViewOnly=true; setShareBadge(id); document.getElementById('shareSkip').textContent='Close';
   document.getElementById('shareScreen').classList.add('on'); startBadgeTilt(); setTimeout(()=>badgeConfetti(_shareConf),420); }
 function badgeConfetti(colors){
   colors=colors||['#fbbf24','#fde047','#ffffff','#f59e0b'];
-  const host=document.getElementById('shareScreen'); const r=host.getBoundingClientRect();
-  const cx=r.width/2, cy=r.height*0.40;
+  const host=document.getElementById('bsvConf'); if(!host) return; host.innerHTML='';
+  const r=host.getBoundingClientRect();
+  const cx=r.width/2, cy=r.height/2;
   for(let i=0;i<52;i++){ const p=document.createElement('div'); p.className='bsv-conf';
     p.style.left=cx+'px'; p.style.top=cy+'px'; p.style.background=colors[i%colors.length];
     p.style.borderRadius=Math.random()<.35?'50%':'1px'; host.appendChild(p);
@@ -1761,6 +1834,9 @@ function closeShare(){ closePreview(); document.getElementById('shareScreen').cl
 function openPreview(){ document.getElementById('spBack').classList.add('on'); document.getElementById('spPanel').classList.add('on'); }
 function closePreview(){ document.getElementById('spBack').classList.remove('on'); document.getElementById('spPanel').classList.remove('on'); }
 function doShare(where){ closePreview(); showToast(where==='clipboard'?'Link copied 🔗':'Shared to '+where+' 🎉'); setTimeout(closeShare, 1100); }
+function openFinaleShare(){ document.getElementById('fshBack').classList.add('on'); document.getElementById('fshPanel').classList.add('on'); }
+function closeFinaleShare(){ document.getElementById('fshBack').classList.remove('on'); document.getElementById('fshPanel').classList.remove('on'); }
+function doFinaleShare(where){ showToast(where==='clipboard'?'Link copied 🔗':'Shared 🎉'); setTimeout(closeFinaleShare, 900); }
 /* ── Unified tilt engine: real gyroscope on iPhone + mouse on desktop, for every badge ── */
 const TILT_TARGETS=[
   {sel:'#badgeWrap',     max:14},
