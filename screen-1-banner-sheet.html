@@ -1,0 +1,1770 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Stimuler · World Cup Challenge — Screen 1 (Banner + Sheet)</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&family=Geist:wght@400;500;600;700&family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#0D0D0D; --bg-2:#131313;
+  --ink:#fff; --ink-dim:rgba(255,255,255,.55); --ink-faint:rgba(255,255,255,.34);
+  --line:rgba(255,255,255,.08);
+  --gold-1:#FBBF24; --gold-2:#FDE047; --gold-3:#F59E0B; --gold-deep:#D97706;
+  --gold-ink:#2A1700; --gold-glow:rgba(251,191,36,.45); --gold-soft:rgba(251,191,36,.12);
+  --t-sheet:.52s cubic-bezier(.16,1,.3,1);
+  --t-step:.42s cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{font-family:'Inter','Inter Display',system-ui,sans-serif;font-optical-sizing:auto;
+  background:#070707;color:var(--ink);
+  display:flex;align-items:center;justify-content:center;min-height:100vh;padding:28px 16px;gap:40px;
+  -webkit-font-smoothing:antialiased;letter-spacing:-.01em}
+.left-col{display:flex;flex-direction:column;align-items:center;gap:16px}
+
+/* ─────────── PHONE ─────────── */
+.phone{width:390px;height:844px;position:relative;flex:none;background:var(--bg);
+  border-radius:46px;overflow:hidden;
+  box-shadow:0 0 0 2px #1c1c22,0 0 0 12px #0a0a0e,0 0 0 13px #2b2b32,0 50px 120px -30px rgba(0,0,0,.8)}
+.screen{position:absolute;inset:0;overflow:hidden}
+.phone-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;
+  transition:filter .5s ease}
+.phone-bg.dim{filter:brightness(.5) saturate(.85)}
+
+/* mode chips (outside the phone) */
+.mode-chips{display:flex;gap:8px;align-items:center}
+.mchip{display:flex;flex-direction:column;gap:1px;padding:9px 16px;border-radius:14px;cursor:pointer;
+  background:#141008;border:1px solid var(--line);transition:.2s;min-width:148px}
+.mchip .mt{font-size:13px;font-weight:600;color:var(--ink)}
+.mchip .ms{font-size:10.5px;font-weight:600;color:var(--ink-faint)}
+.mchip.on{background:linear-gradient(135deg,rgba(253,224,71,.16),rgba(245,158,11,.1));border-color:var(--gold-1);
+  box-shadow:0 8px 24px -12px var(--gold-glow)}
+.mchip.on .mt{color:#ffe9b0}
+.mchip.on .ms{color:var(--gold-1)}
+.replay{padding:9px 14px;border-radius:14px;cursor:pointer;background:#141008;border:1px solid var(--line);
+  font-size:14px;color:var(--ink-dim);font-weight:600}
+.replay:active{transform:scale(.95)}
+
+/* ─────────── BANNER ─────────── */
+/* masks the screenshot's "Your Personal Dictionary" heading that sits in the gap below the banner */
+.gap-mask{position:absolute;left:0;right:0;top:63%;height:9.5%;background:#0E0E0E;z-index:4;pointer-events:none}
+.banner-slot{position:absolute;top:45%;left:4%;right:4%;height:21%;z-index:5}
+.banner{position:relative;width:100%;height:100%;border-radius:18px;overflow:hidden;cursor:pointer;
+  display:flex;align-items:stretch;
+  background:
+    radial-gradient(120% 140% at 92% -10%, rgba(251,191,36,.16), transparent 50%),
+    linear-gradient(135deg,#1b1408 0%, #0e0e0e 52%, #120d04 100%);
+  border:1px solid rgba(251,191,36,.26);
+  box-shadow:0 8px 22px -16px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.06);
+  transition:transform .25s cubic-bezier(.16,1,.3,1)}
+.banner:active{transform:scale(.985)}
+
+/* LEFT · content */
+.b-content{flex:1;min-width:0;padding:15px 8px 15px 18px;display:flex;flex-direction:column;justify-content:center}
+.b-eyebrow{font-family:'Geist';font-size:8.5px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--gold-1);margin-bottom:9px;display:flex;align-items:center;gap:7px}
+.b-eyebrow::before{content:'';width:15px;height:1.5px;border-radius:1px;background:var(--gold-1);opacity:.55}
+.b-title{font-family:'Inter Display','Inter';font-weight:600;font-size:18px;line-height:1.08;letter-spacing:-.005em}
+.b-title span{display:block;color:#fff}
+.b-title .gold{background:linear-gradient(120deg,var(--gold-2),var(--gold-3));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.b-para{font-family:'Geist';font-size:11.5px;font-weight:500;color:var(--ink-dim);margin-top:9px;line-height:1.35;max-width:168px}
+.b-para b{color:#ffe9b0;font-weight:500}
+.b-cta{margin-top:13px;align-self:flex-start;background:linear-gradient(135deg,var(--gold-2),var(--gold-3));
+  color:var(--gold-ink);font-family:'Inter';font-weight:600;font-size:12.5px;letter-spacing:-.01em;
+  padding:9px 17px;border-radius:11px;border:none;cursor:pointer;box-shadow:0 8px 20px -8px var(--gold-glow);
+  transition:transform .2s ease}
+.b-cta:active{transform:scale(.96)}
+
+/* RIGHT · cinematic stage — feathered into the banner so there's no seam */
+.stage{position:relative;width:160px;flex:none;overflow:hidden;border-radius:0 17px 17px 0;
+  /* base tone matches the banner's right side so even un-feathered it blends */
+  background:
+    radial-gradient(70% 48% at 50% 86%, rgba(251,191,36,.10), transparent 64%),      /* warm pitch-side glow */
+    linear-gradient(135deg,#15100a 0%, #100c05 46%, #0a0703 100%);
+  -webkit-mask-image:linear-gradient(90deg, transparent 0%, rgba(0,0,0,.5) 16%, #000 40%, #000 100%);
+          mask-image:linear-gradient(90deg, transparent 0%, rgba(0,0,0,.5) 16%, #000 40%, #000 100%)}
+.stage::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:7;
+  box-shadow:inset 0 0 30px 8px rgba(8,5,1,.5)}  /* vignette ties edges to dark */
+
+/* scene furniture */
+.scene{position:absolute;inset:0;transition:opacity .4s ease}
+
+/* subtle stadium floodlight — soft glow from the top-right corner */
+.scene .lights{position:absolute;inset:0;
+  background:radial-gradient(58% 52% at 100% 0%, rgba(232,228,210,.16), rgba(232,228,210,.05) 38%, transparent 66%)}
+
+/* realistic night pitch (mode B) — trapezoid with a fixed horizon the goal stands on */
+.pitch{position:absolute;left:0;right:0;top:44%;bottom:0;opacity:0;transition:opacity .45s ease;overflow:hidden;
+  clip-path:polygon(27% 0%, 73% 0%, 120% 100%, -20% 100%);
+  background:
+    /* near light pool — lit from the top-right floodlight */
+    radial-gradient(90% 95% at 66% 108%, rgba(190,255,200,.18), transparent 60%),
+    /* vertical mow stripes */
+    repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 6.5%, rgba(0,0,0,.05) 6.5% 13%),
+    /* depth grade: dark far line → lit green near */
+    linear-gradient(180deg, #0e2c18 0%, #134a26 52%, #1c6034 100%)}
+.pitch{background-color:#134a26}
+.pitch::before{content:'';position:absolute;inset:0;opacity:.15;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='90' height='90'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size:64px 64px}
+.pitch::after{content:'';position:absolute;left:30%;right:30%;top:0;height:46%;
+  border:2px solid rgba(255,255,255,.3);border-top:none;border-radius:0 0 2px 2px}  /* goal/penalty area lines */
+.stage.modeB .pitch{opacity:1}
+/* warm gold wash over the grass ties it to the banner */
+.stage.modeB .scene::after{content:'';position:absolute;inset:0;pointer-events:none;mix-blend-mode:soft-light;
+  background:radial-gradient(80% 70% at 90% 4%, rgba(251,191,36,.2), transparent 60%)}
+
+.goalw{position:absolute;left:50%;transform:translateX(-50%);z-index:2}
+.stage.modeA .goalw{top:12%;width:100px;height:56px}
+.stage.modeB .goalw{top:25%;width:64px;height:34px}
+/* grass tuft at the posts so the goal reads as planted in the turf (no black gap) */
+.stage.modeB .goalw::before{content:'';position:absolute;left:-22%;right:-22%;bottom:-7px;height:20px;z-index:-1;
+  background:radial-gradient(62% 100% at 50% 100%, #1c6034, rgba(20,64,38,.7) 52%, transparent 76%)}
+/* soft contact shadow where the posts meet the turf */
+.stage.modeB .goalw::after{content:'';position:absolute;left:-12%;right:-12%;bottom:-5px;height:8px;
+  background:radial-gradient(ellipse, rgba(4,18,10,.55), transparent 72%)}
+.goalw .frame{position:absolute;inset:0;border:2.5px solid rgba(255,255,255,.92);border-bottom:none;border-radius:3px 3px 0 0;
+  box-shadow:0 0 9px rgba(255,255,255,.4), 0 0 20px rgba(251,191,36,.22), inset 0 0 6px rgba(255,255,255,.12)}
+.goalw .net{position:absolute;inset:2.5px 2.5px 0;opacity:.55;transition:transform .18s ease;
+  background-image:linear-gradient(rgba(255,255,255,.28) .7px,transparent .7px),
+                   linear-gradient(90deg,rgba(255,255,255,.28) .7px,transparent .7px);
+  background-size:5px 5px}
+.goalw.hit .net{transform:scaleY(1.2) translateY(2px)}
+.goalw.hit .frame{box-shadow:0 0 16px rgba(255,255,255,.65), 0 0 34px rgba(251,191,36,.5)}
+.flash{position:absolute;left:50%;top:58%;width:34px;height:34px;border-radius:50%;transform:translate(-50%,-50%);
+  border:2px solid var(--gold-2);box-shadow:0 0 16px var(--gold-glow);opacity:0;pointer-events:none}
+.flash.on{animation:flash .55s ease-out}
+@keyframes flash{0%{opacity:.95;transform:translate(-50%,-50%) scale(.3)}100%{opacity:0;transform:translate(-50%,-50%) scale(2.4)}}
+
+/* ball sprite + shadow */
+.bshadow{position:absolute;left:0;top:0;width:130px;height:130px;z-index:1;opacity:0;
+  background:radial-gradient(ellipse 42% 28% at 50% 50%, rgba(0,0,0,.6), transparent 70%);
+  transform-origin:50% 50%;will-change:transform,opacity}
+.ball{position:absolute;left:0;top:0;width:130px;height:130px;z-index:3;opacity:0;
+  transform-origin:50% 50%;will-change:transform,filter,opacity;
+  filter:drop-shadow(0 4px 8px rgba(0,0,0,.5))}
+
+/* football-emoji flood */
+.flood{position:absolute;inset:0;z-index:6;pointer-events:none;overflow:hidden}
+.flood span{position:absolute;left:0;top:0;line-height:1;opacity:0;will-change:transform,opacity;
+  filter:drop-shadow(0 2px 3px rgba(0,0,0,.5))}
+
+/* fifa26 video — screen blend drops the black, logo floats on the banner */
+.vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:4;opacity:0;
+  transform:scale(1.32);transform-origin:center;
+  transition:opacity .5s ease;mix-blend-mode:screen;background:transparent}
+.vid.on{opacity:1}
+
+/* ─────────── BOTTOM SHEET ─────────── */
+.backdrop{position:absolute;inset:0;z-index:50;background:rgba(0,0,0,.62);backdrop-filter:blur(3px);
+  opacity:0;pointer-events:none;transition:opacity .4s ease}
+.backdrop.on{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:60;
+  background:linear-gradient(180deg,#161208 0%,#0f0f0f 16%,#0c0c0c 100%);
+  border-radius:30px 30px 0 0;border-top:1px solid rgba(251,191,36,.2);
+  box-shadow:0 -30px 80px -20px rgba(0,0,0,.7);transform:translateY(102%);
+  transition:transform var(--t-sheet);height:auto;max-height:88%;display:flex;flex-direction:column;overflow:visible}
+.sheet.on{transform:translateY(0)}
+/* FIFA trophy overhanging the top edge of the sheet */
+.sheet-trophy{position:absolute;left:50%;top:0;height:128px;width:auto;z-index:6;pointer-events:none;
+  transform:translate(-50%,-40%) scale(.9);opacity:0;
+  filter:drop-shadow(0 14px 22px rgba(0,0,0,.55)) drop-shadow(0 0 30px rgba(251,191,36,.32));
+  transition:opacity .4s ease .05s, transform .5s cubic-bezier(.16,1,.3,1) .05s}
+.sheet-trophy.show{opacity:1;transform:translate(-50%,-56%) scale(1)}
+#pane-intro{padding-top:30px;text-align:center}
+/* player hero band — bottom fades (curved) into the sheet so the abrupt cut is hidden */
+.players{position:relative;width:108%;margin:0 -4% -2px;pointer-events:none}
+.players img{width:100%;display:block;aspect-ratio:2.752;object-fit:cover;
+  -webkit-mask-image:radial-gradient(135% 96% at 50% -8%, #000 68%, rgba(0,0,0,.35) 86%, transparent 99%);
+          mask-image:radial-gradient(135% 96% at 50% -8%, #000 68%, rgba(0,0,0,.35) 86%, transparent 99%)}
+.grip{width:38px;height:5px;border-radius:3px;background:rgba(255,255,255,.18);margin:11px auto 4px;flex:none}
+.steps{display:flex;align-items:center;gap:6px;justify-content:center;height:0;opacity:0;overflow:hidden;
+  transition:opacity .3s ease,height .3s ease}
+.steps.show{height:auto;opacity:1;padding:10px 0 2px}
+.steps .sd{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.18);transition:.3s}
+.steps .sd.on{width:22px;border-radius:4px;background:linear-gradient(90deg,var(--gold-2),var(--gold-3))}
+.steps .sd.done{background:var(--gold-deep)}
+.sheet-scroll{overflow-y:auto;padding:6px 22px 0;flex:1;min-height:0}
+.sheet-foot{padding:14px 22px calc(20px + env(safe-area-inset-bottom));background:linear-gradient(180deg,transparent,#0c0c0c 30%)}
+.pane{display:none;animation:paneIn var(--t-step) both}
+.pane.on{display:block}
+@keyframes paneIn{from{opacity:0;transform:translateX(22px)}to{opacity:1;transform:none}}
+.pane.back{animation:paneInBack var(--t-step) both}
+@keyframes paneInBack{from{opacity:0;transform:translateX(-22px)}to{opacity:1;transform:none}}
+.sbtn{width:100%;border:none;border-radius:16px;font-family:'Inter';font-weight:600;font-size:16px;padding:16px;cursor:pointer;
+  background:linear-gradient(135deg,var(--gold-2),var(--gold-3));color:var(--gold-ink);
+  box-shadow:0 12px 30px -10px var(--gold-glow);display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .2s,opacity .2s}
+.sbtn:active{transform:scale(.98)}
+.sbtn[disabled]{opacity:.4;box-shadow:none;cursor:default}
+.sbtn.ghost{background:transparent;color:var(--ink-dim);box-shadow:none;font-size:14px;padding:12px;margin-top:4px}
+.foot-row{display:flex;align-items:center;gap:12px}
+.sback{flex:none;width:54px;height:54px;border-radius:16px;border:1px solid var(--line);background:var(--bg-2);
+  color:var(--ink-dim);font-size:20px;cursor:pointer;display:none}
+.sback.show{display:flex;align-items:center;justify-content:center}
+.foot-row .sbtn{flex:1}
+.in-trophy{width:74px;height:74px;border-radius:22px;margin:6px auto 16px;
+  background:radial-gradient(circle at 38% 32%,#2A1F00,#0D0D0D);border:1px solid rgba(251,191,36,.3);
+  display:flex;align-items:center;justify-content:center;font-size:36px;box-shadow:0 18px 50px -16px var(--gold-glow)}
+.in-eyebrow{text-align:center;font-family:'Geist';font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-1);margin-bottom:8px}
+.in-title{text-align:center;font-family:'Inter Display','Inter';font-weight:600;font-size:25px;line-height:1.1;letter-spacing:-.02em;margin-bottom:10px;
+  background:linear-gradient(180deg,#fff,#ffe2a8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.in-title em{font-style:normal;font-weight:600;
+  background:linear-gradient(135deg,var(--gold-2),var(--gold-3));-webkit-background-clip:text;background-clip:text;color:transparent}
+.in-lede{text-align:center;font-family:'Geist';font-size:13.5px;font-weight:400;color:var(--ink-dim);line-height:1.55;margin:0 auto 18px;max-width:296px}
+.in-lede b{color:#ffe9b0;font-weight:600}
+.feat{display:flex;gap:13px;align-items:flex-start;padding:14px;border-radius:16px;background:var(--bg-2);border:1px solid var(--line);margin-bottom:10px}
+.feat .fi{width:38px;height:38px;border-radius:12px;flex:none;display:flex;align-items:center;justify-content:center;font-size:18px;background:var(--gold-soft);border:1px solid rgba(251,191,36,.18)}
+.feat .ft{font-size:14.5px;font-weight:600;margin-bottom:2px}
+.feat .fs{font-size:12.5px;font-weight:500;color:var(--ink-dim);line-height:1.4}
+.reward{position:relative;border-radius:18px;padding:16px;margin:6px 0 8px;overflow:hidden;
+  background:radial-gradient(130% 120% at 80% 0%,rgba(251,191,36,.16),transparent 60%),linear-gradient(135deg,#1a1407,#0e0e0e);border:1px solid rgba(251,191,36,.28)}
+.reward .rk{font-family:'Geist';font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold-1)}
+.reward .rrow{display:flex;align-items:center;gap:13px;margin-top:9px}
+.reward .badge{width:50px;height:50px;flex:none;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;background:radial-gradient(circle at 38% 32%,#3a2900,#1a1206);border:1px solid rgba(251,191,36,.4);box-shadow:0 0 22px -6px var(--gold-glow)}
+.reward .rt{font-size:16px;font-weight:600}
+.reward .rs{font-size:12px;font-weight:600;color:var(--ink-dim);margin-top:2px}
+.tiers{display:flex;gap:6px;margin-top:13px}
+.tier{flex:1;text-align:center;font-size:9px;font-weight:600;color:var(--ink-faint);padding:7px 3px;border-radius:9px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
+.tier.lit{color:var(--gold-1);border-color:rgba(251,191,36,.3);background:var(--gold-soft)}
+.tier .te{font-size:15px;display:block;margin-bottom:3px}
+.pane-head{margin:8px 2px 4px}
+.ph-step{font-family:'Geist';font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--gold-1);margin-bottom:6px}
+.ph-q{font-family:'Inter Display','Inter';font-size:23px;font-weight:600;letter-spacing:-.02em;line-height:1.12}
+.ph-q em{font-style:normal;color:var(--gold-1)}
+.ph-hint{font-family:'Geist';font-size:13px;font-weight:400;color:var(--ink-dim);margin-top:7px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:16px 0 8px}
+.cell{position:relative;border-radius:15px;padding:14px 8px 11px;cursor:pointer;text-align:center;background:var(--bg-2);border:1px solid var(--line);transition:transform .18s,border-color .2s,background .2s}
+.cell:active{transform:scale(.94)}
+.cell .em{font-size:27px;line-height:1;display:block;margin-bottom:7px}
+.cell .nm{font-size:12px;font-weight:600;letter-spacing:-.2px}
+.cell .pos{font-size:10px;font-weight:600;color:var(--ink-faint);margin-top:1px}
+.cell.sel{background:var(--gold-soft);border-color:var(--gold-1);box-shadow:0 0 0 1px var(--gold-1) inset,0 10px 26px -12px var(--gold-glow)}
+.cell.sel .nm{color:#ffe9b0}
+.cell .tick{position:absolute;top:7px;right:7px;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,var(--gold-2),var(--gold-3));color:var(--gold-ink);display:none;align-items:center;justify-content:center;font-size:11px;font-weight:600}
+.cell.sel .tick{display:flex;animation:pop .3s cubic-bezier(.34,1.56,.64,1)}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+.skip-note{text-align:center;font-size:12px;font-weight:600;color:var(--ink-faint);margin-top:6px}
+/* team picker — search + scrollable list of all 48 */
+.team-search{position:sticky;top:0;z-index:3;display:flex;align-items:center;gap:9px;margin:16px 0 8px;
+  padding:11px 13px;border-radius:13px;background:#15110a;border:1px solid var(--line);color:var(--ink-faint)}
+.team-search input{flex:1;background:none;border:none;outline:none;color:#fff;font-family:'Inter';font-size:14px;letter-spacing:-.01em}
+.team-search input::placeholder{color:var(--ink-faint)}
+.team-list{display:flex;flex-direction:column;padding-bottom:6px}
+.tl-group{font-family:'Geist';font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--gold-1);margin:13px 4px 6px;opacity:.85}
+.team-row{display:flex;align-items:center;gap:12px;padding:8px 11px;border-radius:13px;cursor:pointer;
+  border:1px solid transparent;transition:background .15s,border-color .15s}
+.team-row.sel{background:var(--gold-soft);border-color:var(--gold-1)}
+.team-row .nm2{font-size:14.5px;font-weight:500;color:#fff;letter-spacing:-.01em}
+.team-row.sel .nm2{color:#ffe9b0}
+.team-row .rcheck{margin-left:auto;width:20px;height:20px;border-radius:50%;flex:none;border:1.5px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:transparent;transition:.15s}
+.team-row.sel .rcheck{background:linear-gradient(135deg,var(--gold-2),var(--gold-3));border-color:transparent;color:var(--gold-ink)}
+/* flag sticker — circular crop + white ring */
+.flag{width:34px;height:34px;border-radius:50%;flex:none;overflow:hidden;border:2px solid #fff;background:#0a0a0a;
+  box-shadow:0 2px 6px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center}
+.flag span{font-size:25px;line-height:1;transform:scale(1.75)}
+.tl-empty{text-align:center;font-size:13px;font-weight:500;color:var(--ink-faint);padding:26px 0}
+/* player picker — photo stickers in a grid, grouped, selected teams first */
+.player-list{display:grid;grid-template-columns:repeat(3,1fr);gap:10px 8px;padding-bottom:6px;align-content:start}
+.pl-head{grid-column:1/-1;display:flex;align-items:center;gap:8px;margin:12px 2px 2px;
+  font-family:'Geist';font-size:10px;font-weight:600;letter-spacing:1.1px;text-transform:uppercase;color:var(--gold-1);opacity:.9}
+.pl-head .miniflag{width:18px;height:18px;border-radius:50%;overflow:hidden;border:1.5px solid #fff;display:flex;align-items:center;justify-content:center;flex:none}
+.pl-head .miniflag span{font-size:13px;transform:scale(1.7)}
+.pl-head.your{color:#ffe9b0}
+.pcard{display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px 4px 9px;border-radius:15px;cursor:pointer;
+  border:1px solid transparent;transition:background .15s,border-color .15s}
+.pcard.sel{background:var(--gold-soft);border-color:var(--gold-1)}
+.psticker{position:relative;width:62px;height:62px;border-radius:50%;overflow:hidden;border:2.5px solid #fff;
+  background:radial-gradient(circle at 50% 35%,#26303a,#11151b);box-shadow:0 3px 9px rgba(0,0,0,.45)}
+.psticker img{width:100%;height:100%;object-fit:cover;object-position:50% 12%;display:block}
+.psticker .pflag{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:42px;line-height:1;transform:scale(1.5)}
+.psticker .pinit{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:600;color:#fff;font-family:'Inter Display'}
+.pcard .pcheck{position:absolute;top:-3px;right:-3px;width:20px;height:20px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold-2),var(--gold-3));color:var(--gold-ink);font-size:11px;font-weight:600;
+  display:none;align-items:center;justify-content:center;box-shadow:0 2px 5px rgba(0,0,0,.4)}
+.pcard.sel .pcheck{display:flex}
+.psticker-wrap{position:relative}
+.pcard .pname{font-size:11px;font-weight:500;color:#fff;text-align:center;line-height:1.15;letter-spacing:-.01em}
+.pcard.sel .pname{color:#ffe9b0}
+.bell{width:78px;height:78px;border-radius:24px;margin:8px auto 18px;position:relative;background:radial-gradient(circle at 38% 32%,#2A1F00,#0D0D0D);border:1px solid rgba(251,191,36,.3);display:flex;align-items:center;justify-content:center;font-size:36px;box-shadow:0 18px 50px -16px var(--gold-glow)}
+.bell::after{content:'';position:absolute;inset:-6px;border-radius:30px;border:1.5px solid rgba(251,191,36,.25);animation:ring 2.2s ease-out infinite}
+@keyframes ring{0%{transform:scale(.92);opacity:.7}100%{transform:scale(1.25);opacity:0}}
+.notif-hero{text-align:center;padding:8px 0 4px}
+.notif-eg{background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:13px 14px;display:flex;gap:11px;align-items:center;margin:14px 0 4px;text-align:left}
+.notif-eg .ne-ic{width:32px;height:32px;border-radius:9px;flex:none;background:#0D0D0D;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:15px}
+.notif-eg .ne-t{font-size:13px;font-weight:600}
+.notif-eg .ne-s{font-size:11.5px;font-weight:500;color:var(--ink-dim);margin-top:1px}
+/* notification carousel — 3 cards loop vertically, center scaled up, top/bottom peek + fade */
+@keyframes ndot{0%,100%{opacity:.35}50%{opacity:1}}
+.notif-carousel{position:relative;height:188px;margin:16px 0 0;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 25%,#000 75%,transparent 100%);
+          mask-image:linear-gradient(180deg,transparent 0,#000 25%,#000 75%,transparent 100%)}
+.ncard{position:absolute;left:6px;right:6px;top:50%;margin-top:-41px;height:82px;
+  display:flex;gap:12px;align-items:center;padding:11px 13px;border-radius:18px;
+  background:#1b1b1e;border:1px solid rgba(255,255,255,.09);box-shadow:0 12px 30px -16px rgba(0,0,0,.65);
+  transition:transform .62s cubic-bezier(.4,0,.2,1),opacity .55s ease;will-change:transform,opacity}
+.ncard.noanim{transition:none}
+.ncard.pos-center{transform:translateY(0) scale(1);opacity:1;z-index:3}
+.ncard.pos-top{transform:translateY(-90px) scale(.82);opacity:.4;z-index:1}
+.ncard.pos-bottom{transform:translateY(90px) scale(.82);opacity:.4;z-index:1}
+.nmedia{width:58px;height:58px;border-radius:13px;overflow:hidden;flex:none;position:relative;background:#0f0f12}
+.nmedia img,.nmedia video{width:100%;height:100%;object-fit:cover;display:block}
+.nmedia-sarah{background:radial-gradient(circle at 50% 30%,#5b3fed,#2a1c6e)}
+.nmedia-post{background:radial-gradient(circle at 50% 24%,#6aa0ff,#0d1b3a)}
+.nmedia-wrap{position:relative;flex:none}
+.nbadge{position:absolute;top:-7px;right:-7px;width:19px;height:19px;border-radius:50%;overflow:hidden;z-index:5;background:#000;
+  border:2px solid #1b1b1e;box-shadow:0 2px 6px rgba(0,0,0,.55)}
+.nbadge img{width:100%;height:100%;object-fit:cover;display:block}
+.nscore{display:flex;flex-direction:column;align-items:stretch;justify-content:center;gap:0;padding:8px 9px;
+  background:radial-gradient(circle at 50% 22%,#1a5230 0%,#0a1f12 100%)}
+.nsc-line{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:3px 1px}
+.nsc-line .fl{font-size:15px;line-height:1}
+.nsc-line .sc{font-family:'Inter Display','Inter';font-weight:600;font-size:17px;color:#fff;letter-spacing:-.5px}
+.nsc-div{height:1px;background:rgba(255,255,255,.16);margin:1px 0}
+.ntext{min-width:0;flex:1}
+.ntag{font-family:'Geist';font-size:8.5px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--ink-faint);margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.ntag .lvdot{width:5px;height:5px;border-radius:50%;background:#ff5a4d;animation:ndot 1.3s infinite}
+.ntag.live{color:#ff6b5e}
+.nt{font-size:13.5px;font-weight:600;color:var(--gold-1);line-height:1.18;letter-spacing:-.01em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ns{font-size:11.5px;font-weight:400;color:var(--ink-dim);line-height:1.32;margin-top:3px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.done-wrap{text-align:center;padding:14px 0 2px}
+.done-badge{position:relative;height:172px;margin:4px auto 20px;display:flex;align-items:center;justify-content:center;
+  perspective:720px;animation:badgeIn .7s cubic-bezier(.34,1.56,.64,1) both;cursor:grab}
+@keyframes badgeIn{0%{transform:scale(.4) rotate(-16deg);opacity:0}100%{transform:none;opacity:1}}
+.done-badge img{height:172px;width:auto;display:block;transform-style:preserve-3d;will-change:transform;
+  transition:transform .25s cubic-bezier(.16,1,.3,1);
+  filter:drop-shadow(0 16px 26px rgba(0,0,0,.55))}
+@keyframes spin{to{transform:rotate(360deg)}}
+.done-t{font-family:'Inter Display','Inter';font-weight:600;font-size:27px;letter-spacing:-.025em;background:linear-gradient(180deg,#fff,#ffe2a8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.done-s{font-size:14.5px;font-weight:600;color:var(--ink-dim);margin:8px auto 18px;max-width:290px;line-height:1.5}
+.done-s b{color:#ffe9b0;font-weight:600}
+.done-chips{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin-bottom:6px}
+.done-chip{font-size:12px;font-weight:600;padding:8px 13px;border-radius:20px;background:var(--gold-soft);border:1px solid rgba(251,191,36,.3);color:#ffe9b0}
+.confetti{position:absolute;top:-10px;width:8px;height:13px;opacity:0;z-index:70;pointer-events:none}
+.toast{position:absolute;left:50%;bottom:26px;transform:translate(-50%,140%);z-index:99;background:#1a1407;border:1px solid rgba(251,191,36,.35);border-radius:16px;padding:13px 18px;display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:600;color:#ffe9b0;box-shadow:0 18px 50px -16px rgba(0,0,0,.7);transition:transform .5s cubic-bezier(.16,1,.3,1)}
+.toast.on{transform:translate(-50%,0)}
+.toast .ti{width:24px;height:24px;border-radius:8px;background:linear-gradient(135deg,var(--gold-2),var(--gold-3));color:var(--gold-ink);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600}
+.cap{max-width:290px;color:rgba(255,255,255,.5);font-size:13px;line-height:1.6;font-weight:500}
+.cap h3{font-family:'Inter Display','Inter';font-weight:600;font-size:21px;letter-spacing:-.02em;color:#fff;margin-bottom:10px}
+.cap b{color:var(--gold-1);font-weight:600}
+.cap .k{display:inline-block;font-family:'Geist';font-size:11px;background:#161208;border:1px solid var(--line);border-radius:6px;padding:2px 7px;color:var(--gold-1);margin:0 2px}
+@media(max-width:820px){.cap{display:none}}
+
+/* ═══════════ DASHBOARD VIEW (slides in within the same phone) ═══════════ */
+.dash{position:absolute;inset:0;z-index:70;overflow-y:auto;overflow-x:hidden;
+  background:radial-gradient(120% 50% at 50% 0%, rgba(251,191,36,.08), transparent 60%), #0a0a0a;
+  transform:translateX(100%);opacity:0;transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .35s ease}
+.dash.on{transform:translateX(0);opacity:1}
+.dash::-webkit-scrollbar{display:none}
+.dash .d-status{position:sticky;top:0;z-index:30;height:52px;display:flex;align-items:center;justify-content:space-between;padding:16px 24px 0;font-size:14px;font-weight:600;background:linear-gradient(#0a0a0a,#0a0a0a 70%,transparent)}
+.dash .d-status .dots{display:flex;gap:5px;align-items:center}
+.dash .header{position:sticky;top:44px;z-index:29;display:flex;align-items:center;gap:12px;padding:8px 18px 12px;background:linear-gradient(#0a0a0a 60%,transparent)}
+.dash .h-back{width:34px;height:34px;border-radius:11px;border:1px solid var(--line);background:var(--bg-2);display:flex;align-items:center;justify-content:center;font-size:17px;color:var(--ink-dim);flex:none;cursor:pointer}
+.dash .h-title{font-family:'Inter Display';font-size:17px;font-weight:600;letter-spacing:-.02em}
+.dash .h-sub{font-family:'Geist';font-size:10.5px;font-weight:500;color:var(--gold-1);margin-top:1px}
+.dash .h-run{margin-left:auto;display:flex;align-items:center;gap:6px;background:var(--gold-soft);border:1px solid rgba(251,191,36,.28);border-radius:20px;padding:6px 11px;font-size:12px;font-weight:600;color:#ffe9b0}
+.dash .content{padding:4px 18px 40px}
+.dash .sec-label{display:flex;align-items:center;justify-content:space-between;margin:14px 2px 10px}
+.dash .sec-label .t{font-family:'Geist';font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ink-faint)}
+.dash .sec-label .t b{color:var(--gold-1);font-weight:600}
+.dash .sec-label .fresh{font-family:'Geist';font-size:10px;font-weight:500;color:var(--ink-faint);display:flex;align-items:center;gap:5px}
+.dash .sec-label .fresh .rd{width:5px;height:5px;border-radius:50%;background:var(--gold-1);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+.dash .carousel{position:relative;overflow:hidden;border-radius:22px}
+.dash .caro-track{display:flex;transition:transform .5s cubic-bezier(.16,1,.3,1)}
+.dash .topic{flex:0 0 100%;position:relative;min-height:188px;border-radius:22px;overflow:hidden;padding:17px;display:flex;flex-direction:column;justify-content:flex-end;border:1px solid rgba(255,255,255,.07)}
+.dash .topic .bgimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5}
+.dash .topic .scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,12,.2) 0%, rgba(8,8,10,.55) 45%, rgba(7,7,9,.96) 100%)}
+.dash .topic > *{position:relative;z-index:2}
+.dash .topic .ttop{position:absolute;top:15px;left:17px;right:17px;display:flex;align-items:center;justify-content:space-between;z-index:2}
+.dash .steer{display:inline-flex;align-items:center;gap:6px;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.14);border-radius:20px;padding:5px 11px;font-size:11px;font-weight:600}
+.dash .steer .e{font-size:13px}
+.dash .t-flags{display:flex}
+.dash .t-flag{width:26px;height:26px;border-radius:50%;border:2px solid #fff;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#0a0a0a;margin-left:-8px}
+.dash .t-flag:first-child{margin-left:0}
+.dash .t-flag span{font-size:18px;transform:scale(1.7)}
+.dash .t-title{font-family:'Inter Display';font-size:21px;font-weight:600;line-height:1.12;letter-spacing:-.02em;margin-bottom:6px}
+.dash .t-sub{font-family:'Geist';font-size:12px;font-weight:400;color:rgba(255,255,255,.7);line-height:1.35;margin-bottom:13px;max-width:280px}
+.dash .t-cta{align-self:flex-start;display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,var(--gold-2),var(--gold-3));color:var(--gold-ink);font-weight:600;font-size:13px;padding:10px 16px;border-radius:12px;border:none;cursor:pointer;box-shadow:0 8px 20px -10px var(--gold-glow)}
+.dash .caro-dots{display:flex;gap:6px;justify-content:center;margin-top:12px}
+.dash .caro-dots .d{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.18);transition:.3s;cursor:pointer}
+.dash .caro-dots .d.on{width:22px;border-radius:4px;background:linear-gradient(90deg,var(--gold-2),var(--gold-3))}
+.dash .progress{margin-top:22px;border-radius:20px;padding:17px 16px 16px;position:relative;overflow:hidden;background:radial-gradient(130% 120% at 85% 0%,rgba(251,191,36,.14),transparent 60%),linear-gradient(135deg,#1a1407,#0e0e0e);border:1px solid rgba(251,191,36,.24)}
+.dash .pg-head{display:flex;align-items:center;gap:12px;margin-bottom:15px}
+.dash .pg-badge{width:46px;height:46px;flex:none;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:24px;background:radial-gradient(circle at 38% 30%,#3a2900,#1a1206);border:1px solid rgba(251,191,36,.4);box-shadow:0 0 22px -6px var(--gold-glow)}
+.dash .pg-t{font-family:'Inter Display';font-size:15px;font-weight:600}
+.dash .pg-s{font-family:'Geist';font-size:11.5px;font-weight:400;color:var(--ink-dim);margin-top:2px}
+.dash .pg-s b{color:#ffe9b0;font-weight:500}
+.dash .pg-bar{height:8px;border-radius:5px;background:rgba(255,255,255,.08);overflow:hidden;margin-bottom:13px}
+.dash .pg-fill{height:100%;border-radius:5px;width:21%;background:linear-gradient(90deg,var(--gold-3),var(--gold-2));box-shadow:0 0 12px var(--gold-glow)}
+.dash .mtiers{display:flex;gap:6px}
+.dash .mtier{flex:1;text-align:center;font-family:'Geist';font-size:9px;font-weight:600;color:var(--ink-faint);padding:8px 3px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
+.dash .mtier .te{font-size:16px;display:block;margin-bottom:3px;filter:grayscale(.7);opacity:.7}
+.dash .mtier.done{color:var(--gold-1);border-color:rgba(251,191,36,.3);background:var(--gold-soft)}
+.dash .mtier.done .te{filter:none;opacity:1}
+.dash .mtier.cur{color:#ffe9b0;border-color:var(--gold-1);background:var(--gold-soft);box-shadow:0 0 0 1px var(--gold-1) inset}
+.dash .mtier.cur .te{filter:none;opacity:1}
+.dash .days{margin-top:8px}
+.dash .day-row{display:flex;gap:13px;padding-top:14px}
+.dash .tl{display:flex;flex-direction:column;align-items:center;flex:none;width:24px}
+.dash .tl-dot{width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.18);background:#0a0a0a;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--ink-faint);flex:none;z-index:2}
+.dash .tl-dot.done{background:linear-gradient(135deg,var(--gold-2),var(--gold-3));border-color:transparent;color:var(--gold-ink);font-weight:600}
+.dash .tl-dot.cur{border-color:var(--gold-1);box-shadow:0 0 0 4px rgba(251,191,36,.14)}
+.dash .tl-line{position:relative;width:2.5px;flex:1;border-radius:2px;background:rgba(255,255,255,.16);margin:3px 0 -14px;overflow:hidden}
+.dash .tl-line::after{content:'';position:absolute;inset:0;border-radius:2px;background:linear-gradient(180deg,#34d399 0%,#22c55e 30%,var(--gold-1) 100%);transform:scaleY(0);transform-origin:top;transition:transform .75s cubic-bezier(.4,0,.2,1)}
+.dash .tl-line.filled::after{transform:scaleY(1)}
+.dash .day-row:last-child .tl-line{display:none}
+.dash .day-card{flex:1;border-radius:16px;padding:13px 14px;border:1px solid var(--line);background:var(--bg-2);cursor:pointer;min-width:0}
+.dash .day-card.cur{background:radial-gradient(120% 120% at 100% 0%,rgba(251,191,36,.12),transparent 55%),#16120a;border-color:rgba(251,191,36,.35);box-shadow:0 12px 30px -18px var(--gold-glow)}
+.dash .day-card.locked{cursor:default;opacity:.92}
+.dash .dc-top{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.dash .dc-day{font-family:'Geist';font-size:10px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--gold-1)}
+.dash .day-card.locked .dc-day{color:var(--ink-faint)}
+.dash .dc-flag{font-size:13px;margin-left:auto}
+.dash .dc-steer{font-size:10px;font-weight:600;color:var(--ink-dim);background:rgba(255,255,255,.06);border-radius:8px;padding:2px 7px}
+.dash .dc-title{font-size:14.5px;font-weight:600;letter-spacing:-.01em;line-height:1.2}
+.dash .day-card.locked .dc-title{color:var(--ink-dim)}
+.dash .dc-sub{font-family:'Geist';font-size:11.5px;font-weight:400;color:var(--ink-dim);margin-top:3px}
+.dash .dc-lock{display:flex;align-items:center;gap:7px}
+.dash .dc-lock svg{flex:none}
+.dash .dynamic{flex:1;border-radius:16px;padding:15px;position:relative;overflow:hidden;background:linear-gradient(135deg,#141019,#0d0c12);border:1px solid rgba(140,120,255,.22)}
+.dash .dynamic::after{content:'';position:absolute;top:0;left:-120%;width:55%;height:100%;background:linear-gradient(100deg,transparent,rgba(167,139,250,.14),transparent);transform:skewX(-18deg);animation:dsweep 3.6s ease-in-out infinite}
+@keyframes dsweep{0%{left:-120%}40%{left:160%}100%{left:160%}}
+.dash .dyn-tag{font-family:'Geist';font-size:9.5px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:#b8a6ff;display:flex;align-items:center;gap:6px;margin-bottom:7px}
+.dash .dyn-t{font-size:14.5px;font-weight:600;letter-spacing:-.01em}
+.dash .dyn-t b{background:linear-gradient(120deg,#c4b5fd,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent}
+.dash .dyn-s{font-family:'Geist';font-size:11.5px;font-weight:400;color:var(--ink-dim);line-height:1.4;margin-top:4px}
+.dash .dyn-stack{display:flex;gap:5px;margin-top:11px}
+.dash .dyn-pill{flex:1;height:30px;border-radius:9px;background:rgba(255,255,255,.04);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:'Geist';font-size:9.5px;font-weight:500;color:var(--ink-faint)}
+.dash .dyn-pill.more{color:#b8a6ff;border-color:rgba(140,120,255,.25)}
+.dash .final-card{flex:1;border-radius:16px;padding:14px;display:flex;align-items:center;gap:13px;background:radial-gradient(120% 120% at 100% 0%,rgba(251,191,36,.14),transparent 60%),#16120a;border:1px solid rgba(251,191,36,.3)}
+.dash .final-card img{height:52px;width:auto;filter:drop-shadow(0 6px 12px rgba(0,0,0,.5))}
+.dash .final-t{font-family:'Inter Display';font-size:15px;font-weight:600}
+.dash .final-s{font-family:'Geist';font-size:11.5px;font-weight:400;color:var(--ink-dim);margin-top:2px}
+
+/* header actions */
+.dash .h-title{flex:1}
+.dash .h-actions{display:flex;gap:8px;margin-left:auto}
+.dash .h-ic{width:34px;height:34px;border-radius:11px;border:1px solid var(--line);background:var(--bg-2);display:flex;align-items:center;justify-content:center;color:var(--ink-dim);cursor:pointer}
+.dash .h-ic:active{transform:scale(.94)}
+
+/* live match hero */
+.dash .top-banner{border-radius:20px;overflow:hidden;line-height:0;border:1px solid rgba(255,255,255,.08);box-shadow:0 14px 34px -20px rgba(0,0,0,.7)}
+.dash .top-banner img{display:block;width:100%;height:auto}
+.dash .live-hero{position:relative;border-radius:22px;overflow:hidden;padding:16px;min-height:208px;
+  display:flex;flex-direction:column;justify-content:flex-end;border:1px solid rgba(255,255,255,.08);
+  background:
+    radial-gradient(48% 40% at 16% -8%, rgba(200,216,255,.22), transparent 60%),
+    radial-gradient(48% 40% at 84% -8%, rgba(200,216,255,.22), transparent 60%),
+    radial-gradient(120% 60% at 50% 118%, rgba(26,90,46,.5), transparent 62%),
+    linear-gradient(180deg,#0b1626 0%, #0a0f1a 52%, #07090f 100%)}
+.dash .lh-crowd{position:absolute;left:0;right:0;top:26%;height:32%;opacity:.45;pointer-events:none;
+  background-image:radial-gradient(circle, rgba(255,255,255,.5) .6px, transparent 1.2px);background-size:6px 6px;
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 50%,transparent);mask-image:linear-gradient(180deg,transparent,#000 50%,transparent)}
+.dash .lh-pitch{position:absolute;left:-25%;right:-25%;bottom:-8px;height:40%;pointer-events:none;opacity:.8;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.04) 0 20px,transparent 20px 40px),linear-gradient(180deg,transparent,rgba(20,72,40,.55));
+  transform:perspective(120px) rotateX(60deg);transform-origin:bottom center}
+.dash .lh-content{position:relative;z-index:2}
+.dash .lh-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.dash .lh-live{display:inline-flex;align-items:center;gap:6px;background:rgba(255,90,77,.18);border:1px solid rgba(255,90,77,.4);border-radius:20px;padding:5px 11px;font-family:'Geist';font-size:10px;font-weight:600;letter-spacing:.5px;color:#ff8c82}
+.dash .lh-live .dot{width:6px;height:6px;border-radius:50%;background:#ff5a4d;animation:pulse 1.4s infinite}
+.dash .lh-comp{font-family:'Geist';font-size:10px;font-weight:500;color:rgba(255,255,255,.45)}
+.dash .lh-score{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:14px}
+.dash .lhs-team{display:flex;align-items:center;gap:7px;font-family:'Inter Display';font-size:13px;font-weight:600;color:#fff}
+.dash .lhs-team .fl{font-size:21px}
+.dash .lhs-nums{display:flex;align-items:center;gap:10px}
+.dash .lhs-nums b{font-family:'Inter Display';font-weight:600;font-size:32px;letter-spacing:-1px;color:#fff}
+.dash .lhs-nums .sep{font-size:20px;color:var(--ink-faint)}
+.dash .lh-title{font-family:'Inter Display';font-size:18px;font-weight:600;letter-spacing:-.02em;text-align:center;margin-bottom:5px}
+.dash .lh-sub{font-family:'Geist';font-size:12px;font-weight:400;color:rgba(255,255,255,.62);text-align:center;line-height:1.35;margin:0 auto 15px;max-width:300px}
+.dash .lh-cta{display:block;margin:0 auto;background:#fff;color:#0c0c0c;font-weight:600;font-size:14px;padding:12px 24px;border-radius:13px;border:none;cursor:pointer;box-shadow:0 8px 22px -10px rgba(0,0,0,.5)}
+.dash .lh-cta:active{transform:scale(.97)}
+
+/* progress */
+.dash .wc-progress{display:flex;align-items:center;gap:14px;margin-top:20px;border-radius:18px;padding:15px 16px;
+  background:radial-gradient(130% 120% at 88% 0%,rgba(251,191,36,.13),transparent 60%),linear-gradient(135deg,#1a1407,#0e0e0e);border:1px solid rgba(251,191,36,.24)}
+.dash .wcp-badge{height:50px;width:auto;flex:none;filter:drop-shadow(0 6px 12px rgba(0,0,0,.5))}
+.dash .wcp-main{flex:1;min-width:0}
+.dash .wcp-t{font-family:'Inter Display';font-size:14.5px;font-weight:600}
+.dash .wcp-s{font-family:'Geist';font-size:11.5px;font-weight:400;color:var(--ink-dim);margin-top:2px;margin-bottom:11px}
+.dash .wcp-bar{height:8px;border-radius:5px;background:rgba(255,255,255,.08);overflow:hidden}
+.dash .wcp-fill{height:100%;width:6%;border-radius:5px;background:linear-gradient(90deg,var(--gold-3),var(--gold-2));box-shadow:0 0 10px var(--gold-glow)}
+
+/* active day card */
+.dash .active-day{padding:15px 15px 16px}
+.dash .ad-day{font-family:'Geist';font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--gold-1);margin-bottom:8px}
+.dash .ad-title{font-family:'Inter Display';font-size:18px;font-weight:600;letter-spacing:-.02em;line-height:1.18;margin-bottom:6px}
+.dash .ad-title em{font-style:normal;color:var(--gold-1)}
+.dash .ad-sub{font-family:'Geist';font-size:12px;font-weight:400;color:var(--ink-dim);line-height:1.42;margin-bottom:14px}
+.dash .ad-cta{width:100%;background:linear-gradient(135deg,var(--gold-2),var(--gold-3));color:var(--gold-ink);font-weight:600;font-size:14.5px;padding:13px;border-radius:13px;border:none;cursor:pointer;box-shadow:0 10px 26px -12px var(--gold-glow)}
+.dash .ad-cta:active{transform:scale(.98)}
+.dash .day-card.locked .dc-sub{margin-top:3px}
+.dash .ai-star{display:inline-block;color:var(--ink-faint);margin-right:5px;font-size:11px}
+
+/* ═══════════ CONVERSATION (Day 1) ═══════════ */
+.convo{position:absolute;inset:0;z-index:80;display:flex;flex-direction:column;
+  background:radial-gradient(120% 40% at 50% 0%, rgba(251,191,36,.06), transparent 55%), #0a0a0a;
+  transform:translateX(100%);opacity:0;transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .35s;overflow:hidden}
+.convo.on{transform:translateX(0);opacity:1}
+.convo-frame{width:100%;height:100%;border:none;display:block;background:#000}
+.cv-exit{position:absolute;top:48px;left:12px;width:46px;height:46px;z-index:6;cursor:pointer}
+
+/* ── Day-card completed state + ball-to-badge ── */
+.dash .day-card.done-card{background:radial-gradient(120% 120% at 100% 0%,rgba(34,197,94,.1),transparent 55%),#11160f;
+  border-color:rgba(120,220,150,.3);padding:13px 14px;transition:.5s}
+.dash .dcd-row{display:flex;align-items:center;gap:11px}
+.dash .dcd-check{width:30px;height:30px;flex:none;border-radius:50%;background:linear-gradient(135deg,#34d399,#22c55e);color:#06240f;
+  display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;box-shadow:0 0 14px rgba(34,197,94,.4)}
+.dash .dcd-day{font-family:'Geist';font-size:9.5px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:#86efac}
+.dash .dcd-title{font-size:14px;font-weight:600;color:#fff;margin-top:1px;letter-spacing:-.01em}
+.dash .dcd-score{margin-left:auto;display:flex;align-items:center;gap:4px;font-family:'Inter Display';font-weight:600;font-size:14px;color:#ffe9b0}
+
+/* ── Day-1 pick card: choose today's conversation (Figma 7089-26698) ── */
+.dash .pc-eyebrow{font-family:'Geist';font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--gold-1);margin-bottom:8px}
+.dash .pc-title{font-family:'Inter Display';font-size:16px;font-weight:600;letter-spacing:-.02em;line-height:1.2;margin-bottom:14px}
+.dash .pc-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.dash .pc-opt{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:13px;border:1px solid var(--line);background:rgba(255,255,255,.02);cursor:pointer;transition:border-color .18s,background .18s,transform .1s}
+.dash .pc-opt:active{transform:scale(.99)}
+.dash .pc-opt.sel{border-color:rgba(251,191,36,.55);background:radial-gradient(130% 130% at 0% 0%,rgba(251,191,36,.11),transparent 60%),rgba(251,191,36,.04)}
+.dash .pc-thumb{width:42px;height:42px;border-radius:11px;overflow:hidden;flex:none;display:flex;align-items:center;justify-content:center;font-size:25px;background:#14141a;line-height:1}
+.dash .pc-thumb img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.dash .pc-otext{flex:1;min-width:0;font-family:'Geist';font-size:12.5px;font-weight:400;color:var(--ink-dim);line-height:1.35}
+.dash .pc-opt.sel .pc-otext{color:#fff}
+.dash .pc-radio{position:relative;width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,.22);flex:none;transition:border-color .18s}
+.dash .pc-radio::after{content:'';position:absolute;inset:0;margin:auto;width:8px;height:8px;border-radius:50%;background:var(--gold-1);box-shadow:0 0 7px rgba(251,191,36,.6);transform:scale(0);transition:transform .18s cubic-bezier(.34,1.56,.64,1)}
+.dash .pc-opt.sel .pc-radio{border-color:var(--gold-1)}
+.dash .pc-opt.sel .pc-radio::after{transform:scale(1)}
+.dash .pc-cta{width:100%;background:linear-gradient(135deg,var(--gold-2),var(--gold-3));color:var(--gold-ink);font-weight:600;font-size:14.5px;padding:13px;border-radius:13px;border:none;cursor:pointer;box-shadow:0 10px 26px -12px var(--gold-glow);transition:opacity .2s,filter .2s}
+.dash .pc-cta:active{transform:scale(.98)}
+.dash .pc-cta.off{filter:grayscale(.55);opacity:.4;cursor:default;box-shadow:none;pointer-events:none}
+
+/* ── Day-1 done state: shows the conversation they picked (Figma 7090-26718) ── */
+.dash .d2-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}
+.dash .d2-eyebrow{font-family:'Geist';font-size:9.5px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:#86efac}
+.dash .d2-title{font-family:'Inter Display';font-size:16px;font-weight:600;color:#fff;letter-spacing:-.01em;line-height:1.15;margin-top:3px}
+.dash .d2-goals{flex:none;display:flex;align-items:center;gap:4px;font-family:'Inter Display';font-weight:600;font-size:15px;color:#fff}
+.dash .d2-opt{display:flex;align-items:center;gap:11px;padding:10px;border-radius:13px;border:1px solid rgba(120,220,150,.22);background:rgba(34,197,94,.05)}
+.dash .d2-opt .pc-otext{color:#dfe6e0}
+.dash .d2-check{width:24px;height:24px;flex:none;border-radius:50%;border:2px solid #34d399;display:flex;align-items:center;justify-content:center;color:#34d399;font-size:12px;font-weight:700}
+.dash .tl-dot.is-done{background:linear-gradient(135deg,#34d399,#22c55e);border-color:transparent;color:#06240f;font-weight:600}
+.dash .wcp-badge.pop{animation:wcpPop .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes wcpPop{0%,100%{transform:scale(1)}50%{transform:scale(1.28)}}
+.cardball{position:absolute;left:0;top:0;width:30px;height:30px;z-index:75;pointer-events:none;
+  background:url('assets/ball.png') center/contain no-repeat;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5))}
+
+/* ── Day 1 complete celebration overlay ── */
+.day-done{position:absolute;inset:0;z-index:90;display:flex;flex-direction:column;align-items:center;
+  background:radial-gradient(circle at 50% 34%,rgba(251,191,36,.16),rgba(7,7,7,.92) 58%),rgba(6,6,6,.94);
+  opacity:0;pointer-events:none;transition:opacity .55s ease;perspective:900px;overflow:hidden}
+.day-done.on{opacity:1;pointer-events:auto}
+.dd-stage{position:relative;width:100%;flex:1;display:flex;align-items:center;justify-content:center;perspective:620px}
+/* soft ground shadow lives on the (non-3D) stage so it can't flatten the badge's preserve-3d */
+.dd-stage::after{content:'';position:absolute;left:50%;top:50%;width:165px;height:42px;transform:translate(-50%,108px);
+  background:radial-gradient(ellipse at center,rgba(0,0,0,.5),transparent 70%);filter:blur(5px);pointer-events:none}
+/* two-sided 3D badge: front = the patch, back = a flat shiny gold shield (no mirrored text) */
+.dd-badge{position:relative;width:182px;height:250px;opacity:0;transform-style:preserve-3d;will-change:transform;
+  transform:scale(.35) rotateX(8deg) rotateY(0deg)}
+/* NOTE: never put `filter` on a face — it flattens preserve-3d and defeats backface-visibility,
+   leaking the mirrored front artwork through instead of the gold back. */
+.dd-face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.dd-face.dd-front{background:url('assets/fifa-badge.png') center/contain no-repeat}
+.dd-face.dd-back{transform:rotateY(180deg);
+  -webkit-mask:url('assets/fifa-badge.png') center/contain no-repeat;mask:url('assets/fifa-badge.png') center/contain no-repeat;
+  -webkit-mask-size:contain;mask-size:contain;
+  background:
+    linear-gradient(118deg,transparent 28%,rgba(255,255,255,.6) 46%,rgba(255,255,255,.15) 54%,transparent 64%),
+    linear-gradient(135deg,#7a5c12 0%,#e9c662 20%,#fff4cc 36%,#e3c25c 50%,#bd9426 66%,#8a6d15 82%,#f0cf6a 100%)}
+.dd-badge.reveal{animation:ddReveal 2.1s cubic-bezier(.32,0,.2,1) forwards}
+/* one slow 3D turn — front shows, back is the flat gold shield, settles face-front */
+@keyframes ddReveal{
+  0%  {opacity:0;transform:scale(.35) rotateX(8deg) rotateY(0deg)   translateZ(-40px)}
+  18% {opacity:1;transform:scale(1.05) rotateX(8deg) rotateY(0deg)  translateZ(20px)}
+  60% {transform:scale(1.05) rotateX(7deg) rotateY(200deg) translateZ(20px)}
+  100%{opacity:1;transform:scale(1) rotateX(8deg) rotateY(360deg)   translateZ(0)}}
+/* progress bar (Day 0 → Day 1) inside the celebration */
+.dd-prog-wrap{width:100%;max-width:300px;margin:0 auto 24px;opacity:0;transform:translateY(12px);
+  transition:opacity .55s ease,transform .55s cubic-bezier(.16,1,.3,1)}
+.day-done.show-copy .dd-prog-wrap{opacity:1;transform:translateY(0)}
+.dd-prog{height:9px;border-radius:5px;background:rgba(255,255,255,.1);overflow:hidden}
+.dd-prog-fill{height:100%;width:0;border-radius:5px;background:linear-gradient(90deg,var(--gold-3),var(--gold-2));
+  box-shadow:0 0 12px var(--gold-glow);transition:width 1.1s cubic-bezier(.16,1,.3,1) .35s}
+.day-done.show-copy .dd-prog-fill{width:9%}
+.dd-prog-cap{display:flex;justify-content:space-between;font-family:'Geist';font-size:10.5px;font-weight:500;color:var(--ink-faint);margin-top:8px}
+.dd-prog-cap b{color:#ffe9b0;font-weight:600}
+.dd-bottom{width:100%;padding:0 26px calc(34px + env(safe-area-inset-bottom));display:flex;flex-direction:column;align-items:center}
+.dd-t{font-family:'Inter Display';font-size:25px;font-weight:600;text-align:center;
+  background:linear-gradient(180deg,#fff,#ffe2a8);-webkit-background-clip:text;background-clip:text;color:transparent;
+  opacity:0;transform:translateY(12px);transition:opacity .55s ease,transform .55s cubic-bezier(.16,1,.3,1)}
+.dd-s{font-family:'Geist';font-size:13.5px;font-weight:400;color:var(--ink-dim);text-align:center;max-width:300px;margin-top:10px;line-height:1.55;
+  opacity:0;transform:translateY(12px);transition:opacity .55s ease .08s,transform .55s cubic-bezier(.16,1,.3,1) .08s}
+.dd-cta{margin-top:24px;width:100%;background:linear-gradient(135deg,var(--gold-2),var(--gold-3));color:var(--gold-ink);font-weight:600;font-size:16px;
+  padding:16px;border-radius:15px;border:none;cursor:pointer;box-shadow:0 14px 34px -12px var(--gold-glow);
+  opacity:0;transform:translateY(12px);transition:opacity .55s ease .16s,transform .55s cubic-bezier(.16,1,.3,1) .16s}
+.dd-cta:active{transform:scale(.98)}
+.day-done.show-copy .dd-t,.day-done.show-copy .dd-s,.day-done.show-copy .dd-cta{opacity:1;transform:translateY(0)}
+.dd-paper{position:absolute;top:-24px;width:9px;height:14px;z-index:4;pointer-events:none;opacity:0}
+.cv-hud{flex:none;padding:46px 16px 12px;position:relative;z-index:5;background:linear-gradient(#0a0a0a,#0a0a0a 78%,transparent)}
+.cv-hud-top{display:flex;align-items:flex-start;gap:11px;margin-bottom:12px}
+.cv-back{width:32px;height:32px;border-radius:10px;border:1px solid var(--line);background:var(--bg-2);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--ink-dim);cursor:pointer;flex:none}
+.cv-title{font-family:'Inter Display';font-size:14px;font-weight:600}
+.cv-sub{font-family:'Geist';font-size:10px;color:var(--gold-1);font-weight:500;margin-top:1px}
+.cv-goal{margin-left:auto;position:relative;width:60px;height:38px;flex:none;margin-top:-2px}
+.cv-goal .frame{position:absolute;inset:0 0 5px;border:2px solid rgba(255,255,255,.7);border-bottom:none;border-radius:3px 3px 0 0;box-shadow:0 0 8px rgba(255,255,255,.18);transition:box-shadow .3s}
+.cv-goal .net{position:absolute;inset:2px 2px 5px;opacity:.4;background-image:linear-gradient(rgba(255,255,255,.3) .5px,transparent .5px),linear-gradient(90deg,rgba(255,255,255,.3) .5px,transparent .5px);background-size:6px 6px}
+.cv-goal .balls{position:absolute;bottom:5px;left:0;right:0;display:flex;justify-content:center;gap:3px}
+.cv-goal .gb{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);transition:.3s}
+.cv-goal .gb.filled{background:radial-gradient(circle at 34% 30%,#fff,#bbb);border-color:transparent;box-shadow:0 0 7px rgba(255,255,255,.6);animation:gbPop .4s cubic-bezier(.34,1.56,.64,1)}
+@keyframes gbPop{0%{transform:scale(0)}100%{transform:scale(1)}}
+.cv-goal.score .frame{box-shadow:0 0 16px var(--gold-glow)}
+.cv-count{position:absolute;bottom:-14px;left:0;right:0;text-align:center;font-family:'Geist';font-size:9px;color:var(--ink-faint)}
+.cv-prog{height:5px;border-radius:3px;background:rgba(255,255,255,.08);overflow:hidden}
+.cv-prog-fill{height:100%;width:0;border-radius:3px;background:linear-gradient(90deg,var(--gold-3),var(--gold-2));box-shadow:0 0 8px var(--gold-glow);transition:width .6s cubic-bezier(.16,1,.3,1)}
+
+.cv-scroll{flex:1;overflow-y:auto;padding:10px 16px 14px;display:flex;flex-direction:column;gap:11px}
+.cv-scroll::-webkit-scrollbar{display:none}
+.msg{display:flex;gap:9px;max-width:88%;animation:msgIn .4s cubic-bezier(.16,1,.3,1) both}
+@keyframes msgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.msg.bot{align-self:flex-start}
+.msg.user{align-self:flex-end;flex-direction:row-reverse}
+.msg .av{width:30px;height:30px;border-radius:50%;flex:none;overflow:hidden;border:1.5px solid rgba(255,255,255,.15);background:#2a2a30}
+.msg .av img{width:100%;height:100%;object-fit:cover}
+.msg .av.user-av{background:linear-gradient(135deg,#6a4ff0,#9b6bff)}
+.bubble{padding:11px 14px;border-radius:16px;font-size:14px;line-height:1.42;font-weight:400}
+.msg.bot .bubble{background:#1e1e22;border-bottom-left-radius:5px;color:#f0f0f2}
+.msg.user .bubble{background:linear-gradient(135deg,#3a2c08,#2a2006);border:1px solid rgba(251,191,36,.25);border-bottom-right-radius:5px;color:#fff}
+.typing{display:flex;gap:4px;padding:14px 15px}
+.typing span{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.4);animation:typ 1.2s infinite}
+.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+@keyframes typ{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+
+.fixcard{align-self:center;max-width:92%;display:flex;align-items:center;gap:11px;padding:10px 13px;border-radius:14px;
+  background:radial-gradient(120% 120% at 0% 0%,rgba(251,191,36,.14),transparent 60%),#161208;border:1px solid rgba(251,191,36,.3);
+  animation:lootIn .5s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes lootIn{0%{opacity:0;transform:scale(.85) translateY(8px)}100%{opacity:1;transform:none}}
+.fixcard .fi{font-size:16px;filter:drop-shadow(0 0 5px var(--gold-glow))}
+.fixcard .ft{font-size:9.5px;font-weight:600;color:var(--gold-1);font-family:'Geist';letter-spacing:.5px;text-transform:uppercase}
+.fixcard .fc{font-size:13px;font-weight:500;margin-top:2px}
+.fixcard .fc s{color:#ff6b6b;text-decoration-color:rgba(255,107,107,.6);margin-right:7px}
+.fixcard .fc b{color:#ffe9b0;font-weight:600}
+
+.practice{align-self:stretch;border-radius:16px;padding:14px;background:#131318;border:1px solid var(--line);animation:lootIn .5s both}
+.pr-top{font-family:'Geist';font-size:9.5px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:#8b9dff;margin-bottom:9px}
+.pr-word{font-family:'Inter Display';font-size:24px;font-weight:600;letter-spacing:-.02em}
+.pr-ipa{font-family:'Geist';font-size:13px;color:var(--ink-dim);margin-top:2px}
+.pr-btn{margin-top:12px;width:100%;background:#2a2a32;border:1px solid var(--line);border-radius:12px;padding:11px;font-weight:600;font-size:13px;color:#fff;display:flex;align-items:center;justify-content:center;gap:9px;cursor:pointer}
+.pr-btn.done{background:rgba(34,197,94,.18);border-color:rgba(34,197,94,.4);color:#86efac}
+
+.cv-mic{flex:none;padding:12px 16px calc(16px + env(safe-area-inset-bottom));display:flex;justify-content:center;
+  background:linear-gradient(transparent,#0a0a0a 28%);transition:opacity .3s}
+.cv-mic.hidden{opacity:0;pointer-events:none}
+.mic-pill{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--gold-2),var(--gold-3));color:var(--gold-ink);
+  font-weight:600;font-size:14px;padding:14px 26px;border-radius:30px;cursor:pointer;box-shadow:0 10px 26px -10px var(--gold-glow);transition:.2s}
+.mic-pill:active{transform:scale(.97)}
+.mic-pill.listening{background:#1e1e22;color:#fff;border:1px solid rgba(255,255,255,.15);box-shadow:none}
+.wave{display:inline-flex;gap:3px;align-items:center}
+.wave i{width:3px;height:10px;background:currentColor;border-radius:2px;animation:wv .8s infinite}
+.wave i:nth-child(2){animation-delay:.1s}.wave i:nth-child(3){animation-delay:.2s}.wave i:nth-child(4){animation-delay:.3s}
+@keyframes wv{0%,100%{height:6px}50%{height:16px}}
+
+.fly-ball{position:absolute;left:0;top:0;width:22px;height:22px;border-radius:50%;z-index:90;pointer-events:none;
+  box-shadow:0 3px 8px rgba(0,0,0,.5);
+  background:radial-gradient(circle at 50% 38%,#222 0 3px,transparent 3.5px),radial-gradient(circle at 22% 70%,#222 0 2px,transparent 2.5px),radial-gradient(circle at 78% 70%,#222 0 2px,transparent 2.5px),radial-gradient(circle at 34% 30%,#fff,#ccc 60%,#999)}
+
+.finale{position:absolute;inset:0;z-index:95;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 50% 36%,rgba(251,191,36,.13),rgba(7,7,7,.97) 60%),rgba(6,6,6,.97);
+  opacity:0;pointer-events:none;transition:opacity .5s ease;perspective:800px;padding:0 30px}
+.finale.on{opacity:1;pointer-events:auto}
+.finale-badge{height:148px;width:auto;transform-style:preserve-3d;filter:drop-shadow(0 16px 30px rgba(0,0,0,.6)) drop-shadow(0 0 26px rgba(251,191,36,.3))}
+.finale.on .finale-badge{animation:badgeReveal 1.15s cubic-bezier(.2,.7,.3,1) both, badgeIdle 5s ease-in-out 1.2s infinite}
+@keyframes badgeReveal{0%{opacity:0;transform:scale(.15) rotateY(-560deg)}65%{opacity:1}100%{opacity:1;transform:scale(1) rotateY(0)}}
+@keyframes badgeIdle{0%,100%{transform:rotateY(-13deg)}50%{transform:rotateY(13deg)}}
+.finale-t{font-family:'Inter Display';font-size:24px;font-weight:600;margin-top:24px;background:linear-gradient(180deg,#fff,#ffe2a8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.finale-s{font-family:'Geist';font-size:13.5px;font-weight:400;color:var(--ink-dim);text-align:center;max-width:290px;margin-top:9px;line-height:1.5}
+.finale-cta{margin-top:26px;background:linear-gradient(135deg,var(--gold-2),var(--gold-3));color:var(--gold-ink);font-weight:600;font-size:15px;padding:14px 30px;border-radius:14px;border:none;cursor:pointer;box-shadow:0 12px 30px -10px var(--gold-glow)}
+.paper{position:absolute;top:-24px;width:9px;height:14px;z-index:96;pointer-events:none;opacity:0}
+
+/* ═══════════ SHARE SCREEN (memefied, post-results) ═══════════ */
+/* background auto-derived from the Messi hero gif: Barça blue #040c78 + garnet #600c24 over near-black navy */
+.share-screen{position:absolute;inset:0;z-index:92;opacity:0;visibility:hidden;pointer-events:none;
+  display:flex;flex-direction:column;transition:opacity .42s ease;
+  background:
+    radial-gradient(68% 42% at 20% 19%, rgba(4,12,120,.6), transparent 60%),
+    radial-gradient(72% 48% at 84% 70%, rgba(96,12,36,.55), transparent 62%),
+    radial-gradient(140% 90% at 50% 50%, #0c0a1e 0%, #07051a 72%)}
+.share-screen.on{opacity:1;visibility:visible;pointer-events:auto}
+.ss-top{flex:none;display:flex;justify-content:flex-end;padding:46px 16px 0}
+.ss-skip{font-family:'Geist';font-size:13px;font-weight:500;color:rgba(255,255,255,.55);cursor:pointer;padding:6px 10px;border-radius:8px}
+.ss-skip:active{background:rgba(255,255,255,.06)}
+/* the shareable card composition */
+.ss-card{flex:1;display:flex;flex-direction:column;min-height:0;padding:4px 20px 0}
+.ss-saysrow{flex:none;display:flex;align-items:flex-start;gap:11px;margin-bottom:6px}
+.ss-circ{width:50px;height:50px;border-radius:50%;flex:none;overflow:hidden;background:radial-gradient(circle at 50% 30%,#2a2440,#15121f);border:2px solid rgba(255,255,255,.9)}
+.ss-circ img{width:118%;height:118%;object-fit:cover;object-position:center top;margin:-9% 0 0 -9%}
+.ss-bubble{position:relative;background:#15131d;border:1px solid rgba(255,255,255,.1);border-radius:16px;border-top-left-radius:5px;padding:11px 14px;font-family:'Inter';font-size:13px;line-height:1.42;color:#eceaf3;max-width:248px}
+.ss-bubble b{color:var(--gold-1);font-weight:600}
+.ss-bubble::before{content:'';position:absolute;left:-7px;top:13px;width:0;height:0;border:7px solid transparent;border-right-color:#15131d;border-left:0}
+.ss-stage{flex:1;position:relative;display:flex;align-items:center;justify-content:center;min-height:0;margin:4px 0}
+.ss-hero{width:210px;height:210px;border-radius:22px;overflow:hidden;position:relative;z-index:2;
+  box-shadow:0 22px 54px -14px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.08),0 0 50px -8px rgba(4,12,120,.5)}
+.ss-hero img{width:100%;height:100%;object-fit:cover;display:block}
+.ss-sticker{position:absolute;height:118px;width:auto;z-index:3;filter:drop-shadow(0 10px 20px rgba(0,0,0,.55))}
+.ss-sticker.s1{top:2%;right:2%;animation:ssWob1 2.3s ease-in-out infinite}
+.ss-sticker.s2{bottom:0;left:0;animation:ssWob2 1.9s ease-in-out infinite}
+@keyframes ssWob1{0%,100%{transform:rotate(10deg)}50%{transform:rotate(16deg)}}
+@keyframes ssWob2{0%,100%{transform:rotate(-15deg)}50%{transform:rotate(-8deg)}}
+.ss-brand{flex:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 2px 2px;border-top:1px solid rgba(255,255,255,.07)}
+.ss-brand img{height:21px;width:auto;opacity:.95}
+.ss-handle{font-family:'Geist';font-size:12.5px;font-weight:500;color:rgba(255,255,255,.72)}
+/* chrome below the card */
+.ss-dots{flex:none;display:flex;justify-content:center;gap:6px;padding:14px 0 10px}
+.ss-dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.22);transition:.25s}
+.ss-dots i.on{background:#fff;width:17px;border-radius:3px}
+.ss-foot{flex:none;padding:0 20px calc(18px + env(safe-area-inset-bottom))}
+.ss-share{width:100%;background:linear-gradient(135deg,var(--gold-2),var(--gold-3));color:var(--gold-ink);font-family:'Inter';font-weight:600;font-size:15px;padding:15px;border-radius:14px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 12px 30px -10px var(--gold-glow)}
+.ss-share:active{transform:scale(.985)}
+.ss-share svg{width:18px;height:18px}
+
+/* share sheet (channel picker) */
+.ss-sheet-back{position:absolute;inset:0;z-index:93;background:rgba(0,0,0,.55);opacity:0;visibility:hidden;transition:opacity .3s}
+.ss-sheet-back.on{opacity:1;visibility:visible}
+.ss-sheet{position:absolute;left:0;right:0;bottom:0;z-index:94;background:#141320;border-radius:24px 24px 0 0;border-top:1px solid rgba(255,255,255,.08);
+  padding:10px 20px calc(22px + env(safe-area-inset-bottom));transform:translateY(102%);transition:transform .42s cubic-bezier(.16,1,.3,1)}
+.ss-sheet.on{transform:translateY(0)}
+.ss-sheet .grip{width:38px;height:4px;border-radius:3px;background:rgba(255,255,255,.16);margin:0 auto 16px}
+.ss-sheet-t{font-family:'Inter Display';font-size:16px;font-weight:600;text-align:center;margin-bottom:3px}
+.ss-sheet-s{font-family:'Geist';font-size:11.5px;color:var(--ink-dim);text-align:center;margin-bottom:18px}
+.ss-chans{display:flex;justify-content:space-around;gap:8px}
+.ss-chan{display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer;flex:1}
+.ss-chan:active{transform:scale(.95)}
+.ss-ci{width:54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:25px}
+.ss-chan .lbl{font-family:'Geist';font-size:11px;color:var(--ink-dim)}
+.ss-chan .fmt{font-family:'Geist';font-size:8.5px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--gold-1);opacity:.85}
+.ss-ci.ig{background:linear-gradient(45deg,#f09433,#e6683c 30%,#dc2743 50%,#cc2366 75%,#bc1888)}
+.ss-ci.wa{background:#25d366}
+.ss-ci.sv{background:rgba(255,255,255,.1)}
+
+/* ═══════════ TAB SHELL (Conversation / Practice / Profile) ═══════════ */
+.tabview{position:absolute;inset:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease}
+.tabview.active{opacity:1;visibility:visible;pointer-events:auto}
+#tab-convo{background:#0A0A0A;display:flex;flex-direction:column}
+
+/* bottom tab bar */
+.tabbar{position:absolute;left:0;right:0;bottom:0;height:62px;z-index:40;display:flex;align-items:stretch;
+  background:rgba(10,10,10,.97);border-top:1px solid var(--line);backdrop-filter:blur(8px);
+  padding-bottom:env(safe-area-inset-bottom)}
+.tabbar .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;
+  color:var(--ink-faint);font-family:'Geist';font-size:10px;font-weight:500;letter-spacing:.2px;transition:color .18s ease}
+.tabbar .tab svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.tabbar .tab.on{color:#fff}
+.tabbar .tab.on .tb-ic{position:relative}
+.tabbar .tab.on .tb-ic::after{content:'';position:absolute;left:50%;top:-9px;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:var(--gold-1);box-shadow:0 0 8px var(--gold-glow)}
+
+/* shared minimal status bar for built tabs */
+.tv-status{flex:none;height:46px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 22px 4px;
+  font-family:'Inter Display';font-size:14px;font-weight:600;color:#fff}
+.tv-status .sb-r{display:flex;align-items:center;gap:6px}
+.tv-status .sb-r svg{width:17px;height:13px;stroke:#fff;fill:none;stroke-width:2}
+.tv-status .sb-batt{width:23px;height:12px;border-radius:3px;border:1.4px solid rgba(255,255,255,.55);position:relative;display:inline-block}
+.tv-status .sb-batt::before{content:'';position:absolute;inset:1.5px;width:70%;border-radius:1px;background:#fff}
+.tv-status .sb-batt::after{content:'';position:absolute;right:-3px;top:3px;width:2px;height:5px;border-radius:0 1px 1px 0;background:rgba(255,255,255,.55)}
+
+/* ═══ conversation tab — faithful 1:1 copy of the roleplay "Chat with Sarah" screen ═══ */
+#tab-convo{background:#000}
+#tab-convo .status-bar{height:40px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-family:'Inter',sans-serif;position:relative;z-index:5}
+#tab-convo .sb-time{font-size:14px;font-weight:600;color:#fff;letter-spacing:.3px}
+#tab-convo .sb-right{display:flex;align-items:center;gap:5px;color:rgba(255,255,255,.92)}
+#tab-convo .sb-net{font-size:9px;font-weight:600;line-height:1;text-align:center;opacity:.85}
+#tab-convo .sb-net small{display:block;font-size:7px;opacity:.8}
+#tab-convo .sb-ico{width:14px;height:14px;display:block}
+#tab-convo .sb-batt{display:flex;align-items:center;gap:3px;font-size:11px;font-weight:600}
+#tab-convo .sb-batt-shell{width:22px;height:11px;border:1.3px solid rgba(255,255,255,.9);border-radius:3px;position:relative;padding:1.3px}
+#tab-convo .sb-batt-shell::after{content:'';position:absolute;right:-3px;top:3px;width:2px;height:5px;background:rgba(255,255,255,.9);border-radius:0 2px 2px 0}
+#tab-convo .sb-batt-fill{height:100%;width:42%;background:#fff;border-radius:1px}
+
+#tab-convo .topics-scroll{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:14px 16px 80px;scrollbar-width:none}
+#tab-convo .topics-scroll::-webkit-scrollbar{display:none}
+
+/* banner */
+.tc-banner{position:relative;height:152px;border-radius:18px;background:#141414;border:1.2px solid #323232;overflow:hidden;margin-bottom:26px}
+.tc-banner-glow{position:absolute;right:-10px;top:4px;width:220px;height:200px;background:radial-gradient(ellipse 50% 48% at 50% 50%,rgba(67,60,51,.95) 0%,transparent 70%);filter:blur(34px);pointer-events:none}
+.tc-banner-sarah{position:absolute;right:-6px;bottom:0;height:165px;width:auto;object-fit:contain;pointer-events:none;user-select:none}
+.tc-banner-text{position:absolute;left:22px;top:50%;transform:translateY(-50%);width:195px;font-family:'Urbanist',sans-serif;font-weight:500;font-size:21px;line-height:27px;color:#d3d3d3;word-break:break-word}
+
+/* topic rows */
+#tab-convo .topic-row{display:flex;align-items:center;gap:18px;width:100%;cursor:pointer;user-select:none;padding:2px 0;transition:opacity .18s ease,transform .12s ease}
+#tab-convo .topic-row:active{transform:scale(.985)}
+#tab-convo .topic-row.is-locked{opacity:.82}
+.topic-active{margin-bottom:24px}
+
+/* section headers + progress meter (icon · progress · count) */
+.cv-section{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:38px 2px 22px}
+.cv-section .sec-ttl{font-family:'Urbanist',sans-serif;font-weight:600;font-size:21px;color:#fff;letter-spacing:-.01em}
+.goal-meter{display:flex;align-items:center;gap:8px;flex:none}
+.goal-meter img,.goal-meter .star{width:17px;height:17px;object-fit:contain;flex:none}
+.goal-meter img{filter:drop-shadow(0 2px 4px rgba(0,0,0,.45))}
+.goal-meter .star{color:var(--gold-1)}
+.goal-meter .bar{width:66px;height:9px;border-radius:6px;background:rgba(255,255,255,.16);overflow:hidden}
+.goal-meter .bar i{display:block;height:100%;border-radius:6px;width:0;
+  background:linear-gradient(90deg,var(--gold-3),var(--gold-1));box-shadow:0 0 10px var(--gold-glow);
+  transition:width .9s cubic-bezier(.16,1,.3,1)}
+.goal-meter .num{font-family:'Urbanist',sans-serif;font-weight:600;font-size:15px;color:#fff;min-width:10px}
+.ava{position:relative;flex-shrink:0;width:74px;height:74px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.ava-ring{position:absolute;inset:0;border-radius:50%;border:2px solid #D9D9D9;box-sizing:border-box}
+.ava-inner{position:relative;width:58px;height:58px;border-radius:50%;overflow:hidden;display:flex;align-items:flex-end;justify-content:center}
+.ava-inner img{width:118%;height:118%;object-fit:cover;object-position:center top;pointer-events:none;user-select:none}
+.topic-label{font-family:'Inter',sans-serif;font-weight:400;font-size:21px;line-height:1.18;color:#8e8e95;word-break:break-word}
+.topics-list{display:flex;flex-direction:column;gap:22px}
+
+/* FIFA replaces the active "Introduction" row — story ring + day eyebrow + white label */
+.fifa-meta{min-width:0}
+.fifa-day{font-family:'Geist',sans-serif;font-weight:600;font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:#999999;margin-bottom:5px}
+.fifa-lbl{font-family:'Inter',sans-serif;font-weight:400;font-size:21px;line-height:1.18;color:#ffffff}
+.fifa-ava{position:relative;width:74px;height:74px;flex-shrink:0}
+.fifa-ava::before{content:'';position:absolute;inset:0;border-radius:50%;
+  background:conic-gradient(from 0deg,#FDE047,#34d399,#38bdf8,#e879f9,#fb7185,#FBBF24,#FDE047);
+  animation:storyspin 3.4s linear infinite}
+@keyframes storyspin{to{transform:rotate(360deg)}}
+.fifa-ava-gap{position:absolute;inset:3px;border-radius:50%;background:#000}
+.fifa-ava-media{position:absolute;inset:5.5px;border-radius:50%;overflow:hidden;
+  background:linear-gradient(155deg,#1e40af 0%,#2563eb 48%,#1d4ed8 100%)}
+.fifa-ava-media img,.fifa-ava-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  object-position:center 14%;opacity:0;transition:opacity .55s ease}
+.fifa-ava-media img{object-position:center 6%}
+.fifa-ava-media .on{opacity:1}
+
+/* practice tab */
+.pr-head{flex:none;padding:6px 22px 8px}
+.pr-head .ttl{font-family:'Inter Display';font-size:22px;font-weight:600;letter-spacing:-.02em}
+.pr-head .sub{font-family:'Geist';font-size:12.5px;font-weight:400;color:var(--ink-dim);margin-top:3px}
+.pr-list{flex:1;overflow-y:auto;padding:14px 18px 80px}
+.pr-list::-webkit-scrollbar{display:none}
+.pr-card{border-radius:18px;padding:16px;border:1px solid var(--line);background:var(--bg-2);margin-bottom:12px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:transform .12s ease}
+.pr-card:active{transform:scale(.99)}
+.pr-ic{width:46px;height:46px;border-radius:13px;flex:none;display:flex;align-items:center;justify-content:center;font-size:22px}
+.pr-ic.g{background:radial-gradient(120% 120% at 30% 20%,rgba(251,191,36,.22),rgba(251,191,36,.06));border:1px solid rgba(251,191,36,.25)}
+.pr-ic.p{background:radial-gradient(120% 120% at 30% 20%,rgba(140,120,255,.22),rgba(140,120,255,.06));border:1px solid rgba(140,120,255,.25)}
+.pr-ic.b{background:radial-gradient(120% 120% at 30% 20%,rgba(96,165,250,.22),rgba(96,165,250,.06));border:1px solid rgba(96,165,250,.25)}
+.pr-tt{font-size:15px;font-weight:600;letter-spacing:-.01em}
+.pr-ss{font-family:'Geist';font-size:11.5px;font-weight:400;color:var(--ink-dim);margin-top:2px}
+.pr-go{margin-left:auto;color:var(--ink-faint);flex:none}
+.pr-section{font-family:'Geist';font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--ink-faint);margin:8px 4px 12px}
+</style>
+</head>
+<body>
+
+<div class="left-col">
+  <div class="phone">
+    <div class="screen">
+
+      <!-- ═══════════ PROFILE TAB (screenshot + banner) ═══════════ -->
+      <div class="tabview" id="tab-profile">
+      <img class="phone-bg" id="bg" src="assets/Profile-tab-new.png" alt="Stimuler profile tab">
+      <div class="gap-mask"></div>
+
+      <!-- ★ BANNER -->
+      <div class="banner-slot">
+        <div class="banner" id="banner" onclick="openSheet()">
+
+          <!-- LEFT · content -->
+          <div class="b-content">
+            <div class="b-title"><span>FIFA Conversation</span><span class="gold">Challenge</span></div>
+            <div class="b-para">One football chat a day. <b>Win the FIFA Speaker badge.</b></div>
+            <button class="b-cta" onclick="event.stopPropagation();openSheet()">Join challenge</button>
+          </div>
+
+          <!-- RIGHT · cinematic stage -->
+          <div class="stage modeB" id="stage">
+            <div class="scene" id="scene">
+              <div class="lights"></div>
+              <div class="pitch"></div>
+              <div class="goalw" id="goalw"><div class="frame"></div><div class="net"></div>
+                <div class="flash" id="flash"></div>
+              </div>
+            </div>
+            <div class="bshadow" id="bshadow"></div>
+            <img class="ball" id="ball" src="assets/ball.png" alt="">
+            <video class="vid" id="vid" src="assets/fifa26.mp4" muted playsinline preload="auto"></video>
+            <div class="flood" id="flood"></div>
+          </div>
+
+        </div>
+      </div>
+      </div><!-- /tab-profile -->
+
+      <!-- ═══════════ CHAT TAB — faithful copy of the roleplay topics screen ═══════════ -->
+      <div class="tabview active" id="tab-convo">
+        <div class="status-bar">
+          <div class="sb-time">3:34</div>
+          <div class="sb-right">
+            <svg class="sb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3 2 6"/><path d="m22 6-3-3"/></svg>
+            <svg class="sb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3 8a9 9 0 0 1 18 0c0 7 3 9 3 9H0s3-2 3-9"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            <div class="sb-net">9.10<small>MB/S</small></div>
+            <svg class="sb-ico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 18.5a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6Z"/><path d="M12 13.2c-2 0-3.9.8-5.3 2.1l1.7 1.7A5 5 0 0 1 12 15.6c1.4 0 2.6.5 3.6 1.4l1.7-1.7A7.5 7.5 0 0 0 12 13.2Z" opacity=".95"/><path d="M12 8c-3.4 0-6.5 1.4-8.7 3.6l1.7 1.7A9.8 9.8 0 0 1 12 10.4c2.8 0 5.3 1.1 7 2.9l1.7-1.7A12.3 12.3 0 0 0 12 8Z" opacity=".55"/></svg>
+            <div class="sb-net" style="font-size:8px">Vo<small>LTE</small></div>
+            <svg class="sb-ico" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="14" width="3.4" height="6" rx="1"/><rect x="7" y="10" width="3.4" height="10" rx="1"/><rect x="12" y="6" width="3.4" height="14" rx="1" opacity=".5"/><rect x="17" y="3" width="3.4" height="17" rx="1" opacity=".5"/></svg>
+            <div class="sb-batt">
+              <span style="font-size:10px">42</span>
+              <div class="sb-batt-shell"><div class="sb-batt-fill"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topics-scroll">
+          <!-- Banner -->
+          <div class="tc-banner">
+            <div class="tc-banner-glow"></div>
+            <img class="tc-banner-sarah" src="assets/roleplay/banner-sarah.png" alt="">
+            <div class="tc-banner-text">Start here to Unlock all topics to chat</div>
+          </div>
+
+          <!-- ── FIFA Challenge section ── -->
+          <div class="cv-section">
+            <div class="sec-ttl">FIFA Challenge</div>
+            <div class="goal-meter" title="Goals scored across your daily chats">
+              <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.45L12 17.97l-5.8 3.08 1.1-6.45-4.7-4.6 6.5-.95z"/></svg>
+              <div class="bar"><i id="goalBar"></i></div>
+              <span class="num" id="goalNum">0</span>
+            </div>
+          </div>
+
+          <!-- FIFA challenge — the story-ring row (was the active "Introduction") -->
+          <div class="topic-row topic-active" id="fifaStory" onclick="openSheet()">
+            <div class="fifa-ava">
+              <div class="fifa-ava-gap"></div>
+              <div class="fifa-ava-media">
+                <img id="fifaAvaImg" class="on" src="assets/sarah-fifa-cut.png" alt="Sarah">
+                <video id="fifaAvaVid" muted playsinline preload="auto" src="assets/sarah-fifa.mp4"></video>
+              </div>
+            </div>
+            <div class="fifa-meta">
+              <div class="fifa-day" id="fifaDay">Day 0</div>
+              <div class="topic-label fifa-lbl">Talk about your favourite teams and players</div>
+            </div>
+          </div>
+
+          <!-- ── Free Topics section ── -->
+          <div class="cv-section">
+            <div class="sec-ttl">Free Topics</div>
+            <div class="goal-meter" title="Stars earned">
+              <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.45L12 17.97l-5.8 3.08 1.1-6.45-4.7-4.6 6.5-.95z"/></svg>
+              <div class="bar"><i id="starBar"></i></div>
+              <span class="num" id="starNum">0</span>
+            </div>
+          </div>
+
+          <!-- Other topics (rendered from data) -->
+          <div class="topics-list" id="topics-list"></div>
+        </div>
+      </div><!-- /tab-convo -->
+
+      <!-- BACKDROP + SHEET -->
+      <div class="backdrop" id="backdrop" onclick="closeSheet()"></div>
+
+      <div class="sheet" id="sheet">
+        <img class="sheet-trophy" id="sheetTrophy" src="assets/trophy-fifa.png" alt="">
+        <div class="grip"></div>
+        <div class="steps" id="steps"><div class="sd"></div><div class="sd"></div><div class="sd"></div></div>
+
+        <div class="sheet-scroll" id="scroll">
+
+          <div class="pane on" id="pane-intro">
+            <div class="players"><img src="assets/players.png" alt=""></div>
+            <div class="in-title">FIFA <em>World Cup</em><br>Conversation Challenge</div>
+            <div class="in-lede">One <b>football conversation</b> a day with Sarah. Chat the games, win the badge.</div>
+          </div>
+
+          <div class="pane" id="pane-team">
+            <div class="pane-head">
+              <div class="ph-step">Step 1 of 3 · Your team</div>
+              <div class="ph-q">Who are you <em>riding with?</em></div>
+              <div class="ph-hint">Pick one or more. Search or scroll all 48.</div>
+            </div>
+            <div class="team-search">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+              <input id="teamSearch" type="text" autocomplete="off" placeholder="Search teams or groups…" oninput="filterTeams(this.value)">
+            </div>
+            <div class="team-list" id="teamList"></div>
+          </div>
+
+          <div class="pane" id="pane-players">
+            <div class="pane-head">
+              <div class="ph-step">Step 2 of 3 · Your players</div>
+              <div class="ph-q">Whose <em>magic</em> do you love?</div>
+              <div class="ph-hint">Your teams come first. Search for anyone else.</div>
+            </div>
+            <div class="team-search">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+              <input id="playerSearch" type="text" autocomplete="off" placeholder="Search players or teams…" oninput="filterPlayers(this.value)">
+            </div>
+            <div class="player-list" id="playerList"></div>
+          </div>
+
+          <div class="pane" id="pane-notif">
+            <div class="pane-head">
+              <div class="ph-step">Step 3 of 3 · Matchday nudges</div>
+              <div class="ph-q">Never miss a <em>matchday</em></div>
+              <div class="ph-hint">One nudge when your topic is hot. Never spammy.</div>
+            </div>
+            <div class="notif-carousel" id="notifCarousel">
+
+              <!-- PRE-MATCH · anticipation / prediction (Sarah excitement video) -->
+              <div class="ncard" data-slot="0">
+                <div class="nmedia-wrap">
+                  <div class="nmedia nmedia-sarah">
+                    <video src="assets/sarah-excited.mp4" poster="assets/sarah.png" muted loop autoplay playsinline></video>
+                  </div>
+                  <span class="nbadge"><img src="assets/stimuler-badge.png" alt=""></span>
+                </div>
+                <div class="ntext">
+                  <div class="ntag">⏳ Pre-match · in 1 hour</div>
+                  <div class="nt">Big one tonight: ARG vs BRA 🔮</div>
+                  <div class="ns">Predict the score with Sarah before kickoff. Nail it for a bonus.</div>
+                </div>
+              </div>
+
+              <!-- LIVE · in-play reaction (live score box) -->
+              <div class="ncard" data-slot="1">
+                <div class="nmedia-wrap">
+                  <div class="nmedia nscore">
+                    <div class="nsc-line"><span class="fl">🇦🇷</span><span class="sc">1</span></div>
+                    <div class="nsc-div"></div>
+                    <div class="nsc-line"><span class="fl">🇵🇹</span><span class="sc">0</span></div>
+                  </div>
+                  <span class="nbadge"><img src="assets/stimuler-badge.png" alt=""></span>
+                </div>
+                <div class="ntext">
+                  <div class="ntag live"><span class="lvdot"></span>Live now</div>
+                  <div class="nt">GOAL! Argentina lead 1–0 🔥</div>
+                  <div class="ns">Sarah's got a take. 2 min to react in English?</div>
+                </div>
+              </div>
+
+              <!-- POST-MATCH · result recap (player gif) -->
+              <div class="ncard" data-slot="2">
+                <div class="nmedia-wrap">
+                  <div class="nmedia nmedia-post">
+                    <img src="assets/post-celebration.gif" alt="" onerror="this.src='assets/players/30981.png'">
+                  </div>
+                  <span class="nbadge"><img src="assets/stimuler-badge.png" alt=""></span>
+                </div>
+                <div class="ntext">
+                  <div class="ntag">✓ Full-time</div>
+                  <div class="nt">Argentina win it, 3–0 🏆</div>
+                  <div class="ns">Break down the match with Sarah. Your verdict and why.</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="pane" id="pane-done">
+            <div class="done-wrap">
+              <div class="done-badge" id="fifaBadge"><img src="assets/fifa-badge.png" alt="FIFA Stimuler Champion 2026"></div>
+              <div class="done-t">Ready for your challenge?</div>
+              <div class="done-s">Your <b>World Cup dashboard</b> is ready, let's get started.</div>
+              <div class="done-chips" id="done-chips"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="sheet-foot">
+          <div class="foot-row">
+            <button class="sback" id="sback" onclick="prevStep()">‹</button>
+            <button class="sbtn" id="primary" onclick="nextStep()">Join the Challenge <span>→</span></button>
+          </div>
+          <button class="sbtn ghost" id="ghost" onclick="ghostAction()" style="display:none">Skip for now</button>
+        </div>
+      </div>
+
+      <div class="toast" id="toast"><span class="ti">✓</span><span id="toast-tx">You're in the Challenge</span></div>
+
+      <!-- ═══════════ DASHBOARD (in-flow view) ═══════════ -->
+      <div class="dash" id="dash">
+        <div class="d-status">
+          <span>9:41</span>
+          <div class="dots">
+            <svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="6" width="3" height="5" rx="1" fill="#fff"/><rect x="4.5" y="4" width="3" height="7" rx="1" fill="#fff"/><rect x="9" y="2" width="3" height="9" rx="1" fill="#fff"/><rect x="13.5" y="0" width="3" height="11" rx="1" fill="#fff"/></svg>
+            <svg width="22" height="11" viewBox="0 0 22 11"><rect x="0.5" y="0.5" width="18" height="10" rx="2.5" fill="none" stroke="#fff" stroke-opacity=".5"/><rect x="2" y="2" width="14" height="7" rx="1.3" fill="#fff"/></svg>
+          </div>
+        </div>
+        <div class="header">
+          <div class="h-back" onclick="hideDash()">‹</div>
+          <div class="h-title">World Cup Challenge</div>
+          <div class="h-actions">
+            <div class="h-ic" title="Share"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4M8.5 7.5 12 4l3.5 3.5"/><path d="M5 12v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg></div>
+            <div class="h-ic" title="Settings"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+          </div>
+        </div>
+        <div class="content">
+
+          <!-- ═══ LIVE MATCH HERO ═══ -->
+          <div class="top-banner"><img src="assets/fifa-top-banner.jpg" alt="FIFA World Cup Conversation Challenge 2026"></div>
+
+          <!-- ═══ PROGRESS ═══ -->
+          <div class="wc-progress">
+            <img class="wcp-badge" id="wcpBadge" src="assets/fifa-badge.png" alt="">
+            <div class="wcp-main">
+              <div class="wcp-t">World Cup Speaking Challenge</div>
+              <div class="wcp-s">Speak your way to the final 🏆</div>
+              <div class="wcp-bar"><div class="wcp-fill" id="wcpFill"></div></div>
+            </div>
+          </div>
+
+          <!-- ═══ DAY STACK ═══ -->
+          <div class="days" style="margin-top:24px">
+
+            <!-- Day 1 · active -->
+            <div class="day-row" id="day1Row">
+              <div class="tl"><div class="tl-dot cur" id="day1Dot"></div><div class="tl-line"></div></div>
+              <div class="day-card cur active-day" id="day1Card"><!-- rendered by renderDay1Active() --></div>
+            </div>
+
+            <!-- Day 2 · locked -->
+            <div class="day-row" id="day2Row">
+              <div class="tl"><div class="tl-dot" id="day2Dot"></div><div class="tl-line"></div></div>
+              <div class="day-card locked" id="day2Card">
+                <div class="dc-lock"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="3" y="7" width="10" height="8" rx="2" fill="rgba(255,255,255,.16)"/><path d="M5 7V5a3 3 0 0 1 6 0v2" stroke="rgba(255,255,255,.22)" stroke-width="1.5"/></svg>
+                  <div><div class="dc-title">Day 2</div><div class="dc-sub"><span class="ai-star">✦</span>Generated after Day 1 from your players and the latest matches.</div></div></div>
+              </div>
+            </div>
+
+            <!-- Day 3 · locked -->
+            <div class="day-row">
+              <div class="tl"><div class="tl-dot"></div><div class="tl-line"></div></div>
+              <div class="day-card locked">
+                <div class="dc-lock"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="3" y="7" width="10" height="8" rx="2" fill="rgba(255,255,255,.16)"/><path d="M5 7V5a3 3 0 0 1 6 0v2" stroke="rgba(255,255,255,.22)" stroke-width="1.5"/></svg>
+                  <div><div class="dc-title">Day 3</div><div class="dc-sub"><span class="ai-star">✦</span>Generated from your interests, recent results and the matches that matter to you.</div></div></div>
+              </div>
+            </div>
+
+            <!-- Day 4 · locked -->
+            <div class="day-row">
+              <div class="tl"><div class="tl-dot"></div><div class="tl-line"></div></div>
+              <div class="day-card locked">
+                <div class="dc-lock"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="3" y="7" width="10" height="8" rx="2" fill="rgba(255,255,255,.16)"/><path d="M5 7V5a3 3 0 0 1 6 0v2" stroke="rgba(255,255,255,.22)" stroke-width="1.5"/></svg>
+                  <div><div class="dc-title">Day 4</div><div class="dc-sub"><span class="ai-star">✦</span>Generated from your interests and the latest matches.</div></div></div>
+              </div>
+            </div>
+
+            <!-- Final -->
+            <div class="day-row">
+              <div class="tl"><div class="tl-dot"></div></div>
+              <div class="final-card"><div><div class="final-t">The Final</div><div class="final-s">Speak through to earn the FIFA Speaker badge 🏆</div></div></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════ CONVERSATION (Day 1 · Messi) — the real stimuler-flow, embedded ═══════════ -->
+      <div class="convo" id="convo">
+        <iframe id="convoFrame" class="convo-frame" title="Day 1 conversation"></iframe>
+        <div class="cv-exit" onclick="exitConvo()" title="Back"></div>
+      </div>
+
+      <!-- ═══════════ DAY 1 COMPLETE celebration ═══════════ -->
+      <div class="day-done" id="dayDone">
+        <div class="dd-stage"><div class="dd-badge" id="ddBadge"><div class="dd-face dd-front"></div><div class="dd-face dd-back"></div></div></div>
+        <div class="dd-bottom">
+          <div class="dd-prog-wrap">
+            <div class="dd-prog"><div class="dd-prog-fill" id="ddProgFill"></div></div>
+            <div class="dd-prog-cap"><span>Day 0</span><span><b>Day 1 of 39</b> ✓</span></div>
+          </div>
+          <div class="dd-t">Day 1 is done 🎉</div>
+          <div class="dd-s">You're one step closer to your FIFA Speaker badge. Come back tomorrow for a fresh topic.</div>
+          <button class="dd-cta" onclick="closeDayDone()">I'll come tomorrow</button>
+        </div>
+      </div>
+
+      <!-- ═══════════ SHARE SCREEN (post-results, before dashboard) ═══════════ -->
+      <div class="share-screen" id="shareScreen">
+        <div class="ss-top"><div class="ss-skip" onclick="closeShare()">Skip for now</div></div>
+
+        <div class="ss-card" id="ssCard">
+          <div class="ss-saysrow">
+            <div class="ss-circ"><img src="assets/sarah.png" alt="Sarah"></div>
+            <div class="ss-bubble"><b>Ram</b> beat me! Absolute Messi superfan — he won the whole “who’s the GOAT” debate 😤</div>
+          </div>
+          <div class="ss-stage">
+            <img class="ss-sticker s1" src="assets/sarah-sad-1.png" alt="">
+            <div class="ss-hero"><img src="assets/messi-flykiss.gif" alt="Messi"></div>
+            <img class="ss-sticker s2" src="assets/sarah-sad-2.png" alt="">
+          </div>
+          <div class="ss-brand">
+            <img src="assets/stimuler-logo.png" alt="Stimuler">
+            <span class="ss-handle">@stimuler</span>
+          </div>
+        </div>
+
+        <div class="ss-dots"><i class="on"></i><i></i><i></i><i></i></div>
+        <div class="ss-foot">
+          <button class="ss-share" onclick="openShareSheet()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg>
+            Share your win
+          </button>
+        </div>
+
+        <!-- channel picker -->
+        <div class="ss-sheet-back" id="ssSheetBack" onclick="closeShareSheet()"></div>
+        <div class="ss-sheet" id="ssSheet">
+          <div class="grip"></div>
+          <div class="ss-sheet-t">Share to</div>
+          <div class="ss-sheet-s">Story &amp; status share the animated card · chats share a still</div>
+          <div class="ss-chans">
+            <div class="ss-chan" onclick="doShare('Instagram story')"><div class="ss-ci ig">📸</div><div class="lbl">Story</div><div class="fmt">GIF</div></div>
+            <div class="ss-chan" onclick="doShare('WhatsApp status')"><div class="ss-ci wa">💬</div><div class="lbl">Status</div><div class="fmt">GIF</div></div>
+            <div class="ss-chan" onclick="doShare('WhatsApp chat')"><div class="ss-ci wa">📨</div><div class="lbl">Chat</div><div class="fmt">Still</div></div>
+            <div class="ss-chan" onclick="doShare('your camera roll')"><div class="ss-ci sv">⬇️</div><div class="lbl">Save</div><div class="fmt">GIF</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════ BOTTOM TAB BAR ═══════════ -->
+      <div class="tabbar" id="tabbar">
+        <div class="tab on" data-tab="convo" onclick="switchTab('convo')">
+          <div class="tb-ic"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+          Chat
+        </div>
+        <div class="tab" data-tab="profile" onclick="switchTab('profile')">
+          <div class="tb-ic"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          Profile
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- replay (outside the phone) -->
+  <div class="mode-chips">
+    <div class="replay" onclick="runCycle()" title="Replay the shot">↻ Replay shot</div>
+  </div>
+</div>
+
+
+<script src="players-data.js"></script>
+<script>
+/* ═══════════ BANNER ANIMATION LOOP ═══════════ */
+const BASE=130;                       // ball/shadow base px (scale 1)
+const mode='B';                        // locked: perspective pitch replay
+const stage=document.getElementById('stage');
+const scene=document.getElementById('scene');
+const goalw=document.getElementById('goalw');
+const flash=document.getElementById('flash');
+const ball=document.getElementById('ball');
+const bshadow=document.getElementById('bshadow');
+const vid=document.getElementById('vid');
+const flood=document.getElementById('flood');
+let balls=[], ballAnim=null, shadowAnim=null;
+const timers=[];
+const later=(fn,ms)=>timers.push(setTimeout(fn,ms));
+const clearTimers=()=>{timers.forEach(clearTimeout);timers.length=0;};
+
+/* football-emoji flood grid */
+function buildFlood(){
+  flood.innerHTML=''; balls=[];
+  const W=stage.clientWidth||150, H=stage.clientHeight||160;
+  const cols=4, rows=5, cw=W/cols, ch=H/rows, size=Math.max(cw,ch)*1.1;
+  for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
+    const s=document.createElement('span'); s.textContent='⚽'; s.style.fontSize=size+'px';
+    const tx=c*cw+(cw-size)/2, ty=r*ch+(ch-size)/2, fromTop=r<rows/2;
+    s.style.transform=`translate(${tx}px, ${fromTop?-H*1.1:H*1.4}px)`;
+    flood.appendChild(s); balls.push({el:s,tx,ty,fromTop,W,H});
+  }
+}
+function floodIn(){ balls.forEach(b=>{ const startY=b.fromTop?-b.H*1.1:b.H*1.4, d=Math.abs(b.ty-b.H/2);
+  b.el.style.opacity=1;
+  b.el.animate([{transform:`translate(${b.tx}px,${startY}px) rotate(0)`},
+                {transform:`translate(${b.tx}px,${b.ty}px) rotate(${b.fromTop?200:-200}deg)`}],
+    {duration:470,delay:d*0.7,easing:'cubic-bezier(.45,0,.25,1)',fill:'forwards'}); }); }
+function floodOut(){ balls.forEach(b=>{ const endY=b.fromTop?b.H*1.4:-b.H*1.1;
+  b.el.animate([{transform:`translate(${b.tx}px,${b.ty}px)`,opacity:1},
+                {transform:`translate(${b.tx}px,${endY}px)`,opacity:0}],
+    {duration:520,delay:Math.random()*120,easing:'cubic-bezier(.5,0,.2,1)',fill:'forwards'}); }); }
+
+/* keyframe recipe (B) — quick fly-in, then a VERY fast, smooth, hard-spinning strike into the net */
+function recipe(W,H){
+  return [
+    {o:0,   cx:W+10, cy:H+14, s:.9,  r:0,    b:.7, op:0, e:'cubic-bezier(.3,0,.5,.6)'},     // ── FLY in
+    {o:.16, cx:W*.8, cy:H*.82,s:1.0, r:90,   b:.7, op:1, e:'cubic-bezier(.3,.1,.3,1)'},
+    {o:.30, cx:W*.77,cy:H*.79,s:1.02,r:170,  b:.3, op:1, e:'cubic-bezier(.4,0,.85,.45)'},   //    brief settle → wind-up
+    /* one continuous, hard-ACCELERATING arc — fastest at the moment of impact (no deceleration) */
+    {o:.60, cx:W*.66,cy:H*.63,s:.58, r:680,  b:.8, op:1, e:'cubic-bezier(.45,0,.9,.5)'},     // ── SPIN + curve
+    {o:.85, cx:W*.56,cy:H*.48,s:.34, r:1240, b:.7, op:1, e:'cubic-bezier(.55,0,1,1)'},       // ── SHRINK + drive in
+    {o:1,   cx:W*.5, cy:H*.355,s:.2, r:1860, b:.5, op:1, e:'linear'},                         // ── HIT — buries it in the net
+  ];
+}
+
+function resetStage(){
+  clearTimers();
+  if(ballAnim)ballAnim.cancel(); if(shadowAnim)shadowAnim.cancel();
+  ball.style.opacity=0; bshadow.style.opacity=0;
+  scene.style.opacity=1; flash.classList.remove('on'); goalw.classList.remove('hit');
+  vid.classList.remove('on'); try{vid.pause();vid.currentTime=0;}catch(e){}
+  buildFlood();
+}
+
+const DUR=2050, T0=80;
+function runCycle(){
+  resetStage();
+  const W=stage.clientWidth||150, H=stage.clientHeight||160, half=BASE/2;
+  const kf=recipe(W,H);
+  const ballKf=kf.map(k=>({offset:k.o, easing:k.e,
+    transform:`translate(${k.cx-half}px,${k.cy-half}px) scale(${k.s}) rotate(${k.r}deg)`,
+    filter:`drop-shadow(0 4px 8px rgba(0,0,0,.5)) blur(${k.b}px)`, opacity:k.op}));
+  const showShadow = mode==='B';
+  const shKf=kf.map(k=>{ const cy=k.cy + BASE*k.s*0.40;
+    return {offset:k.o, easing:k.e,
+      transform:`translate(${k.cx-half}px,${cy-half}px) scale(${k.s*1.25},${k.s*0.34})`,
+      opacity: showShadow ? Math.min(.5,k.s*0.5)*k.op : 0}; });
+
+  later(()=>{
+    ballAnim=ball.animate(ballKf,{duration:DUR,fill:'forwards'});
+    shadowAnim=bshadow.animate(shKf,{duration:DUR,fill:'forwards'});
+  },T0);
+
+  // impact fires exactly as the ball buries it — no frozen pause
+  later(()=>{ flash.classList.add('on'); goalw.classList.add('hit');
+              later(()=>goalw.classList.remove('hit'),300); }, T0+DUR-10);
+  // football flood wipe → swap to video → reveal
+  later(floodIn,            T0+DUR+40);
+  later(()=>{ scene.style.opacity=0;
+              // hide the ball/shadow so they don't show through the screen-blended video
+              if(ballAnim)ballAnim.cancel(); if(shadowAnim)shadowAnim.cancel();
+              ball.style.opacity=0; bshadow.style.opacity=0;
+              vid.classList.add('on');
+              try{vid.currentTime=0; const p=vid.play(); if(p&&p.catch)p.catch(()=>{});}catch(e){} },
+        T0+DUR+440);
+  later(floodOut,           T0+DUR+640);
+  // fallback in case 'ended' never fires
+  const vdur=(vid.duration&&isFinite(vid.duration))?vid.duration*1000:2000;
+  later(()=>{ if(vid.classList.contains('on')) endVideo(); }, T0+DUR+560+vdur+350);
+}
+function endVideo(){ vid.classList.remove('on'); later(runCycle,650); }
+vid.addEventListener('ended',()=>{ clearTimers(); endVideo(); });
+
+window.addEventListener('load',()=>{ buildFlood(); runCycle(); });
+
+/* ═══════════ SHEET STATE MACHINE ═══════════ */
+let step=0;
+const panes=['pane-intro','pane-team','pane-players','pane-notif','pane-done'];
+const team=new Set(), players=new Set();
+const $=id=>document.getElementById(id);
+function openSheet(){ $('backdrop').classList.add('on'); $('sheet').classList.add('on'); $('bg').classList.add('dim'); $('sheetTrophy').classList.toggle('show',step===0); }
+function closeSheet(){ $('backdrop').classList.remove('on'); $('sheet').classList.remove('on'); $('bg').classList.remove('dim'); $('sheetTrophy').classList.remove('show'); }
+function render(dir){
+  panes.forEach((p,i)=>{ const el=$(p); el.classList.toggle('on',i===step); el.classList.toggle('back',i===step&&dir<0); });
+  $('scroll').scrollTop=0;
+  const onboarding=step>=1&&step<=3;
+  const steps=$('steps'); steps.classList.toggle('show',onboarding);
+  steps.querySelectorAll('.sd').forEach((d,i)=>{ d.classList.toggle('on',i===step-1); d.classList.toggle('done',i<step-1); });
+  $('sback').classList.toggle('show',onboarding);
+  if(step===2) buildPlayers();
+  $('sheetTrophy').classList.toggle('show',step===0 && $('sheet').classList.contains('on'));
+  const ghost=$('ghost'); ghost.style.display=step<=3?'flex':'none'; ghost.textContent=step===3?'Maybe later':'Skip for now';
+  const p=$('primary');
+  if(step===0) p.textContent='Join the Challenge';
+  else if(step===1||step===2) p.textContent='Continue';
+  else if(step===3) p.textContent='Allow notifications';
+  else if(step===4){ p.textContent='Go to my dashboard'; p.onclick=goDashboard; }
+  if(step!==4) p.onclick=nextStep;
+  p.disabled=(step===1&&team.size===0);
+}
+function nextStep(){ if(step<4){ step++; render(1); if(step===4)celebrate(); } }
+function skipStep(){ if(step<4){ step++; render(1); if(step===4)celebrate(); } }
+function ghostAction(){ if(step===0){ closeSheet(); } else { skipStep(); } }
+function prevStep(){ if(step>0){ step--; render(-1); } }
+function goDashboard(){ $('dash').classList.add('on'); ensureDay1Card(); setTimeout(closeSheet,120); }
+function hideDash(){ $('dash').classList.remove('on'); }
+
+/* ═══════════ DAY CARDS — every active day uses the 4-option pick card → done state ═══════════ */
+const DAY_DATA={
+  1:{ opts:[
+    {thumb:'🇨🇻', text:"I think Cape Verde's draw was no fluke..is it ??"},
+    {img:'assets/players/737066.png', text:"I'm calling it: Haaland wins the Golden Boot.. what do you think ?"},
+    {img:'assets/sarah-fifa-cut.png', text:"I bet your team mexico, gets knocked out early.. he.he.."},
+    {img:'assets/players/30981.png', text:"I think your favorite 'Messi' is overrated.. ready to challenge me ?"}
+  ]},
+  2:{ opts:[
+    {thumb:'🇦🇷', text:"Argentina take this one 2–0.. calling it now"},
+    {thumb:'🇧🇷', text:"Brazil bottle it again tonight.. classic, right ?"},
+    {img:'assets/players/30981.png', text:"Messi runs the whole game.. you still doubt him ?"},
+    {thumb:'🟥', text:"The ref ruins this one.. watch the VAR drama"}
+  ]}
+};
+const DAY_PICK={1:3, 2:3};   // 4th option selected by default on each active day
+function dayThumb(o){ return o.img ? '<img src="'+o.img+'" alt="">' : o.thumb; }
+function renderDayActive(day){
+  const card=document.getElementById('day'+day+'Card'); if(!card) return;
+  const opts=DAY_DATA[day].opts, pick=DAY_PICK[day];
+  card.className='day-card cur active-day';
+  const rows=opts.map((o,i)=>
+    '<div class="pc-opt'+(i===pick?' sel':'')+'" onclick="pickDay('+day+','+i+')">'
+    +'<div class="pc-thumb">'+dayThumb(o)+'</div>'
+    +'<div class="pc-otext">'+o.text+'</div>'
+    +'<div class="pc-radio"></div></div>').join('');
+  card.innerHTML='<div class="pc-eyebrow">Day '+day+' · Today</div>'
+    +'<div class="pc-title">Pick one to finish today’s conversation</div>'
+    +'<div class="pc-opts">'+rows+'</div>'
+    +'<button class="pc-cta'+(pick<0?' off':'')+'" onclick="startDay('+day+')">Start Day '+day+'</button>';
+}
+function pickDay(day,i){ DAY_PICK[day]=(DAY_PICK[day]===i?-1:i); renderDayActive(day); }  // tap selected = deselect
+function startDay(day){ if(DAY_PICK[day]<0) return; if(day===1) startConvo(); }
+function renderDayDone(day){
+  const card=document.getElementById('day'+day+'Card'); if(!card) return;
+  card.classList.remove('active-day','cur'); card.classList.add('done-card');
+  const pick=DAY_PICK[day]<0?3:DAY_PICK[day], o=DAY_DATA[day].opts[pick];
+  card.innerHTML='<div class="d2-head"><div>'
+    +'<div class="d2-eyebrow">Day '+day+' · Done</div>'
+    +'<div class="d2-title">Well done! Nailing today</div></div>'
+    +'<div class="d2-goals">3 <img src="assets/ball.png" style="width:17px;height:17px;vertical-align:-3px"></div></div>'
+    +'<div class="d2-opt"><div class="pc-thumb">'+dayThumb(o)+'</div>'
+    +'<div class="pc-otext">'+o.text+'</div>'
+    +'<div class="d2-check">✓</div></div>';
+}
+/* back-compat aliases used elsewhere in the flow */
+function renderDay1Active(){ renderDayActive(1); }
+function renderDay1Done(){ renderDayDone(1); }
+
+/* ═══════════ CONVERSATION — embeds the real stimuler-flow (Day 1 · Messi) ═══════════ */
+function startConvo(){ const f=document.getElementById('convoFrame'); f.src='day1-conversation.html'; document.getElementById('convo').classList.add('on'); }
+function exitConvo(){ document.getElementById('convo').classList.remove('on'); setTimeout(()=>{ document.getElementById('convoFrame').src='about:blank'; },520); }
+
+/* conversation "Continue" → return to dashboard + play the Day 1 completion */
+/* Day-1 results "Continue" → memefied SHARE SCREEN first, then the dashboard celebration */
+window.addEventListener('message', e=>{ if(e.data==='day1-done'){ exitConvo(); setTimeout(openShare, 560); } });
+
+function openShare(){ document.getElementById('shareScreen').classList.add('on'); }
+function closeShare(){
+  const ss=document.getElementById('shareScreen');
+  closeShareSheet();
+  ss.classList.remove('on');
+  setTimeout(showDayDone, 460);   // continue into the Day-1 badge celebration → dashboard
+}
+function openShareSheet(){ document.getElementById('ssSheetBack').classList.add('on'); document.getElementById('ssSheet').classList.add('on'); }
+function closeShareSheet(){ document.getElementById('ssSheetBack').classList.remove('on'); document.getElementById('ssSheet').classList.remove('on'); }
+function doShare(where){
+  closeShareSheet();
+  showToast('Shared to '+where+' 🎉');
+  setTimeout(closeShare, 1100);   // after sharing, move on to the dashboard
+}
+
+function showDayDone(){
+  const dash=document.getElementById('dash');
+  const card=document.getElementById('day1Card');
+  if(dash && card) dash.scrollTop = Math.max(0, card.offsetTop - 270);
+  setTimeout(()=>{
+    completeDay1Card();
+    setTimeout(()=> ballCardToBadge(()=> setTimeout(openCelebration, 280)), 560);
+  }, 180);
+}
+function completeDay1Card(){
+  const dot=document.getElementById('day1Dot');
+  renderDay1Done();
+  if(dot){ dot.classList.remove('cur'); dot.classList.add('is-done'); dot.textContent='✓'; }
+  // keep the Chat tab's day indicator + goal meter in sync (Day 1 = 3 goals)
+  wcDay=1; wcGoals=3; if(typeof syncWC==='function') syncWC();
+}
+function ballCardToBadge(done){
+  const screenEl=document.querySelector('.screen'); const sR=screenEl.getBoundingClientRect();
+  const card=document.getElementById('day1Card'), badge=document.getElementById('wcpBadge');
+  if(!card || !badge){ if(done) done(); return; }
+  const cR=card.getBoundingClientRect(), bR=badge.getBoundingClientRect();
+  const sx=cR.left-sR.left+cR.width/2-15, sy=cR.top-sR.top+8;
+  const ex=bR.left-sR.left+bR.width/2-15, ey=bR.top-sR.top+bR.height/2-15;
+  const ball=document.createElement('div'); ball.className='cardball'; screenEl.appendChild(ball);
+  const mx=(sx+ex)/2-30, my=Math.min(sy,ey)-70;
+  ball.animate([
+    {transform:`translate(${sx}px,${sy}px) scale(1) rotate(0deg)`,opacity:0,offset:0},
+    {transform:`translate(${sx}px,${sy}px) scale(1) rotate(20deg)`,opacity:1,offset:.08},
+    {transform:`translate(${mx}px,${my}px) scale(.9) rotate(380deg)`,opacity:1,offset:.55},
+    {transform:`translate(${ex}px,${ey}px) scale(.5) rotate(760deg)`,opacity:1,offset:.95},
+    {transform:`translate(${ex}px,${ey}px) scale(.3) rotate(800deg)`,opacity:0,offset:1},
+  ],{duration:760,easing:'cubic-bezier(.42,0,.5,1)',fill:'forwards'});
+  setTimeout(()=>{
+    ball.remove();
+    badge.classList.add('pop'); setTimeout(()=>badge.classList.remove('pop'),520);
+    const fill=document.getElementById('wcpFill'); if(fill) fill.style.width='14%';
+    if(done) done();
+  }, 790);
+}
+function openCelebration(){
+  const dd=document.getElementById('dayDone'), badge=document.getElementById('ddBadge');
+  dd.classList.add('on'); dd.classList.remove('show-copy');
+  badge.classList.remove('reveal'); void badge.offsetWidth;
+  setTimeout(()=> badge.classList.add('reveal'), 220);   // scale in → one slow 3D turn → settle face-front
+  setTimeout(ddConfetti, 220 + 1900);                    // confetti as the spin finishes
+  setTimeout(()=> dd.classList.add('show-copy'), 220 + 2150);  // then progress bar + copy + CTA
+}
+function ddConfetti(){
+  const host=document.getElementById('dayDone'); const H=host.getBoundingClientRect().height+50;
+  const colors=['#FBBF24','#FDE047','#ffffff','#F59E0B','#e879f9','#60a5fa','#34d399'];
+  for(let i=0;i<60;i++){
+    const p=document.createElement('div'); p.className='dd-paper';
+    p.style.left=(Math.random()*100)+'%'; p.style.background=colors[i%colors.length];
+    p.style.borderRadius=Math.random()<.3?'50%':'1px'; host.appendChild(p);
+    const dur=2800+Math.random()*2400, dx=(Math.random()-.5)*130, rot=Math.random()*1000;
+    p.animate([{transform:'translate(0,-24px) rotate(0)',opacity:1},{transform:`translate(${dx}px,${H}px) rotate(${rot}deg)`,opacity:.85}],
+      {duration:dur,delay:Math.random()*700,easing:'cubic-bezier(.3,.5,.5,1)',fill:'forwards'});
+    setTimeout(()=>p.remove(), dur+800);
+  }
+}
+function closeDayDone(){
+  const dd=document.getElementById('dayDone');
+  dd.classList.remove('on','show-copy');
+  setTimeout(()=>{ document.getElementById('ddBadge').classList.remove('reveal');
+    const pf=document.getElementById('ddProgFill'); if(pf) pf.style.width='';
+    dd.querySelectorAll('.dd-paper').forEach(e=>e.remove()); unlockDay2(); }, 560);
+}
+function unlockDay2(){
+  const card=document.getElementById('day2Card'), dot=document.getElementById('day2Dot');
+  if(card){ card.classList.remove('locked'); renderDayActive(2); }   // same 4-option pick card as Day 1
+  if(dot){ dot.classList.add('cur'); }
+  // advance the roadmap line from the completed Day 1 down to the now-active Day 2
+  const seg=document.querySelector('#day1Row .tl-line');
+  if(seg){ void seg.offsetWidth; setTimeout(()=>seg.classList.add('filled'),120); }
+  const dash=document.getElementById('dash'); if(dash) dash.scrollTop=0;
+}
+/* dashboard carousel */
+(function(){
+  const track=$('track'), dots=[...document.querySelectorAll('#dots .d')];
+  if(!track) return; let i=0; const N=dots.length;
+  function go(n){ i=(n+N)%N; track.style.transform=`translateX(-${i*100}%)`; dots.forEach((d,k)=>d.classList.toggle('on',k===i)); }
+  dots.forEach(d=>d.addEventListener('click',()=>{ go(+d.dataset.i); restart(); }));
+  let timer; function restart(){ clearInterval(timer); timer=setInterval(()=>go(i+1),4200); } restart();
+  let sx=null;
+  track.addEventListener('pointerdown',e=>sx=e.clientX);
+  track.addEventListener('pointerup',e=>{ if(sx==null)return; const dx=e.clientX-sx; if(Math.abs(dx)>40){ go(i+(dx<0?1:-1)); restart(); } sx=null; });
+})();
+/* ── all 48 teams across the 12 groups (A–L) ── */
+const TEAMS=[
+  ['A',[['Mexico','🇲🇽'],['South Africa','🇿🇦'],['South Korea','🇰🇷'],['Czechia','🇨🇿']]],
+  ['B',[['Canada','🇨🇦'],['Bosnia-Herzegovina','🇧🇦'],['Qatar','🇶🇦'],['Switzerland','🇨🇭']]],
+  ['C',[['Brazil','🇧🇷'],['Morocco','🇲🇦'],['Haiti','🇭🇹'],['Scotland','🏴󠁧󠁢󠁳󠁣󠁴󠁿']]],
+  ['D',[['United States','🇺🇸'],['Paraguay','🇵🇾'],['Australia','🇦🇺'],['Türkiye','🇹🇷']]],
+  ['E',[['Germany','🇩🇪'],['Curaçao','🇨🇼'],['Ivory Coast','🇨🇮'],['Ecuador','🇪🇨']]],
+  ['F',[['Netherlands','🇳🇱'],['Japan','🇯🇵'],['Sweden','🇸🇪'],['Tunisia','🇹🇳']]],
+  ['G',[['Belgium','🇧🇪'],['Egypt','🇪🇬'],['Iran','🇮🇷'],['New Zealand','🇳🇿']]],
+  ['H',[['Spain','🇪🇸'],['Cape Verde','🇨🇻'],['Saudi Arabia','🇸🇦'],['Uruguay','🇺🇾']]],
+  ['I',[['France','🇫🇷'],['Senegal','🇸🇳'],['Iraq','🇮🇶'],['Norway','🇳🇴']]],
+  ['J',[['Argentina','🇦🇷'],['Algeria','🇩🇿'],['Austria','🇦🇹'],['Jordan','🇯🇴']]],
+  ['K',[['Portugal','🇵🇹'],['Congo DR','🇨🇩'],['Uzbekistan','🇺🇿'],['Colombia','🇨🇴']]],
+  ['L',[['England','🏴󠁧󠁢󠁥󠁮󠁧󠁿'],['Croatia','🇭🇷'],['Ghana','🇬🇭'],['Panama','🇵🇦']]],
+];
+function buildTeams(){
+  let h='';
+  TEAMS.forEach(([g,list])=>{
+    h+=`<div class="tl-group">Group ${g}</div>`;
+    list.forEach(([nm,fl])=>{
+      h+=`<div class="team-row" data-v="${nm}" data-s="${nm.toLowerCase()} group ${g.toLowerCase()}">`
+        +`<span class="flag"><span>${fl}</span></span><span class="nm2">${nm}</span><span class="rcheck">✓</span></div>`;
+    });
+  });
+  h+=`<div class="tl-empty" id="tlEmpty" style="display:none">No team matches that search.</div>`;
+  $('teamList').innerHTML=h;
+}
+$('teamList').addEventListener('click',e=>{ const r=e.target.closest('.team-row'); if(!r)return;
+  r.classList.toggle('sel'); const v=r.dataset.v;
+  if(r.classList.contains('sel'))team.add(v); else team.delete(v);
+  $('primary').disabled=(team.size===0); buzz(r); });
+function filterTeams(q){ q=(q||'').trim().toLowerCase(); const list=$('teamList'); let any=false;
+  list.querySelectorAll('.team-row').forEach(r=>{ const m=!q||r.dataset.s.includes(q); r.style.display=m?'':'none'; if(m)any=true; });
+  list.querySelectorAll('.tl-group').forEach(hd=>{ let n=hd.nextElementSibling,vis=false;
+    while(n&&n.classList.contains('team-row')){ if(n.style.display!=='none'){vis=true;break;} n=n.nextElementSibling; }
+    hd.style.display=vis?'':'none'; });
+  $('tlEmpty').style.display=any?'none':'block';
+}
+buildTeams();
+
+/* ── notification carousel: 3 cards loop vertically, center scales up ── */
+(function(){
+  const cards=[...document.querySelectorAll('#notifCarousel .ncard')];
+  if(!cards.length) return;
+  const POS=['pos-top','pos-center','pos-bottom'];
+  const apply=()=>cards.forEach(c=>{ const s=+c.dataset.slot; POS.forEach((p,i)=>c.classList.toggle(p,i===s)); });
+  apply();
+  setInterval(()=>{
+    cards.forEach(c=>{ const old=+c.dataset.slot; const nw=(old+2)%3;
+      if(old===0&&nw===2)c.classList.add('noanim');   // top→bottom wraps: jump, don't fly through center
+      c.dataset.slot=nw; });
+    apply();
+    requestAnimationFrame(()=>requestAnimationFrame(()=>cards.forEach(c=>c.classList.remove('noanim'))));
+  },2800);
+})();
+
+/* ── FIFA badge: gyroscope 3D tilt that follows the cursor ── */
+(function(){
+  const badge=document.getElementById('fifaBadge'); if(!badge) return;
+  const img=badge.querySelector('img');
+  const area=document.getElementById('pane-done')||badge;
+  function tilt(e){
+    const r=badge.getBoundingClientRect();
+    const cx=r.left+r.width/2, cy=r.top+r.height/2;
+    const dx=Math.max(-1,Math.min(1,(e.clientX-cx)/(r.width*1.25)));
+    const dy=Math.max(-1,Math.min(1,(e.clientY-cy)/(r.height*1.25)));
+    const max=20;
+    img.style.transition='transform .09s ease-out';
+    img.style.transform=`rotateY(${dx*max}deg) rotateX(${-dy*max}deg) translateZ(14px) scale(1.04)`;
+  }
+  function reset(){ img.style.transition='transform .55s cubic-bezier(.16,1,.3,1)'; img.style.transform='rotateY(0deg) rotateX(0deg) translateZ(0) scale(1)'; }
+  area.addEventListener('mousemove',tilt);
+  area.addEventListener('mouseleave',reset);
+})();
+
+/* ── players: top-100 get photos, everyone else a flag name-card ── */
+const TEAM_FLAG={}, TEAM_GROUP={};
+TEAMS.forEach(([g,list])=>list.forEach(([nm,fl])=>{ TEAM_FLAG[nm]=fl; TEAM_GROUP[nm]=g; }));
+function pcard(p){
+  const name=p[0], tname=p[1], id=p[2];
+  const flag=TEAM_FLAG[tname]||'⚽', g=TEAM_GROUP[tname]||'';
+  const inner = id
+    ? `<img src="assets/players/${id}.png" alt="">`
+    : `<span class="pflag">${flag}</span>`;
+  const s=(name+' '+tname+' group '+g).toLowerCase().replace(/"/g,'');
+  return `<div class="pcard" data-v="${name.replace(/"/g,'&quot;')}" data-s="${s}">`
+    +`<div class="psticker-wrap"><div class="psticker">${inner}</div><span class="pcheck">✓</span></div>`
+    +`<div class="pname">${name}</div></div>`;
+}
+function buildPlayers(){
+  const sel=[...team]; let h='';
+  const mine=PLAYERS_DATA.filter(p=>sel.includes(p[1])).sort((a,b)=>(b[2]?1:0)-(a[2]?1:0));
+  if(mine.length){ h+=`<div class="pl-head your">★ From your teams</div>`; mine.forEach(p=>h+=pcard(p)); }
+  TEAMS.forEach(([g,list])=>list.forEach(([tname,flag])=>{
+    if(sel.includes(tname))return;
+    const ps=PLAYERS_DATA.filter(p=>p[1]===tname).sort((a,b)=>(b[2]?1:0)-(a[2]?1:0));
+    if(!ps.length)return;
+    h+=`<div class="pl-head"><span class="miniflag"><span>${flag}</span></span>${tname}</div>`;
+    ps.forEach(p=>h+=pcard(p));
+  }));
+  h+=`<div class="tl-empty" id="plEmpty" style="display:none">No player matches that search.</div>`;
+  const pl=$('playerList'); pl.innerHTML=h; $('playerSearch').value='';
+  pl.querySelectorAll('.pcard').forEach(c=>{ if(players.has(c.dataset.v))c.classList.add('sel'); });
+}
+$('playerList').addEventListener('click',e=>{ const c=e.target.closest('.pcard'); if(!c)return;
+  c.classList.toggle('sel'); const v=c.dataset.v;
+  if(c.classList.contains('sel'))players.add(v); else players.delete(v); buzz(c); });
+function filterPlayers(q){ q=(q||'').trim().toLowerCase(); const list=$('playerList'); let any=false;
+  const kids=[...list.children];
+  kids.forEach(el=>{ if(el.classList.contains('pcard')){ const m=!q||el.dataset.s.includes(q); el.style.display=m?'':'none'; if(m)any=true; } });
+  for(let i=0;i<kids.length;i++){ const el=kids[i];
+    if(el.classList.contains('pl-head')){ let vis=false;
+      for(let j=i+1;j<kids.length&&!kids[j].classList.contains('pl-head');j++){ if(kids[j].classList.contains('pcard')&&kids[j].style.display!=='none'){vis=true;break;} }
+      el.style.display=vis?'':'none'; } }
+  $('plEmpty').style.display=any?'none':'block';
+}
+function buzz(el){ el.style.transform='scale(.9)'; setTimeout(()=>el.style.transform='',120); }
+function celebrate(){ const chips=$('done-chips'); chips.innerHTML='';
+  [...team].slice(0,2).forEach(t=>chips.appendChild(chip('🏟️ '+t)));
+  [...players].slice(0,2).forEach(p=>chips.appendChild(chip('⚽ '+p)));
+  chips.appendChild(chip('🔔 Nudges on')); confetti(); }
+function chip(tx){ const d=document.createElement('div'); d.className='done-chip'; d.textContent=tx; return d; }
+function confetti(){ const colors=['#FBBF24','#FDE047','#F59E0B','#fff','#D97706']; const host=$('sheet');
+  for(let i=0;i<46;i++){ const c=document.createElement('div'); c.className='confetti';
+    c.style.left=(8+Math.random()*84)+'%'; c.style.background=colors[i%colors.length];
+    c.style.borderRadius=Math.random()<.4?'50%':'1px'; host.appendChild(c);
+    const dx=(Math.random()-.5)*180, dy=200+Math.random()*260, rot=Math.random()*720;
+    c.animate([{transform:'translate(0,0) rotate(0)',opacity:1},{transform:`translate(${dx}px,${dy}px) rotate(${rot}deg)`,opacity:0}],
+      {duration:1100+Math.random()*900,easing:'cubic-bezier(.2,.6,.4,1)',fill:'forwards'});
+    setTimeout(()=>c.remove(),2100); } }
+function showToast(tx){ const t=$('toast'); $('toast-tx').textContent=tx; t.classList.add('on'); setTimeout(()=>t.classList.remove('on'),2400); }
+function reset(){ step=0; team.clear(); players.clear();
+  document.querySelectorAll('.cell.sel').forEach(c=>c.classList.remove('sel')); $('primary').onclick=nextStep; render(0); closeSheet(); }
+render(0);
+/* self-heal: guarantee the Day 1 pick card is rendered (unless already completed) */
+function ensureDay1Card(){
+  var c=document.getElementById('day1Card');
+  if(c && !c.classList.contains('done-card') && !c.querySelector('.pc-cta')){ renderDay1Active(); }
+}
+ensureDay1Card();
+
+/* ═══════════ TAB SWITCHING ═══════════ */
+function switchTab(name){
+  document.querySelectorAll('.tabview').forEach(v=>v.classList.remove('active'));
+  const view=document.getElementById('tab-'+name); if(view) view.classList.add('active');
+  document.querySelectorAll('.tabbar .tab').forEach(t=>t.classList.toggle('on',t.dataset.tab===name));
+}
+
+/* ═══════════ FIFA STORY AVATAR — image (5s) → square video → fade back, loop ═══════════ */
+(function(){
+  const img=document.getElementById('fifaAvaImg'), vid=document.getElementById('fifaAvaVid');
+  if(!img||!vid) return;
+  let timer;
+  function showImage(){
+    clearTimeout(timer);
+    img.classList.add('on'); vid.classList.remove('on');
+    timer=setTimeout(playVideo,5000);   // hold Sarah's photo ~5s to draw the eye, then roll the clip
+  }
+  function playVideo(){
+    try{ vid.currentTime=0; }catch(e){}
+    const p=vid.play(); if(p&&p.catch) p.catch(()=>{ showImage(); });   // if autoplay blocked, stay on image
+    img.classList.remove('on'); vid.classList.add('on');
+  }
+  vid.addEventListener('ended',showImage);   // clip ends → crossfade to photo → 5s → replay
+  showImage();
+})();
+
+/* ═══════════ CHAT TAB topic list (same data/avatars as the roleplay screen) ═══════════ */
+(function(){
+  var TOPICS=[
+    {label:'Asking for leave to a<br>rude boss',     img:'av-rude-boss.png',     bg:'#746344', live:true},
+    {label:'Movies',                                 img:'av-movies.png',        bg:'#746a44'},
+    {label:'Hobbies',                                img:'av-hobbies.png',       bg:'#444a74'},
+    {label:'Salary Negotiating<br>with manager',     img:'av-salary.png',        bg:'#746344'},
+    {label:'Team conflict<br>resolution',            img:'av-team-conflict.png', bg:'#745944'},
+    {label:'Talking about career<br>goals',          img:'av-career-goals.png',  bg:'#744466'},
+    {label:'Work',                                   img:'av-work.png',          bg:'#445f74'},
+    {label:'Technology',                             img:'av-technology.png',    bg:'#4c4474'},
+    {label:'Morning coffee<br>break at office<br>kitchen', img:'av-coffee.png',  bg:'#445f74'},
+    {label:'Education',                              img:'av-education.png',     bg:'#746a44'},
+    {label:'Cultural fit and<br>team dynamics',      img:'av-cultural-fit.png',  bg:'#445f74'},
+    {label:'Adapting to change',                     img:'av-adapting.png',      bg:'#707444'},
+    {label:'Leadership and initiative',              img:'av-leadership.png',    bg:'#445874'},
+    {label:'Alignment with<br>company values',       img:'av-alignment.png',     bg:'#445f74'},
+    {label:'Sports',                                 img:'av-sports.png',        bg:'#746144'},
+    {label:'Family',                                 img:'av-family.png',        bg:'#445f74'}
+  ];
+  var host=document.getElementById('topics-list'); if(!host) return;
+  host.innerHTML=TOPICS.map(function(t){
+    return '<div class="topic-row is-locked">'+   // free topics read uniformly dim
+      '<div class="ava"><div class="ava-ring"></div>'+
+      '<div class="ava-inner" style="background:'+t.bg+'"><img src="assets/roleplay/'+t.img+'" alt=""></div></div>'+
+      '<div class="topic-label">'+t.label+'</div></div>';
+  }).join('');
+})();
+
+/* ═══════════ WC progress — day indicator + cumulative goals, synced to the dashboard ═══════════ */
+var wcDay=0, wcGoals=0;            // bumped when a daily challenge completes
+const WC_GOAL_MILESTONE=30;        // football bar fills toward the next milestone
+function syncWC(){
+  var gn=document.getElementById('goalNum'), gb=document.getElementById('goalBar'), fd=document.getElementById('fifaDay');
+  if(gn) gn.textContent=wcGoals;
+  if(gb) gb.style.width=Math.min(100,wcGoals/WC_GOAL_MILESTONE*100)+'%';
+  if(fd) fd.textContent='Day '+wcDay;
+}
+requestAnimationFrame(syncWC);
+
+/* dev shortcut: open #dash to jump straight to the dashboard */
+if(location.hash==='#dash'){ const d=document.getElementById('dash'); if(d){ d.classList.add('on'); setTimeout(()=>d.scrollTop=560,150); } }
+if(location.hash==='#share'){ setTimeout(openShare,150); }
+/* dev shortcut: #flowtest simulates the real onboarding path into the dashboard */
+if(location.hash==='#flowtest'){
+  openSheet();
+  setTimeout(()=>{ step=1; render(1); team.add('Argentina'); },400);
+  setTimeout(()=>{ step=2; render(2); },800);
+  setTimeout(()=>{ step=3; render(3); },1200);
+  setTimeout(()=>{ step=4; render(4); },1600);
+  setTimeout(()=>{ goDashboard(); },2100);
+  setTimeout(()=>{ const d=document.getElementById('dash'); if(d)d.scrollTop=560; },2600);
+}
+</script>
+</body>
+</html>
