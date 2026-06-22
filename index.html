@@ -806,22 +806,26 @@ body{font-family:'Inter','Inter',-apple-system,system-ui,sans-serif,system-ui,sa
 .repo-sec{margin-bottom:8px}
 .repo-sec-h{font-family:'Geist';font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:rgba(255,255,255,.38);padding:6px 4px 13px}
 .repo-sec.special .repo-sec-h{color:var(--gold-1)}
-.repo-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px 10px;margin-bottom:22px}
-.repo-sec.special .repo-row{grid-template-columns:1fr;justify-items:center;margin-bottom:26px}
-.repo-sec.special .repo-cell{max-width:150px;width:100%}
+.repo-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px 10px;margin-bottom:22px;align-items:start}
+/* Special = the finale, left-aligned and bigger than the uniform daily cards */
+.repo-sec.special .repo-row{grid-template-columns:1fr;justify-items:start;margin-bottom:26px}
+.repo-sec.special .repo-cell{width:182px;align-items:flex-start}
+.repo-sec.special .repo-name,.repo-sec.special .repo-tier{text-align:left;width:100%}
 .repo-finale .repo-badge{perspective:800px}
 .repo-finale .repo-badge img{cursor:pointer}
 @keyframes finaleSpin{0%{transform:rotateY(0deg) scale(1)}40%{transform:rotateY(200deg) scale(1.06)}100%{transform:rotateY(360deg) scale(1)}}
 .repo-cell{display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer}
 .repo-cell.locked{cursor:default}
-.repo-badge{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;position:relative;border-radius:18px;
+.repo-badge{width:100%;aspect-ratio:1;min-height:0;overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative;border-radius:18px;
   background:radial-gradient(120% 100% at 50% 0%,rgba(255,255,255,.05),rgba(255,255,255,.015));border:1px solid rgba(255,255,255,.05)}
-.repo-badge img{width:88%;height:88%;object-fit:contain;position:relative;z-index:1}
+/* badges fit WITHIN the square box (max-* + auto) so the image never stretches the cell taller */
+.repo-badge img{max-width:84%;max-height:84%;width:auto;height:auto;object-fit:contain;position:relative;z-index:1}
 .repo-cell.earned .repo-badge{box-shadow:0 8px 22px -10px var(--cellglow,rgba(251,191,36,.5))}
 .repo-cell.locked .repo-badge img{filter:grayscale(1) brightness(.34);opacity:.55}
 .repo-cell.locked .repo-badge::after{content:'';position:absolute;z-index:2;width:22px;height:22px;border-radius:50%;background:rgba(10,10,14,.7);border:1px solid rgba(255,255,255,.12);
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 16 16' fill='none'%3E%3Crect x='3' y='7' width='10' height='8' rx='2' fill='%23ffffff' fill-opacity='.45'/%3E%3Cpath d='M5 7V5a3 3 0 0 1 6 0v2' stroke='%23ffffff' stroke-opacity='.5' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center}
-.repo-finale .repo-badge{border:1.5px solid rgba(251,191,36,.85);box-shadow:0 0 0 4px rgba(251,191,36,.12),0 0 28px -4px rgba(251,191,36,.5)}
+.repo-finale .repo-badge{border:1.5px solid rgba(251,191,36,.5);box-shadow:0 0 0 3px rgba(251,191,36,.08),0 0 22px -6px rgba(251,191,36,.32)}
+.repo-finale.locked .repo-badge::after{width:34px;height:34px;background-size:17px}
 .repo-name{font-family:'Geist';font-size:10px;font-weight:600;color:rgba(255,255,255,.74);text-align:center;line-height:1.15}
 .repo-cell.locked .repo-name{color:rgba(255,255,255,.3)}
 .repo-tier{font-family:'Geist';font-size:7.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase}
@@ -1787,7 +1791,7 @@ function repoCell(b,earned,finale){
 function buildRepo(){
   // Special (the always-present Finale shield) on top, then Common → Rare → Epic → Legendary
   let h='<div class="repo-sec special"><div class="repo-sec-h">Special</div><div class="repo-row">'
-    + '<div class="repo-cell repo-finale" onclick="spinFinale(this)"><div class="repo-badge"><img src="'+FINALE.img+'" alt=""></div>'
+    + '<div class="repo-cell repo-finale locked" onclick="spinFinale(this)"><div class="repo-badge"><img src="'+FINALE.img+'" alt=""></div>'
     + '<div class="repo-name">'+FINALE.name+'</div><div class="repo-tier rt-legendary">Finale</div></div>'
     + '</div></div>';
   for(const [tier,label] of [['common','Common'],['rare','Rare'],['epic','Epic'],['legendary','Legendary']]){
