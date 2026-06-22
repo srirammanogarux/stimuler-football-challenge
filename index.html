@@ -1491,16 +1491,16 @@ function hideDash(){ $('dash').classList.remove('on'); }
 /* ═══════════ DAY CARDS — every active day uses the 4-option pick card → done state ═══════════ */
 const DAY_DATA={
   1:{ opts:[
-    {thumb:'🇨🇻', text:"I think Cape Verde's draw was no fluke..is it ??"},
-    {thumb:'🇳🇴', text:"I'm calling it: Haaland wins the top scorer.. what do you think ?"},
-    {thumb:'🇲🇽', text:"I bet your team mexico, gets knocked out early.. he.he.."},
-    {thumb:'🇦🇷', text:"I think your favorite 'Messi' is overrated.. ready to challenge me ?"}
+    {emotion:'curious',        text:"I think Cape Verde's draw was no fluke..is it ??"},
+    {emotion:'smug_confident', text:"I'm calling it: Haaland wins the top scorer.. what do you think ?"},
+    {emotion:'provoke',        text:"I bet your team mexico, gets knocked out early.. he.he.."},
+    {emotion:'skeptical',      text:"I think your favorite 'Messi' is overrated.. ready to challenge me ?"}
   ]},
   2:{ opts:[
-    {thumb:'🇦🇷', text:"Argentina take this one 2–0.. calling it now"},
-    {thumb:'🇧🇷', text:"Brazil bottle it again tonight.. classic, right ?"},
-    {img:'assets/sarah.png', text:"Messi runs the whole game.. you still doubt him ?"},
-    {thumb:'🟥', text:"The ref ruins this one.. watch the VAR drama"}
+    {emotion:'hyped',          text:"Argentina take this one 2–0.. calling it now"},
+    {emotion:'provoke',        text:"Brazil bottle it again tonight.. classic, right ?"},
+    {emotion:'smug_confident', text:"Messi runs the whole game.. you still doubt him ?"},
+    {emotion:'outraged',       text:"The ref ruins this one.. watch the VAR drama"}
   ]}
 };
 /* ═══════════ DAY ENGINE — per-topic, day-long progress + demo timer ═══════════ */
@@ -1508,16 +1508,19 @@ let DAY_MS = 180000;                 // ◀ demo day-window (tweak this): 3 min
 const TPD = 4;                       // topics per day
 const dayState = {};                 // day -> {done:[4], badge, status, endsAt}
 let curDay = 1, _attemptDay = 1, _attemptTopic = 0;
+/* 4 original character avatars; each topic shows a random one (no repeats per day) in its emotion */
+const CHARS=['sarah','navy_guy','green_yellow_guy','curly_red_black'];
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
 function initDayState(){
-  for(let d=1; d<=4; d++) dayState[d]={done:[false,false,false,false], badge:false, status:(d===1?'active':'locked'), endsAt:null};
+  for(let d=1; d<=4; d++) dayState[d]={done:[false,false,false,false], badge:false, status:(d===1?'active':'locked'), endsAt:null, chars:shuffle(CHARS)};
   dayState[1].endsAt = Date.now() + DAY_MS; curDay=1;
 }
 initDayState();
 const DAY_PICK={1:-1,2:-1,3:-1,4:-1};
-function dayThumb(o){ return o.img ? '<img src="'+o.img+'" alt="">' : o.thumb; }
+function topicThumb(day,i){ const ch=((dayState[day]&&dayState[day].chars)||CHARS)[i], em=(DAY_DATA[day].opts[i].emotion)||'curious'; return '<img src="assets/emotions/'+ch+'/'+em+'.png" alt="">'; }
 function firstUndone(day){ const dn=dayState[day].done; for(let i=0;i<TPD;i++) if(!dn[i]) return i; return -1; }
 function fmtLeft(ms){ ms=Math.max(0,ms); const s=Math.floor(ms/1000), m=Math.floor(s/60), ss=s%60; return String(m).padStart(2,'0')+':'+String(ss).padStart(2,'0'); }
-function doneRow(o){ return '<div class="pc-done"><div class="pc-thumb">'+dayThumb(o)+'</div><div class="pc-otext">'+o.text+'</div><span class="pc-tick">✓</span></div>'; }
+function doneRow(day,i){ const o=DAY_DATA[day].opts[i]; return '<div class="pc-done"><div class="pc-thumb">'+topicThumb(day,i)+'</div><div class="pc-otext">'+o.text+'</div><span class="pc-tick">✓</span></div>'; }
 
 function renderDayCard(day){
   const card=document.getElementById('day'+day+'Card'); if(!card) return;
@@ -1542,7 +1545,7 @@ function renderDayCard(day){
   if(st.status==='done' || st.status==='pending'){
     card.className='day-card done-card';
     if(dot){ dot.className='tl-dot is-done'; dot.textContent='✓'; }
-    const rows=opts.map((o,i)=> st.done[i]?doneRow(o):'').join(''), full=doneCount===TPD;
+    const rows=opts.map((o,i)=> st.done[i]?doneRow(day,i):'').join(''), full=doneCount===TPD;
     card.innerHTML='<div class="d2-head"><div><div class="d2-eyebrow">Day '+day+' · Done</div>'
       +'<div class="d2-title">'+(full?'Full day, nailed it! 🎉':doneCount+' of '+TPD+' done')+'</div></div>'
       +'<div class="d2-goals">'+(doneCount*3)+' <img src="assets/ball.png" style="width:17px;height:17px;vertical-align:-3px"></div></div>'
@@ -1553,9 +1556,9 @@ function renderDayCard(day){
   if(dot){ dot.className='tl-dot cur'; }
   if(DAY_PICK[day]<0 || st.done[DAY_PICK[day]]) DAY_PICK[day]=firstUndone(day);
   const pick=DAY_PICK[day];
-  const doneRows=opts.map((o,i)=> st.done[i]?doneRow(o):'').join('');
+  const doneRows=opts.map((o,i)=> st.done[i]?doneRow(day,i):'').join('');
   const pickRows=opts.map((o,i)=> st.done[i]?'':
-    '<div class="pc-opt'+(i===pick?' sel':'')+'" onclick="pickDay('+day+','+i+')"><div class="pc-thumb">'+dayThumb(o)+'</div><div class="pc-otext">'+o.text+'</div><div class="pc-radio"></div></div>').join('');
+    '<div class="pc-opt'+(i===pick?' sel':'')+'" onclick="pickDay('+day+','+i+')"><div class="pc-thumb">'+topicThumb(day,i)+'</div><div class="pc-otext">'+o.text+'</div><div class="pc-radio"></div></div>').join('');
   card.innerHTML='<div class="pc-eyebrow">Day '+day+' · Today</div>'
     +'<div class="pc-title">'+(doneCount===0?'Pick one to finish today’s conversation':doneCount+' of '+TPD+' done · keep going')+'</div>'
     +(doneRows.trim()?'<div class="pc-donewrap mini">'+doneRows+'</div>':'')
