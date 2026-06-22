@@ -740,11 +740,11 @@ body{font-family:'Inter','Inter',-apple-system,system-ui,sans-serif,system-ui,sa
 .paper{position:absolute;top:-24px;width:9px;height:14px;z-index:96;pointer-events:none;opacity:0}
 
 /* ═══════════ SHARE SCREEN — collectible badge (post-results) ═══════════ */
-.share-screen{position:absolute;inset:0;z-index:92;opacity:0;visibility:hidden;pointer-events:none;
+.share-screen{position:absolute;inset:0;z-index:96;opacity:0;visibility:hidden;pointer-events:none;--bglow:rgba(251,191,36,.55);
   display:flex;flex-direction:column;align-items:center;transition:opacity .42s ease;
   background:
-    radial-gradient(72% 42% at 50% 33%, rgba(251,191,36,.14), transparent 62%),
-    radial-gradient(100% 60% at 50% 120%, rgba(120,70,10,.18), transparent 60%),
+    radial-gradient(72% 42% at 50% 33%, rgba(251,191,36,.10), transparent 62%),
+    radial-gradient(100% 60% at 50% 120%, rgba(120,70,10,.16), transparent 60%),
     #0b0a10}
 .share-screen.on{opacity:1;visibility:visible;pointer-events:auto}
 .collection{flex:none;display:flex;flex-direction:column;align-items:center;gap:7px;padding:54px 0 0}
@@ -764,8 +764,56 @@ body{font-family:'Inter','Inter',-apple-system,system-ui,sans-serif,system-ui,sa
   background:radial-gradient(circle, rgba(251,191,36,.30), rgba(245,158,11,.10) 44%, transparent 64%);
   animation:auraPulse 3.8s ease-in-out infinite}
 @keyframes auraPulse{0%,100%{opacity:.55;transform:translate(-50%,-50%) scale(.94)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.06)}}
-.badge-wrap{position:relative;z-index:1;width:226px;transform-style:preserve-3d;transition:transform .14s ease-out;
-  filter:drop-shadow(0 0 26px rgba(251,191,36,.45)) drop-shadow(0 18px 34px rgba(0,0,0,.6))}
+.badge-wrap{position:relative;z-index:1;width:208px;transform-style:preserve-3d;transition:transform .14s ease-out;
+  filter:drop-shadow(0 0 26px var(--bglow)) drop-shadow(0 18px 34px rgba(0,0,0,.6))}
+.badge-wrap img{width:100%;height:auto;display:block}
+.share-screen.on #shareBadgeImg{animation:bsvPop .72s cubic-bezier(.22,1.15,.36,1) both}
+@keyframes bsvPop{0%{opacity:0;transform:scale(.5)}60%{opacity:1}100%{opacity:1;transform:scale(1)}}
+.bsv-info{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center}
+.bsv-title{font-family:'Inter',-apple-system,system-ui,sans-serif;font-weight:800;font-size:21px;letter-spacing:.2px;
+  background:linear-gradient(180deg,#fff,#ffe7ad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.bsv-sub{font-family:'Geist';font-size:11.5px;font-weight:400;color:rgba(255,255,255,.55);max-width:240px;line-height:1.45}
+/* collection strip (earned lit · locked dim) */
+.coll-strip{display:flex;gap:9px;overflow-x:auto;max-width:100%;padding:5px 22px;scrollbar-width:none}
+.coll-strip::-webkit-scrollbar{display:none}
+.cmini{flex:none;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:11px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07)}
+.cmini img{width:100%;height:100%;object-fit:contain}
+.cmini.locked img{filter:grayscale(1) brightness(.42);opacity:.5}
+.cmini.cur{border-color:var(--bglow);box-shadow:0 0 0 1px var(--bglow),0 0 16px -2px var(--bglow)}
+/* rarity pill tiers */
+.rarity.tier-common{background:linear-gradient(100deg,#eef2f6,#c3ccd6 50%,#e6ebf0);color:#2a3340;box-shadow:0 8px 22px -8px rgba(180,190,205,.6),inset 0 1px 1px rgba(255,255,255,.6)}
+.rarity.tier-rare{background:linear-gradient(100deg,#bfe0ff,#3b82f6 50%,#7cc0ff);color:#06224a;box-shadow:0 8px 22px -8px rgba(59,130,246,.65),inset 0 1px 1px rgba(255,255,255,.4)}
+.rarity.tier-epic{background:linear-gradient(100deg,#e7c8ff,#a855f7 50%,#d9a8ff);color:#2c0a52;box-shadow:0 8px 22px -8px rgba(168,85,247,.65),inset 0 1px 1px rgba(255,255,255,.4)}
+.rarity.tier-legendary{background:linear-gradient(100deg,#fde68a,#f59e0b 45%,#fbbf24 70%,#fcd34d);color:#3a2600;box-shadow:0 8px 22px -8px rgba(251,191,36,.7),inset 0 1px 1px rgba(255,255,255,.5)}
+.bsv-conf{position:absolute;width:9px;height:13px;z-index:5;pointer-events:none;will-change:transform}
+/* ═══════════ BADGE REPO — full collection grid ═══════════ */
+.badge-repo{position:absolute;inset:0;z-index:95;background:radial-gradient(120% 70% at 50% -10%,rgba(251,191,36,.08),transparent 55%),#08080c;
+  opacity:0;visibility:hidden;pointer-events:none;transition:opacity .34s ease;display:flex;flex-direction:column}
+.badge-repo.on{opacity:1;visibility:visible;pointer-events:auto}
+.repo-head{flex:none;padding:54px 22px 6px;display:flex;align-items:flex-start;justify-content:space-between}
+.repo-h1{font-family:'Inter',-apple-system,system-ui,sans-serif;font-size:30px;font-weight:800;letter-spacing:-.5px;line-height:1.05;color:#fff}
+.repo-sub{font-family:'Geist';font-size:11.5px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--gold-1);margin-top:6px}
+.repo-close{flex:none;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);
+  display:flex;align-items:center;justify-content:center;color:#fff;cursor:pointer;font-size:17px;margin-top:6px}
+.repo-close:active{transform:scale(.92)}
+.repo-grid{flex:1;overflow-y:auto;padding:18px 16px calc(34px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(3,1fr);gap:20px 10px;scrollbar-width:none}
+.repo-grid::-webkit-scrollbar{display:none}
+.repo-cell{display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer}
+.repo-cell.locked{cursor:default}
+.repo-badge{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;position:relative;border-radius:18px;
+  background:radial-gradient(120% 100% at 50% 0%,rgba(255,255,255,.05),rgba(255,255,255,.015));border:1px solid rgba(255,255,255,.05)}
+.repo-badge img{width:88%;height:88%;object-fit:contain;position:relative;z-index:1}
+.repo-cell.earned .repo-badge{box-shadow:0 8px 22px -10px var(--cellglow,rgba(251,191,36,.5))}
+.repo-cell.locked .repo-badge img{filter:grayscale(1) brightness(.34);opacity:.55}
+.repo-cell.locked .repo-badge::after{content:'';position:absolute;z-index:2;width:22px;height:22px;border-radius:50%;background:rgba(10,10,14,.7);border:1px solid rgba(255,255,255,.12);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 16 16' fill='none'%3E%3Crect x='3' y='7' width='10' height='8' rx='2' fill='%23ffffff' fill-opacity='.45'/%3E%3Cpath d='M5 7V5a3 3 0 0 1 6 0v2' stroke='%23ffffff' stroke-opacity='.5' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center}
+.repo-finale .repo-badge{border-color:var(--bglow);box-shadow:0 0 22px -6px rgba(251,191,36,.5),inset 0 0 0 1px rgba(251,191,36,.3)}
+.repo-name{font-family:'Geist';font-size:10px;font-weight:600;color:rgba(255,255,255,.74);text-align:center;line-height:1.15}
+.repo-cell.locked .repo-name{color:rgba(255,255,255,.3)}
+.repo-tier{font-family:'Geist';font-size:7.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase}
+.rt-common{color:#aab4c2}.rt-rare{color:#60a5fa}.rt-epic{color:#c084fc}.rt-legendary{color:var(--gold-1)}
+.repo-cell.locked .repo-tier{color:rgba(255,255,255,.22)}
 .badge-border{clip-path:var(--pennant);padding:2.5px;
   background:linear-gradient(135deg,#fff6cf,#f59e0b 30%,#fde047 55%,#b45309 80%,#fcd34d)}
 .share-screen .badge{position:relative;clip-path:var(--pennant);overflow:hidden;
@@ -810,6 +858,10 @@ body{font-family:'Inter','Inter',-apple-system,system-ui,sans-serif,system-ui,sa
 .sp-prev .bi{clip-path:var(--pennant);background:#0a0a0d;padding:8px 8px 30px;display:flex;flex-direction:column;align-items:center}
 .sp-prev .bi img{width:66px;height:66px;border-radius:6px;object-fit:cover;object-position:center 32%}
 .sp-prev .bi .t{font-family:'Inter';font-weight:800;font-size:8px;color:#ffe7ad;margin-top:6px;text-align:center;line-height:1.1}
+.sp-prev2{width:110px;margin:0 auto 22px;display:flex;flex-direction:column;align-items:center;gap:7px;
+  filter:drop-shadow(0 12px 24px rgba(0,0,0,.55)) drop-shadow(0 0 14px var(--bglow))}
+.sp-prev2 img{width:90px;height:90px;object-fit:contain}
+.sp-prev2 .t{font-family:'Inter',-apple-system,system-ui,sans-serif;font-weight:800;font-size:11px;color:#ffe7ad;text-align:center;line-height:1.1}
 .sp-icons{display:flex;justify-content:space-between;gap:4px}
 .sp-ic{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer}
 .sp-ic:active{transform:scale(.94)}
@@ -1179,7 +1231,7 @@ body{font-family:'Inter','Inter',-apple-system,system-ui,sans-serif,system-ui,sa
           <div class="top-banner"><img src="assets/fifa-top-banner.jpg" alt="World Football Conversation Challenge 2026"></div>
 
           <!-- ═══ PROGRESS ═══ -->
-          <div class="wc-progress">
+          <div class="wc-progress" onclick="openRepo()" style="cursor:pointer">
             <img class="wcp-badge" id="wcpBadge" src="assets/fifa-badge.png" alt="">
             <div class="wcp-main">
               <div class="wcp-t">World Football Speaking Challenge</div>
@@ -1253,39 +1305,22 @@ body{font-family:'Inter','Inter',-apple-system,system-ui,sans-serif,system-ui,sa
         </div>
       </div>
 
-      <!-- ═══════════ SHARE SCREEN — collectible badge (post-results) ═══════════ -->
+      <!-- ═══════════ BADGE SHOWCASE — earned daily badge (post-results) ═══════════ -->
       <div class="share-screen" id="shareScreen">
-        <svg style="position:absolute;width:0;height:0"><defs><linearGradient id="shg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff6cf"/><stop offset=".4" stop-color="#f59e0b"/><stop offset=".7" stop-color="#fde047"/><stop offset="1" stop-color="#b45309"/></linearGradient></defs></svg>
-        <div class="collection">
-          <div class="coll-row">
-            <div class="shield earned"><svg viewBox="0 0 30 34"><path d="M2 2 H28 V21 L15 31 L2 21 Z" fill="url(#shg)"/></svg><span class="pip">⚽</span></div>
-            <div class="shield"><svg viewBox="0 0 30 34"><path d="M2 2 H28 V21 L15 31 L2 21 Z" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="1.4" stroke-dasharray="3 3"/></svg></div>
-            <div class="shield"><svg viewBox="0 0 30 34"><path d="M2 2 H28 V21 L15 31 L2 21 Z" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="1.4" stroke-dasharray="3 3"/></svg></div>
-            <div class="shield"><svg viewBox="0 0 30 34"><path d="M2 2 H28 V21 L15 31 L2 21 Z" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="1.4" stroke-dasharray="3 3"/></svg></div>
-            <div class="shield"><svg viewBox="0 0 30 34"><path d="M2 2 H28 V21 L15 31 L2 21 Z" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="1.4" stroke-dasharray="3 3"/></svg></div>
-            <div class="shield"><svg viewBox="0 0 30 34"><path d="M2 2 H28 V21 L15 31 L2 21 Z" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="1.4" stroke-dasharray="3 3"/></svg></div>
-          </div>
-          <div class="coll-cap">1 of 24 badges</div>
+        <div class="bsv-top">
+          <div class="coll-strip" id="collStrip"></div>
+          <div class="coll-cap" id="collCap">1 of 26 badges</div>
         </div>
         <div class="badge-stage">
-          <div class="rarity">✦ Legendary</div>
+          <div class="rarity tier-legendary" id="shareRarity">✦ Legendary</div>
           <div class="badge-hero">
-            <div class="aura"></div>
-            <div class="badge-wrap" id="badgeWrap">
-              <div class="badge-border"><div class="badge">
-                <div class="art"><img src="assets/messi-flykiss.gif" alt="Messi"></div>
-                <div class="badge-info">
-                  <div class="badge-title">DIE-HARD<br>MESSI FAN</div>
-                  <div class="badge-sub">Earned for backing Messi without hurting Sarah’s feelings.</div>
-                </div>
-                <div class="shine"></div>
-              </div></div>
-            </div>
+            <div class="aura" id="bsvAura"></div>
+            <div class="badge-wrap" id="badgeWrap"><img id="shareBadgeImg" src="assets/badges/badge_01.png" alt=""></div>
           </div>
-        </div>
-        <div class="reaction">
-          <img src="assets/sarah-sad-1.png" alt="Sarah">
-          <div class="re-bubble"><b>Ram</b> beat me! He’s the absolute Messi superfan and won the whole “who’s the GOAT” debate 😤</div>
+          <div class="bsv-info">
+            <div class="bsv-title" id="shareTitle">Kickoff</div>
+            <div class="bsv-sub" id="shareSub">Your first Football Fluent badge.</div>
+          </div>
         </div>
         <div class="bd-brand"><img src="assets/stimuler-logo.png" alt="Stimuler"><span class="bd-handle">@stimuler</span></div>
         <div class="bd-foot">
@@ -1293,14 +1328,14 @@ body{font-family:'Inter','Inter',-apple-system,system-ui,sans-serif,system-ui,sa
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg>
             Share your badge
           </button>
-          <span class="bd-skip" onclick="closeShare()">Skip for now</span>
+          <span class="bd-skip" id="shareSkip" onclick="closeShare()">Skip for now</span>
         </div>
         <div class="sp-back" id="spBack" onclick="closePreview()"></div>
         <div class="sp-panel" id="spPanel">
           <div class="sp-grip"></div>
           <div class="sp-title">Share your badge</div>
           <div class="sp-sub">Story &amp; status post the animated badge · chats send a still</div>
-          <div class="sp-prev"><div class="bb"><div class="bi"><img src="assets/messi-flykiss.gif" alt=""><div class="t">DIE-HARD MESSI FAN</div></div></div></div>
+          <div class="sp-prev2" id="spPrev"><img id="spPrevImg" src="assets/badges/badge_01.png" alt=""><div class="t" id="spPrevName">Kickoff</div></div>
           <div class="sp-icons">
             <div class="sp-ic" onclick="doShare('Instagram')"><div class="ring ig"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="#fff" stroke="none"/></svg></div><div class="lbl">Instagram</div></div>
             <div class="sp-ic" onclick="doShare('WhatsApp')"><div class="ring wa"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm0 2a8 8 0 1 1-4.2 14.8l-.3-.2-2.8.8.8-2.7-.2-.3A8 8 0 0 1 12 4zm-2.7 4c-.2 0-.5.1-.7.4-.3.3-.9.9-.9 2.1s.9 2.4 1 2.6c.1.2 1.8 2.9 4.5 3.9 2.2.8 2.7.7 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2-.1-.1-.2-.2-.5-.3l-1.7-.8c-.2-.1-.4-.1-.6.1l-.6.8c-.1.1-.3.2-.5.1-.7-.3-1.4-.5-2.3-1.4-.7-.6-1.1-1.4-1.3-1.6-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.2-.5s0-.4-.1-.5l-.8-1.9c-.2-.4-.4-.4-.6-.4z"/></svg></div><div class="lbl">WhatsApp</div></div>
@@ -1309,6 +1344,15 @@ body{font-family:'Inter','Inter',-apple-system,system-ui,sans-serif,system-ui,sa
             <div class="sp-ic" onclick="doShare('clipboard')"><div class="ring cp"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></div><div class="lbl">Copy link</div></div>
           </div>
         </div>
+      </div>
+
+      <!-- ═══════════ BADGE REPO — full collection grid ═══════════ -->
+      <div class="badge-repo" id="badgeRepo">
+        <div class="repo-head">
+          <div><div class="repo-h1">Badges</div><div class="repo-sub" id="repoSub">1 of 26 earned</div></div>
+          <div class="repo-close" onclick="closeRepo()">✕</div>
+        </div>
+        <div class="repo-grid" id="repoGrid"></div>
       </div>
 
       <!-- ═══════════ BOTTOM TAB BAR ═══════════ -->
@@ -1340,6 +1384,7 @@ body{font-family:'Inter','Inter',-apple-system,system-ui,sans-serif,system-ui,sa
     <button onclick="devJump('onboard')">Onboarding</button>
     <button onclick="devJump('convo')">Conversation</button>
     <button onclick="devJump('share')">Share badge</button>
+    <button onclick="devJump('repo')">Badge repo</button>
     <button onclick="devJump('celebrate')">Celebration</button>
   </div>
 </div>
@@ -1619,8 +1664,100 @@ window.addEventListener('message', e=>{
   if(e.data==='day1-done'){ exitConvo(); setTimeout(markTopicDone, 560); } // topic finished
 });
 
-function openShare(){ document.getElementById('shareScreen').classList.add('on'); startBadgeTilt(); }
-function closeShare(){ closePreview(); document.getElementById('shareScreen').classList.remove('on'); setTimeout(()=>afterTopic(_attemptDay), 420); }
+/* ═══════════ BADGE COLLECTION — 25 daily badges + pinned finale (26) ═══════════ */
+const BADGES=[
+  {id:1,key:"badge_01",img:"assets/badges/badge_01.png",name:"Kickoff",tier:"common",sub:"You're off the mark — first chat done."},
+  {id:2,key:"badge_02",img:"assets/badges/badge_02.png",name:"First Touch",tier:"common",sub:"Boots laced, first words spoken."},
+  {id:3,key:"badge_03",img:"assets/badges/badge_03.png",name:"On the Whistle",tier:"rare",sub:"Right on cue, every single day."},
+  {id:4,key:"badge_04",img:"assets/badges/badge_04.png",name:"Corner Taken",tier:"common",sub:"Working the flanks of the conversation."},
+  {id:5,key:"badge_05",img:"assets/badges/badge_05.png",name:"Home Kit",tier:"common",sub:"Wearing the colours with pride."},
+  {id:6,key:"badge_06",img:"assets/badges/badge_06.png",name:"Safe Hands",tier:"rare",sub:"Nothing gets past you now."},
+  {id:7,key:"badge_07",img:"assets/badges/badge_07.png",name:"Back of the Net",tier:"rare",sub:"Words hitting the target."},
+  {id:8,key:"badge_08",img:"assets/badges/badge_08.png",name:"Captain's Armband",tier:"rare",sub:"Leading the talk from the front."},
+  {id:9,key:"badge_09",img:"assets/badges/badge_09.png",name:"Silverware",tier:"epic",sub:"First real piece of the collection."},
+  {id:10,key:"badge_10",img:"assets/badges/badge_10.png",name:"Fresh Studs",tier:"common",sub:"Gripping the conversation."},
+  {id:11,key:"badge_11",img:"assets/badges/badge_11.png",name:"Matchday",tier:"rare",sub:"Stepping out under the lights."},
+  {id:12,key:"badge_12",img:"assets/badges/badge_12.png",name:"Lucky Boots",tier:"rare",sub:"Form is temporary, class is permanent."},
+  {id:13,key:"badge_13",img:"assets/badges/badge_13.png",name:"Home Ground",tier:"rare",sub:"Owning your turf."},
+  {id:14,key:"badge_14",img:"assets/badges/badge_14.png",name:"Screamer",tier:"epic",sub:"A strike worth replaying."},
+  {id:15,key:"badge_15",img:"assets/badges/badge_15.png",name:"Flag Bearer",tier:"rare",sub:"Flying your team's colours."},
+  {id:16,key:"badge_16",img:"assets/badges/badge_16.png",name:"Star Striker",tier:"epic",sub:"Shining on the big stage."},
+  {id:17,key:"badge_17",img:"assets/badges/badge_17.png",name:"Golden Gloves",tier:"epic",sub:"A keeper of a streak."},
+  {id:18,key:"badge_18",img:"assets/badges/badge_18.png",name:"Final Whistle",tier:"rare",sub:"Seeing every chat through."},
+  {id:19,key:"badge_19",img:"assets/badges/badge_19.png",name:"Playmaker",tier:"epic",sub:"Dictating the tempo."},
+  {id:20,key:"badge_20",img:"assets/badges/badge_20.png",name:"Golden Boot",tier:"epic",sub:"Top of the scoring charts."},
+  {id:21,key:"badge_21",img:"assets/badges/badge_21.png",name:"Legend's Kit",tier:"epic",sub:"The shirt fits a star."},
+  {id:22,key:"badge_22",img:"assets/badges/badge_22.png",name:"Champion",tier:"legendary",sub:"Crowned for your consistency."},
+  {id:23,key:"badge_23",img:"assets/badges/badge_23.png",name:"King of the Pitch",tier:"legendary",sub:"The pitch belongs to you."},
+  {id:24,key:"badge_24",img:"assets/badges/badge_24.png",name:"Hall of Fame",tier:"legendary",sub:"An all-time great in the making."},
+  {id:25,key:"badge_25",img:"assets/badges/badge_25.png",name:"The Finale",tier:"legendary",sub:"The very summit of the challenge."}
+];
+const PALETTE={"badge_01":["#dbdddf","#8f5b41","#f6f7f7","#b88360"],"badge_02":["#dcdcde","#b2b3b7","#ba845e","#915a40"],"badge_03":["#1d2a42","#8b5b42","#e0dfdb","#644437"],"badge_04":["#dddedd","#b5b7b9","#915a40","#bc7f5e"],"badge_05":["#bc7e59","#dbdde2","#634135","#8d5b43"],"badge_06":["#212a42","#dddee0","#915d41","#b28364"],"badge_07":["#5f6268","#393c41","#84888f","#b0b4b9"],"badge_08":["#afb2b6","#d9dadc","#868b91","#393c41"],"badge_09":["#3c4046","#aeb1b5","#dbdbdd","#888c91"],"badge_10":["#404045","#dbdcde","#8d8c8c","#b2b1b0"],"badge_11":["#3c3e43","#b0b2b6","#878a8f","#d9dadc"],"badge_12":["#3c3e43","#d9dbde","#afb3b7","#868b90"],"badge_13":["#b08449","#dbdbdd","#8e6738","#633d19"],"badge_14":["#8a683b","#dedddc","#b1905b","#5e3f1e"],"badge_15":["#dddde1","#8c6837","#b38542","#d6ae63"],"badge_16":["#8f6332","#dbdadd","#b28345","#673d19"],"badge_17":["#af8841","#8e6b35","#d1b165","#dcdce0"],"badge_18":["#dddddb","#ae9462","#d2bb88","#866b3d"],"badge_19":["#b38842","#8b6836","#d6b260","#dbdbdb"],"badge_20":["#b38841","#d7b162","#8b6a39","#e1dfda"],"badge_21":["#8b6836","#b18743","#dddbd8","#b7b4b1"],"badge_22":["#8d6837","#b18542","#dfdedb","#d6b063"],"badge_23":["#b58c43","#d5af5b","#e1e0de","#8a6a38"],"badge_24":["#b38640","#8c6636","#d6ae5f","#dddcd9"],"badge_25":["#b6893e","#dbb55b","#8b6b37","#5d4220"]};
+const TIER={common:{label:'Common',glow:'rgba(186,196,210,.55)'},rare:{label:'Rare',glow:'rgba(96,165,250,.6)'},epic:{label:'Epic',glow:'rgba(192,132,252,.6)'},legendary:{label:'Legendary',glow:'rgba(251,191,36,.6)'}};
+function badgeFor(day){ return BADGES[(day-1)%BADGES.length]; }   // Day N → badge N (sequential)
+function isEarned(id){ return id>=1 && id<=4 && dayState[id] && dayState[id].badge; }  // demo models days 1–4
+function earnedCount(){ let n=0; for(const b of BADGES) if(isEarned(b.id)) n++; return n; }
+
+let _shareViewOnly=false, _shareConf=null;
+function setShareBadge(day){
+  const b=badgeFor(day), tm=TIER[b.tier], glow=tm.glow;
+  document.getElementById('shareScreen').style.setProperty('--bglow',glow);
+  document.getElementById('shareBadgeImg').src=b.img;
+  document.getElementById('shareTitle').textContent=b.name;
+  document.getElementById('shareSub').textContent=b.sub;
+  const rar=document.getElementById('shareRarity'); rar.textContent='✦ '+tm.label; rar.className='rarity tier-'+b.tier;
+  document.getElementById('bsvAura').style.background='radial-gradient(circle,'+glow+', transparent 62%)';
+  document.getElementById('spPrevImg').src=b.img;
+  document.getElementById('spPrevName').textContent=b.name;
+  _shareConf=(PALETTE[b.key]||['#fbbf24','#fde047','#f59e0b']).concat(['#ffffff']);
+  buildCollStrip(b.id);
+}
+function buildCollStrip(curId){
+  const strip=document.getElementById('collStrip'); let h='';
+  for(const b of BADGES){ const e=isEarned(b.id)||b.id===curId; h+='<div class="cmini'+(e?'':' locked')+(b.id===curId?' cur':'')+'"><img src="'+b.img+'" alt=""></div>'; }
+  h+='<div class="cmini locked"><img src="'+BADGES[24].img+'" alt=""></div>';   // pinned finale (26)
+  strip.innerHTML=h;
+  document.getElementById('collCap').textContent=earnedCount()+' of 26 badges';
+  const c=strip.querySelector('.cmini.cur'); if(c) strip.scrollLeft=c.offsetLeft-strip.clientWidth/2+c.offsetWidth/2;
+}
+function repoCell(b,earned,finale){
+  const tm=TIER[b.tier], cls='repo-cell '+(earned?'earned':'locked')+(finale?' repo-finale':'');
+  const style=earned?' style="--cellglow:'+tm.glow+'"':'';
+  const name=earned?b.name:(finale?'The Finale':'Day '+b.id);
+  const tier=earned?'<div class="repo-tier rt-'+b.tier+'">'+tm.label+'</div>':(finale?'<div class="repo-tier rt-legendary">Finale</div>':'<div class="repo-tier">Locked</div>');
+  const click=earned?' onclick="openBadgeView('+b.id+')"':'';
+  return '<div class="'+cls+'"'+style+click+'><div class="repo-badge"><img src="'+b.img+'" alt=""></div><div class="repo-name">'+name+'</div>'+tier+'</div>';
+}
+function buildRepo(){
+  let h=''; for(const b of BADGES) h+=repoCell(b,isEarned(b.id),false);
+  h+=repoCell({id:26,key:'badge_25',img:BADGES[24].img,name:'The Finale',tier:'legendary',sub:''},false,true);
+  document.getElementById('repoGrid').innerHTML=h;
+  document.getElementById('repoSub').textContent=earnedCount()+' of 26 earned';
+}
+function openRepo(){ buildRepo(); document.getElementById('badgeRepo').classList.add('on'); }
+function closeRepo(){ document.getElementById('badgeRepo').classList.remove('on'); }
+function openBadgeView(id){ _shareViewOnly=true; setShareBadge(id); document.getElementById('shareSkip').textContent='Close';
+  document.getElementById('shareScreen').classList.add('on'); startBadgeTilt(); setTimeout(()=>badgeConfetti(_shareConf),420); }
+function badgeConfetti(colors){
+  colors=colors||['#fbbf24','#fde047','#ffffff','#f59e0b'];
+  const host=document.getElementById('shareScreen'); const r=host.getBoundingClientRect();
+  const cx=r.width/2, cy=r.height*0.40;
+  for(let i=0;i<52;i++){ const p=document.createElement('div'); p.className='bsv-conf';
+    p.style.left=cx+'px'; p.style.top=cy+'px'; p.style.background=colors[i%colors.length];
+    p.style.borderRadius=Math.random()<.35?'50%':'1px'; host.appendChild(p);
+    const a=Math.random()*6.283, d=70+Math.random()*200, dx=Math.cos(a)*d, dy=Math.sin(a)*d, rot=Math.random()*720;
+    p.animate([{transform:'translate(-50%,-50%) scale(.4) rotate(0deg)',opacity:1,offset:0},
+      {transform:'translate('+(dx*0.6)+'px,'+(dy*0.6)+'px) scale(1.2) rotate('+(rot*0.6)+'deg)',opacity:1,offset:.5},
+      {transform:'translate('+dx+'px,'+(dy+150)+'px) scale(.7) rotate('+rot+'deg)',opacity:0,offset:1}],
+      {duration:1500+Math.random()*900,easing:'cubic-bezier(.15,.7,.3,1)',fill:'forwards'});
+    setTimeout(()=>p.remove(),2500);
+  }
+}
+function openShare(){ _shareViewOnly=false; setShareBadge(_attemptDay); document.getElementById('shareSkip').textContent='Skip for now';
+  document.getElementById('shareScreen').classList.add('on'); startBadgeTilt(); setTimeout(()=>badgeConfetti(_shareConf),480); }
+function closeShare(){ closePreview(); document.getElementById('shareScreen').classList.remove('on');
+  if(_shareViewOnly){ _shareViewOnly=false; return; }
+  setTimeout(()=>afterTopic(_attemptDay), 420); }
 function openPreview(){ document.getElementById('spBack').classList.add('on'); document.getElementById('spPanel').classList.add('on'); }
 function closePreview(){ document.getElementById('spBack').classList.remove('on'); document.getElementById('spPanel').classList.remove('on'); }
 function doShare(where){ closePreview(); showToast(where==='clipboard'?'Link copied 🔗':'Shared to '+where+' 🎉'); setTimeout(closeShare, 1100); }
@@ -1954,7 +2091,7 @@ requestAnimationFrame(syncWC);
 updateFifaCard();
 
 /* ═══════════ DEV CHIPS — jump to any day-card state / screen for QA ═══════════ */
-function _devCloseOverlays(){ ['shareScreen','dayDone','convo'].forEach(id=>{const e=document.getElementById(id); if(e) e.classList.remove('on');}); closeSheet(); }
+function _devCloseOverlays(){ ['shareScreen','dayDone','convo','badgeRepo'].forEach(id=>{const e=document.getElementById(id); if(e) e.classList.remove('on');}); closeSheet(); }
 function _devOpenDash(){ _devCloseOverlays(); document.getElementById('dash').classList.add('on'); }
 function devState(name){
   initDayState();
@@ -1972,12 +2109,14 @@ function devJump(name){
   else if(name==='onboard'){ _devCloseOverlays(); document.getElementById('dash').classList.remove('on'); switchTab('profile'); openSheet(); }
   else if(name==='convo'){ _devOpenDash(); _attemptDay=curDay; _attemptTopic=Math.max(0,firstUndone(curDay)); startConvo(); }
   else if(name==='share'){ _devOpenDash(); _attemptDay=curDay; _attemptTopic=Math.max(0,firstUndone(curDay)); openShare(); }
+  else if(name==='repo'){ _devOpenDash(); openRepo(); }
   else if(name==='celebrate'){ _devOpenDash(); openCelebration(); }
 }
 
 /* dev shortcut: open #dash to jump straight to the dashboard */
 if(location.hash==='#dash'){ const d=document.getElementById('dash'); if(d){ d.classList.add('on'); setTimeout(()=>d.scrollTop=560,150); } }
-if(location.hash==='#share'){ setTimeout(openShare,150); }
+if(location.hash==='#share'){ setTimeout(()=>{_attemptDay=curDay; openShare();},150); }
+if(location.hash==='#repo'){ setTimeout(openRepo,150); }
 /* dev shortcut: #flowtest simulates the real onboarding path into the dashboard */
 if(location.hash==='#flowtest'){
   openSheet();
