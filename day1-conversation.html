@@ -518,45 +518,50 @@ body {
 .bubble.bot-typing span:nth-child(2) { animation-delay: 150ms; }
 .bubble.bot-typing span:nth-child(3) { animation-delay: 300ms; }
 
-/* ─── Bot "searching the web" state — loader + rotating text + source chips ─── */
+/* ─── Bot "searching the web" state — golden orb + shimmering text ─── */
 .bubble.searching {
   background: var(--bubble-bot);
   border-radius: 20px 20px 20px 4px;
-  padding: 14px 16px;
-  display: flex; flex-direction: column; gap: 11px;
-  min-width: 210px; max-width: 300px;
+  padding: 15px 18px;
+  display: inline-flex; align-items: center; gap: 12px;
 }
-.ws-head { display: flex; align-items: center; gap: 11px; }
-/* radar orb: rotating gold sweep + globe, with a soft pulse ring */
-.ws-orb { position: relative; width: 26px; height: 26px; flex: none; }
+.ws-head { display: flex; align-items: center; gap: 12px; }
+/* radar orb: rotating gold sweep + globe, wrapped in a breathing golden glow */
+.ws-orb { position: relative; width: 27px; height: 27px; flex: none; animation: wsOrbGlow 1.9s ease-in-out infinite; }
 .ws-orb::before {            /* sweeping conic gradient */
   content: ''; position: absolute; inset: 0; border-radius: 50%;
-  background: conic-gradient(from 0deg, transparent 0deg, rgba(245,182,82,.0) 230deg, #F5B252 320deg, #FAD643 360deg);
+  background: conic-gradient(from 0deg, transparent 0deg, rgba(245,182,82,0) 210deg, #F5B252 310deg, #FFE9A8 350deg, #FAD643 360deg);
   -webkit-mask: radial-gradient(circle, transparent 7px, #000 8px); mask: radial-gradient(circle, transparent 7px, #000 8px);
-  animation: wsSweep 1.05s linear infinite;
+  animation: wsSweep 1s linear infinite;
 }
-.ws-orb::after {             /* expanding pulse ring */
+.ws-orb::after {             /* expanding golden pulse ring */
   content: ''; position: absolute; inset: -3px; border-radius: 50%;
-  border: 1.5px solid rgba(245,182,82,.5); animation: wsPulse 1.6s ease-out infinite;
+  border: 1.5px solid rgba(250,214,67,.55); animation: wsPulse 1.7s ease-out infinite;
 }
 .ws-orb .ws-globe { position: absolute; inset: 6px; color: #FAD643; }
 .ws-orb .ws-globe svg { width: 100%; height: 100%; display: block; }
 @keyframes wsSweep { to { transform: rotate(360deg); } }
-@keyframes wsPulse { 0% { transform: scale(.7); opacity: .8; } 100% { transform: scale(1.35); opacity: 0; } }
-.ws-text { position: relative; font-size: 14px; font-weight: 500; color: rgba(255,255,255,.86); line-height: 1.3; min-height: 18px; }
-.ws-text .ph { transition: opacity .35s ease, transform .35s ease; }
-.ws-text .ph.out { opacity: 0; transform: translateY(-4px); }
-.ws-sources { display: flex; flex-direction: column; gap: 6px; }
-.ws-src {
-  display: flex; align-items: center; gap: 8px; padding: 6px 9px;
-  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: 10px;
-  opacity: 0; transform: translateY(5px); animation: wsSrcIn .4s cubic-bezier(.25,.1,.25,1) forwards;
+@keyframes wsPulse { 0% { transform: scale(.65); opacity: .85; } 100% { transform: scale(1.45); opacity: 0; } }
+@keyframes wsOrbGlow {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(250,214,67,.45)); }
+  50%      { filter: drop-shadow(0 0 13px rgba(250,214,67,.85)); }
 }
-@keyframes wsSrcIn { to { opacity: 1; transform: translateY(0); } }
-.ws-src .fav { width: 16px; height: 16px; flex: none; border-radius: 3px; object-fit: cover; background: rgba(255,255,255,.08); }
-.ws-src .fav-fallback { width: 16px; height: 16px; flex: none; color: rgba(255,255,255,.6); }
-.ws-src .dom { font-size: 12px; font-weight: 500; color: rgba(255,255,255,.72); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ws-src .chk { margin-left: auto; width: 13px; height: 13px; color: #6ee7b7; flex: none; }
+.ws-text { position: relative; font-size: 14px; font-weight: 600; line-height: 1.3; min-height: 18px; }
+/* the phrase text shimmers: a gold highlight sweeps across it left→right, looping */
+.ws-text .ph {
+  display: inline-block;
+  background: linear-gradient(100deg,
+    rgba(255,255,255,.5) 0%, rgba(255,255,255,.5) 38%,
+    #FFE9A8 47%, #FAD643 50%, #F5B252 53%,
+    rgba(255,255,255,.5) 62%, rgba(255,255,255,.5) 100%);
+  background-size: 230% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+  animation: wsShimmer 2.1s linear infinite;
+  transition: opacity .3s ease, transform .3s ease;
+}
+.ws-text .ph.out { opacity: 0; transform: translateY(-4px); }
+@keyframes wsShimmer { 0% { background-position: 130% 0; } 100% { background-position: -30% 0; } }
 
 /* ─── Sarah avatar — sits BEHIND chat, head + torso peek above the bubble ─── */
 #sarah-host {
@@ -3464,28 +3469,16 @@ const WEB_FLOW = location.search.indexOf('web') >= 0 || location.hash.indexOf('w
 const WS1_PHRASES = ['Searching the web…', 'Checking the record books…', 'Reading match reports…', 'Cross-checking sources…'];
 const WS2_PHRASES = ['Searching the web…', 'Looking up World Cup history…', 'Counting the head-to-heads…', 'Almost there…'];
 
-function favChip(domain) {
-  const url = 'https://www.google.com/s2/favicons?domain=' + domain + '&sz=64';
-  return '<div class="ws-src">'
-    + '<img class="fav" src="' + url + '" alt="" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'block\'">'
-    + '<svg class="fav-fallback" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3c-2.6 3-2.6 15 0 18"/></svg>'
-    + '<span class="dom">' + domain + '</span>'
-    + '<svg class="chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'
-    + '</div>';
-}
-
-/* shows the searching bubble for `ms`, rotating phrases + fading in source chips, then removes it */
-async function addWebSearch({ phrases, sources, ms }) {
+/* shows the searching bubble for `ms` — golden orb + shimmering, rotating phrases — then removes it */
+async function addWebSearch({ phrases, ms }) {
   const row = document.createElement('div');
   row.className = 'bubble-row bot';
   row.innerHTML = '<div class="bubble bot searching">'
     + '<div class="ws-head"><div class="ws-orb"><div class="ws-globe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3c-2.6 3-2.6 15 0 18"/></svg></div></div>'
-    + '<div class="ws-text"><span class="ph">' + phrases[0] + '</span></div></div>'
-    + '<div class="ws-sources"></div></div>';
+    + '<div class="ws-text"><span class="ph">' + phrases[0] + '</span></div></div></div>';
   chat.appendChild(row);
   scrollChat();
   const textEl = row.querySelector('.ws-text');
-  const srcWrap = row.querySelector('.ws-sources');
   let pi = 0;
   const phraseTimer = setInterval(() => {
     pi = (pi + 1) % phrases.length;
@@ -3494,15 +3487,9 @@ async function addWebSearch({ phrases, sources, ms }) {
     cur.classList.add('out');                 // fade current out, swap text, fade back in (never blank)
     setTimeout(() => { cur.textContent = phrases[pi]; cur.classList.remove('out'); }, 240);
   }, 1700);
-  const srcStart = Math.min(1400, ms * 0.16);
-  const srcGap = Math.min(1400, (ms * 0.5) / Math.max(1, sources.length));
-  sources.forEach((d, i) => setTimeout(() => {
-    srcWrap.insertAdjacentHTML('beforeend', favChip(d));
-    scrollChat();
-  }, srcStart + i * srcGap));
   await wait(ms);
   clearInterval(phraseTimer);
-  row.remove();   // sources live only during the search
+  row.remove();
 }
 
 async function runWebFlow() {
@@ -3523,7 +3510,7 @@ async function runWebFlow() {
       addBubble({ kind: 'user', html: `Quick one — what was Messi's first official match, and who was it against? 🤔`, tools: ['speaker-solid'] });
       scrollChat(); await wait(950); if (g !== CURRENT_GEN) break;
       setProgress(40);
-      await addWebSearch({ phrases: WS1_PHRASES, sources: ['fcbarcelona.com', 'espn.com', 'wikipedia.org'], ms: 9000 });
+      await addWebSearch({ phrases: WS1_PHRASES, ms: 9000 });
       if (g !== CURRENT_GEN) break;
       await addBotMessage({ html: `Found it 🔎 Messi made his competitive debut for Barcelona on <span class="text-y">16 Oct 2004</span>, coming off the bench against <span class="text-y">Espanyol</span> in the city derby — he was just 17.`, tools: ['translate', 'speaker-solid'], loadingMs: 520 });
       await wait(2000); if (g !== CURRENT_GEN) break;
@@ -3532,7 +3519,7 @@ async function runWebFlow() {
       addBubble({ kind: 'user', html: `Nice! And how many times have Argentina beaten Brazil at the World Cup? ⚽`, tools: ['speaker-solid'] });
       scrollChat(); await wait(950); if (g !== CURRENT_GEN) break;
       setProgress(64);
-      await addWebSearch({ phrases: WS2_PHRASES, sources: ['fifa.com', 'espn.com', 'wikipedia.org'], ms: 8000 });
+      await addWebSearch({ phrases: WS2_PHRASES, ms: 8000 });
       if (g !== CURRENT_GEN) break;
       await addBotMessage({ html: `Here's the record 📚 They've met <span class="text-y">five times</span> at the World Cup — Argentina won <span class="text-y">once</span> (a 1–0 in Italia '90). The rest: two for Brazil and two draws.`, tools: ['translate', 'speaker-solid'], loadingMs: 520 });
       setProgress(84);
