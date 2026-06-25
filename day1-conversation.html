@@ -518,6 +518,46 @@ body {
 .bubble.bot-typing span:nth-child(2) { animation-delay: 150ms; }
 .bubble.bot-typing span:nth-child(3) { animation-delay: 300ms; }
 
+/* ─── Bot "searching the web" state — loader + rotating text + source chips ─── */
+.bubble.searching {
+  background: var(--bubble-bot);
+  border-radius: 20px 20px 20px 4px;
+  padding: 14px 16px;
+  display: flex; flex-direction: column; gap: 11px;
+  min-width: 210px; max-width: 300px;
+}
+.ws-head { display: flex; align-items: center; gap: 11px; }
+/* radar orb: rotating gold sweep + globe, with a soft pulse ring */
+.ws-orb { position: relative; width: 26px; height: 26px; flex: none; }
+.ws-orb::before {            /* sweeping conic gradient */
+  content: ''; position: absolute; inset: 0; border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0deg, rgba(245,182,82,.0) 230deg, #F5B252 320deg, #FAD643 360deg);
+  -webkit-mask: radial-gradient(circle, transparent 7px, #000 8px); mask: radial-gradient(circle, transparent 7px, #000 8px);
+  animation: wsSweep 1.05s linear infinite;
+}
+.ws-orb::after {             /* expanding pulse ring */
+  content: ''; position: absolute; inset: -3px; border-radius: 50%;
+  border: 1.5px solid rgba(245,182,82,.5); animation: wsPulse 1.6s ease-out infinite;
+}
+.ws-orb .ws-globe { position: absolute; inset: 6px; color: #FAD643; }
+.ws-orb .ws-globe svg { width: 100%; height: 100%; display: block; }
+@keyframes wsSweep { to { transform: rotate(360deg); } }
+@keyframes wsPulse { 0% { transform: scale(.7); opacity: .8; } 100% { transform: scale(1.35); opacity: 0; } }
+.ws-text { position: relative; font-size: 14px; font-weight: 500; color: rgba(255,255,255,.86); line-height: 1.3; min-height: 18px; }
+.ws-text .ph { transition: opacity .35s ease, transform .35s ease; }
+.ws-text .ph.out { opacity: 0; transform: translateY(-4px); }
+.ws-sources { display: flex; flex-direction: column; gap: 6px; }
+.ws-src {
+  display: flex; align-items: center; gap: 8px; padding: 6px 9px;
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: 10px;
+  opacity: 0; transform: translateY(5px); animation: wsSrcIn .4s cubic-bezier(.25,.1,.25,1) forwards;
+}
+@keyframes wsSrcIn { to { opacity: 1; transform: translateY(0); } }
+.ws-src .fav { width: 16px; height: 16px; flex: none; border-radius: 3px; object-fit: cover; background: rgba(255,255,255,.08); }
+.ws-src .fav-fallback { width: 16px; height: 16px; flex: none; color: rgba(255,255,255,.6); }
+.ws-src .dom { font-size: 12px; font-weight: 500; color: rgba(255,255,255,.72); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ws-src .chk { margin-left: auto; width: 13px; height: 13px; color: #6ee7b7; flex: none; }
+
 /* ─── Sarah avatar — sits BEHIND chat, head + torso peek above the bubble ─── */
 #sarah-host {
   position: absolute;
@@ -3415,6 +3455,95 @@ function animateResultsNumber(el, duration) {
   requestAnimationFrame(tick);
 }
 
+/* ════════════════════════════════════════════════════════════
+   WEB-SEARCH FLOW — a separate scripted demo: factual question →
+   "Searching the web" loader (rotating phrases + source chips) → answer
+   (reached via ?flow=web ; sources shown only during the search)
+   ════════════════════════════════════════════════════════════ */
+const WEB_FLOW = location.search.indexOf('web') >= 0 || location.hash.indexOf('web') >= 0;
+const WS1_PHRASES = ['Searching the web…', 'Checking the record books…', 'Reading match reports…', 'Cross-checking sources…'];
+const WS2_PHRASES = ['Searching the web…', 'Looking up World Cup history…', 'Counting the head-to-heads…', 'Almost there…'];
+
+function favChip(domain) {
+  const url = 'https://www.google.com/s2/favicons?domain=' + domain + '&sz=64';
+  return '<div class="ws-src">'
+    + '<img class="fav" src="' + url + '" alt="" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'block\'">'
+    + '<svg class="fav-fallback" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3c-2.6 3-2.6 15 0 18"/></svg>'
+    + '<span class="dom">' + domain + '</span>'
+    + '<svg class="chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'
+    + '</div>';
+}
+
+/* shows the searching bubble for `ms`, rotating phrases + fading in source chips, then removes it */
+async function addWebSearch({ phrases, sources, ms }) {
+  const row = document.createElement('div');
+  row.className = 'bubble-row bot';
+  row.innerHTML = '<div class="bubble bot searching">'
+    + '<div class="ws-head"><div class="ws-orb"><div class="ws-globe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3c-2.6 3-2.6 15 0 18"/></svg></div></div>'
+    + '<div class="ws-text"><span class="ph">' + phrases[0] + '</span></div></div>'
+    + '<div class="ws-sources"></div></div>';
+  chat.appendChild(row);
+  scrollChat();
+  const textEl = row.querySelector('.ws-text');
+  const srcWrap = row.querySelector('.ws-sources');
+  let pi = 0;
+  const phraseTimer = setInterval(() => {
+    pi = (pi + 1) % phrases.length;
+    const cur = textEl.querySelector('.ph');
+    if (!cur) return;
+    cur.classList.add('out');                 // fade current out, swap text, fade back in (never blank)
+    setTimeout(() => { cur.textContent = phrases[pi]; cur.classList.remove('out'); }, 240);
+  }, 1700);
+  const srcStart = Math.min(1400, ms * 0.16);
+  const srcGap = Math.min(1400, (ms * 0.5) / Math.max(1, sources.length));
+  sources.forEach((d, i) => setTimeout(() => {
+    srcWrap.insertAdjacentHTML('beforeend', favChip(d));
+    scrollChat();
+  }, srcStart + i * srcGap));
+  await wait(ms);
+  clearInterval(phraseTimer);
+  row.remove();   // sources live only during the search
+}
+
+async function runWebFlow() {
+  const g = ++CURRENT_GEN;
+  if (_recordAbort) { _recordAbort(); _recordAbort = null; }
+  while (g === CURRENT_GEN) {
+    resetAll();
+    loopFade.classList.remove('show');
+    await wait(220);
+    if (g !== CURRENT_GEN) break;
+    try {
+      addBubble({ kind: 'bot', html: `Matchday mood! ⚽ Ask me anything — players, records, head-to-heads — and I'll look it up for you.`, tools: ['translate', 'speaker-solid'], id: 'msg-greeting' });
+      requestAnimationFrame(() => { positionSarah(); showSarah(); });
+      scrollChat();
+      await wait(1800); if (g !== CURRENT_GEN) break;
+
+      /* ── Query 1 ── */
+      addBubble({ kind: 'user', html: `Quick one — what was Messi's first official match, and who was it against? 🤔`, tools: ['speaker-solid'] });
+      scrollChat(); await wait(950); if (g !== CURRENT_GEN) break;
+      setProgress(40);
+      await addWebSearch({ phrases: WS1_PHRASES, sources: ['fcbarcelona.com', 'espn.com', 'wikipedia.org'], ms: 9000 });
+      if (g !== CURRENT_GEN) break;
+      await addBotMessage({ html: `Found it 🔎 Messi made his competitive debut for Barcelona on <span class="text-y">16 Oct 2004</span>, coming off the bench against <span class="text-y">Espanyol</span> in the city derby — he was just 17.`, tools: ['translate', 'speaker-solid'], loadingMs: 520 });
+      await wait(2000); if (g !== CURRENT_GEN) break;
+
+      /* ── Query 2 ── */
+      addBubble({ kind: 'user', html: `Nice! And how many times have Argentina beaten Brazil at the World Cup? ⚽`, tools: ['speaker-solid'] });
+      scrollChat(); await wait(950); if (g !== CURRENT_GEN) break;
+      setProgress(64);
+      await addWebSearch({ phrases: WS2_PHRASES, sources: ['fifa.com', 'espn.com', 'wikipedia.org'], ms: 8000 });
+      if (g !== CURRENT_GEN) break;
+      await addBotMessage({ html: `Here's the record 📚 They've met <span class="text-y">five times</span> at the World Cup — Argentina won <span class="text-y">once</span> (a 1–0 in Italia '90). The rest: two for Brazil and two draws.`, tools: ['translate', 'speaker-solid'], loadingMs: 520 });
+      setProgress(84);
+      await wait(2600); if (g !== CURRENT_GEN) break;
+    } catch (e) { console.error('web flow failed:', e); }
+    loopFade.classList.add('show');
+    await wait(700); if (g !== CURRENT_GEN) break;
+    await wait(180);
+  }
+}
+
 /* ─── Master sequence ─── */
 async function runFlow() {
   const g = ++CURRENT_GEN;
@@ -3605,7 +3734,7 @@ function updateSceneUI() {
 document.getElementById('replay').addEventListener('click', () => {
   CURRENT_GEN++;
   loopFade.classList.remove('show');
-  runFlow();
+  (WEB_FLOW ? runWebFlow : runFlow)();
 });
 const pauseBtn = document.getElementById('pauseBtn');
 pauseBtn.addEventListener('click', () => {
@@ -3625,7 +3754,7 @@ sceneJumps.querySelectorAll('button').forEach(b => {
 window.addEventListener('load', () => {
   // Initial tab indicator position
   setActiveTab('grammar');
-  setTimeout(runFlow, 600);
+  setTimeout(WEB_FLOW ? runWebFlow : runFlow, 600);
 });
 
 // Re-position Sarah if window resizes mid-scene (rare)

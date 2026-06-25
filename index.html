@@ -1436,6 +1436,7 @@ body{font-family:'Inter','Inter',-apple-system,system-ui,sans-serif,system-ui,sa
     <button onclick="devJump('chat')">Chat tab</button>
     <button onclick="devJump('onboard')">Onboarding</button>
     <button onclick="devJump('convo')">Conversation</button>
+    <button onclick="devJump('web')">Web conversation</button>
     <button onclick="devJump('share')">Share badge</button>
     <button onclick="devJump('repo')">Badge repo</button>
     <button onclick="devJump('celebrate')">Celebration</button>
@@ -1713,7 +1714,7 @@ function renderDay1Active(){ renderDayCard(1); }
 function renderDay1Done(){ renderDayCard(1); }
 
 /* ═══════════ CONVERSATION — embeds the real stimuler-flow (Day 1 · Messi) ═══════════ */
-function startConvo(){ const f=document.getElementById('convoFrame'); f.src='day1-conversation.html'; document.getElementById('convo').classList.add('on'); }
+function startConvo(flow){ const f=document.getElementById('convoFrame'); f.src='day1-conversation.html'+(flow?('?flow='+flow):''); document.getElementById('convo').classList.add('on'); }
 function exitConvo(){ document.getElementById('convo').classList.remove('on'); setTimeout(()=>{ document.getElementById('convoFrame').src='about:blank'; },520); }
 
 /* conversation "Continue" → return to dashboard + play the Day 1 completion */
@@ -2195,6 +2196,7 @@ function devJump(name){
   if(name==='chat'){ _devCloseOverlays(); document.getElementById('dash').classList.remove('on'); switchTab('convo'); }
   else if(name==='onboard'){ _devCloseOverlays(); document.getElementById('dash').classList.remove('on'); switchTab('profile'); openSheet(); }
   else if(name==='convo'){ _devOpenDash(); _attemptDay=curDay; _attemptTopic=Math.max(0,firstUndone(curDay)); startConvo(); }
+  else if(name==='web'){ _devOpenDash(); startConvo('web'); }
   else if(name==='share'){ _devOpenDash(); _attemptDay=curDay; _attemptTopic=Math.max(0,firstUndone(curDay)); openShare(); }
   else if(name==='repo'){ _devOpenDash(); openRepo(); }
   else if(name==='celebrate'){ _devOpenDash(); openCelebration(); }
